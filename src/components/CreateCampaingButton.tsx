@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import { usePrepareContractWrite, useContractWrite, useProvider } from "wagmi";
-
 import abi from "../../abi/contracts.json";
 import listenerForTxMine from "../helpers/listenerForTxMine";
 
@@ -10,18 +9,22 @@ import { client, Profiles } from "../pages/api/Profile";
 interface EventIdInputInterface {
   nextCampaingAddress: string;
   amountInSMC: number;
+  amountFlowRate: number;
   clientInfo: string;
 }
 
 export default function CreateCampaingButton({
   nextCampaingAddress,
   amountInSMC,
+  amountFlowRate,
   clientInfo,
 }: EventIdInputInterface) {
   const [lensProfile, setLensProfile] = useState<any>();
   const [body, setBody] = useState<any>();
+  const [noLensProfile, setNoLensProfile] = useState<boolean>(false);
+  const [onSendClicked, setOnSendClicked] = useState<boolean>(false);
 
-  let options: RequestInit | undefined;
+  const amount = ethers.utils.parseEther(amountInSMC.toString());
 
   const provider = useProvider();
 
@@ -36,10 +39,7 @@ export default function CreateCampaingButton({
     address: "0xbe49ac1EadAc65dccf204D4Df81d650B50122aB2",
     abi: abi.abiFUSDC,
     functionName: "transfer",
-    args: [
-      nextCampaingAddress,
-      ethers.utils.parseEther(amountInSMC.toString()),
-    ],
+    args: [nextCampaingAddress, amount],
   });
 
   const { writeAsync: transferTokensContractTx } = useContractWrite(
@@ -161,7 +161,11 @@ export default function CreateCampaingButton({
           return profile;
         })
       );
-      setLensProfile(profileData[0]);
+      if (profileData[0] === undefined) {
+        setNoLensProfile(true);
+      } else {
+        setLensProfile(profileData[0]);
+      }
     } catch (err) {
       console.log({ err });
     }
@@ -178,12 +182,13 @@ export default function CreateCampaingButton({
         clientAddress: clientInfo,
         flowSenderAddress: nextCampaingAddress,
         followNftAddress: lensProfile?.followNftAddress,
+        amountFlowRate: Number(amountFlowRate),
       })
     );
   }, [lensProfile]);
 
   async function postClient() {
-    console.log(options);
+    console.log(body);
     try {
       const response = await fetch(
         "https://qfgg4yahcg.execute-api.eu-north-1.amazonaws.com/fluidSense/clients",
@@ -205,7 +210,7 @@ export default function CreateCampaingButton({
     }
   }
 
-  const onMintClick = async () => {
+  const onSendClick = async () => {
     try {
       const txResponseCreateFlowSender = await transferTokensContractTx?.();
       await listenerForTxMine(
@@ -213,6 +218,14 @@ export default function CreateCampaingButton({
         provider,
         "transfer"
       );
+      setOnSendClicked(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onCreateClick = async () => {
+    try {
       const txResponseCampaignSender = await createCampaignContractTx?.();
       await listenerForTxMine(
         txResponseCampaignSender?.hash,
@@ -224,32 +237,30 @@ export default function CreateCampaingButton({
       console.log(error);
     }
   };
-  const onPostClick = async () => {
-    try {
-      postClient();
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
-    <>
-      <div className="mt-10 flex justify-center ">
-        <button
-          onClick={() => onMintClick()}
-          className="border-2 border-grey-500 px-4 py-2 rounded-full hover:bg-green-100 h-12 bg-green-50"
-        >
-          Create Campaign
-        </button>
-      </div>
-      <div className="mt-10 flex justify-center ">
-        <button
-          onClick={() => onPostClick()}
-          className="border-2 border-grey-500 px-4 py-2 rounded-full hover:bg-green-100 h-12 bg-green-50"
-        >
-          Post Campaign
-        </button>
-      </div>
-    </>
+    <div>
+      {noLensProfile ? (
+        <div>This address is not owner of a Lens Profile</div>
+      ) : !onSendClicked ? (
+        <div className="mt-10 flex justify-center ">
+          <button
+            onClick={() => onSendClick()}
+            className="border-2 border-grey-500 px-4 py-2 rounded-full hover:bg-green-100 h-12 bg-green-50"
+          >
+            Send tokens
+          </button>
+        </div>
+      ) : (
+        <div className="mt-10 flex justify-center ">
+          <button
+            onClick={() => onCreateClick()}
+            className="border-2 border-grey-500 px-4 py-2 rounded-full hover:bg-green-100 h-12 bg-green-50"
+          >
+            Create Campaign
+          </button>
+        </div>
+      )}
+    </div>
   );
 }

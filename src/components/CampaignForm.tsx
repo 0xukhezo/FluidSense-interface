@@ -56,10 +56,14 @@ export default function CampaignForm() {
     }
   };
 
-  const handleClientChange = async (e: any) => {
-    await getContractAddress();
+  const handleClientChange = (e: any) => {
     setClientInfo(e.target.value);
   };
+
+  useEffect(() => {
+    getContractAddress();
+    console.log(nextCampaingAddress);
+  }, [clientInfo]);
 
   return (
     <div className="border-b border-gray-900/10 pb-12 mx-20">
@@ -154,12 +158,14 @@ export default function CampaignForm() {
         <div className="sm:col-span-4">
           {nextCampaingAddress !== undefined &&
           amountInSMC !== undefined &&
+          amountFlowRate !== undefined &&
           clientInfo !== undefined ? (
             amountInSMC > 0 && (
               <CreateCampaingButton
                 nextCampaingAddress={nextCampaingAddress}
                 amountInSMC={amountInSMC}
                 clientInfo={clientInfo}
+                amountFlowRate={amountFlowRate}
               />
             )
           ) : (
