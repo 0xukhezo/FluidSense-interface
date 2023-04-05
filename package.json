@@ -12,6 +12,7 @@
     "@apollo/client": "^3.7.11",
     "@lens-protocol/react": "^0.5.1",
     "@lens-protocol/wagmi": "^0.5.1",
+    "@rainbow-me/rainbowkit": "^0.12.7",
     "@types/node": "18.15.11",
     "@types/react": "18.0.33",
     "@types/react-dom": "18.0.11",
