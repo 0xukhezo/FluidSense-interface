@@ -10,7 +10,7 @@ export default function CampaignForm() {
   const [amountInSMC, setAmountInSMC] = useState<number>();
 
   const [nextCampaingAddress, setNextCampaingAddress] = useState<string>();
-  const campaignsFactoryAddress = "0x9Eb19d1A3D7bb955A81a5e246aa0f524d835CA59";
+  const campaignsFactoryAddress = "0x90947A7BA76Ca935C5b72ecBC65142758ed0a010";
 
   const getNonce = async () => {
     const provider = ethers.getDefaultProvider(
@@ -35,6 +35,7 @@ export default function CampaignForm() {
     ]);
     let contractAddressLong = ethers.utils.keccak256(rlpEncoded);
     let contractAddress = "0x".concat(contractAddressLong.substring(26));
+
     setNextCampaingAddress(contractAddress);
   };
 

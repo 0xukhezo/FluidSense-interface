@@ -29,10 +29,10 @@ export default function CreateCampaingButton({
   const amount = ethers.utils.parseEther(amountInSMC.toString());
 
   const { config: createCampaignContractConfig } = usePrepareContractWrite({
-    address: "0x9Eb19d1A3D7bb955A81a5e246aa0f524d835CA59",
+    address: "0x90947A7BA76Ca935C5b72ecBC65142758ed0a010",
     abi: abi.abiCampaignFactory,
     functionName: "deployCampaign",
-    args: ["0xa8EC796eE75B04af1223445c587588181CEb56CD"],
+    args: [],
   });
 
   const { config: transferTokensContractConfig } = usePrepareContractWrite({
@@ -48,12 +48,12 @@ export default function CreateCampaingButton({
     useContractWrite(createCampaignContractConfig);
 
   const { data: txReceiptTransfer } = useWaitForTransaction({
-    confirmations: 2,
+    confirmations: 5,
     hash: dataTransfer?.hash,
   });
 
   const { isSuccess: txSuccessCampaign } = useWaitForTransaction({
-    confirmations: 5,
+    confirmations: 2,
     hash: dataCampaign?.hash,
   });
 
@@ -244,7 +244,7 @@ export default function CreateCampaingButton({
       <div>
         {noLensProfile ? (
           <div>This address is not owner of a Lens Profile</div>
-        ) : txReceiptTransfer === undefined ? (
+        ) : txReceiptTransfer === undefined && amount !== undefined ? (
           <div className="mt-10 flex justify-center ">
             <button
               onClick={() => onSendClick()}

@@ -186,31 +186,7 @@
       "type": "constructor"
     },
     {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": false,
-          "internalType": "address",
-          "name": "newAddress",
-          "type": "address"
-        }
-      ],
-      "name": "CampaignCreated",
-      "type": "event"
-    },
-    {
-      "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-      "name": "accountList",
-      "outputs": [
-        { "internalType": "contract Campaign", "name": "", "type": "address" }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        { "internalType": "address", "name": "_client", "type": "address" }
-      ],
+      "inputs": [],
       "name": "deployCampaign",
       "outputs": [],
       "stateMutability": "payable",
