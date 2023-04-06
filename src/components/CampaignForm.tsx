@@ -38,22 +38,12 @@ export default function CampaignForm() {
     setNextCampaingAddress(contractAddress);
   };
 
-  const handleAmountFlowRateChange = (val: number) => {
-    if (isNaN(val)) {
-      setAmountFlowRate(0);
-    } else {
-      val = val >= 0 ? val : 0;
-      setAmountFlowRate(val);
-    }
+  const handleAmountFlowRateChange = (val: string) => {
+    setAmountFlowRate(Number(val));
   };
 
-  const handleAmountInSMCChange = (val: number) => {
-    if (isNaN(val)) {
-      setAmountInSMC(0);
-    } else {
-      val = val >= 0 ? val : 0;
-      setAmountInSMC(val);
-    }
+  const handleAmountInSMCChange = (val: string) => {
+    setAmountInSMC(Number(val));
   };
 
   const handleClientChange = (e: any) => {
@@ -62,7 +52,6 @@ export default function CampaignForm() {
 
   useEffect(() => {
     getContractAddress();
-    console.log(nextCampaingAddress);
   }, [clientInfo]);
 
   return (
@@ -80,14 +69,12 @@ export default function CampaignForm() {
             htmlFor="flow"
             className="block text-sm font-medium leading-6 text-gray-900"
           >
-            Flow in USDC
+            Flow in fUSDC
           </label>
           <div className="mt-2">
             <input
               value={amountFlowRate}
-              onChange={(e) =>
-                handleAmountFlowRateChange(parseInt(e.target.value, 10))
-              }
+              onChange={(e) => handleAmountFlowRateChange(e.target.value)}
               onFocus={(e) =>
                 e.target.addEventListener(
                   "wheel",
@@ -97,6 +84,7 @@ export default function CampaignForm() {
                   { passive: false }
                 )
               }
+              step="any"
               type="number"
               name="flow"
               id="flow"
@@ -111,14 +99,12 @@ export default function CampaignForm() {
             htmlFor="amount"
             className="block text-sm font-medium leading-6 text-gray-900"
           >
-            Amount in USDC
+            Amount in fUSDC
           </label>
           <div className="mt-2">
             <input
               value={amountInSMC}
-              onChange={(e) =>
-                handleAmountInSMCChange(parseInt(e.target.value, 10))
-              }
+              onChange={(e) => handleAmountInSMCChange(e.target.value)}
               onFocus={(e) =>
                 e.target.addEventListener(
                   "wheel",
@@ -128,6 +114,7 @@ export default function CampaignForm() {
                   { passive: false }
                 )
               }
+              step="any"
               type="number"
               name="amount"
               id="amount"
@@ -142,10 +129,11 @@ export default function CampaignForm() {
             htmlFor="address"
             className="block text-sm font-medium leading-6 text-gray-900"
           >
-            Address
+            Address with lens profile
           </label>
           <div className="mt-2">
             <input
+              placeholder="0x......"
               value={clientInfo}
               onChange={(e) => handleClientChange(e)}
               id="address"
@@ -160,7 +148,13 @@ export default function CampaignForm() {
           amountInSMC !== undefined &&
           amountFlowRate !== undefined &&
           clientInfo !== undefined ? (
-            amountInSMC > 0 && (
+            amountInSMC < 0 && amountFlowRate < 0 ? (
+              <div className="mt-10 flex justify-center ">
+                <div className="text-red-500">
+                  You need enter a positive flow and amount
+                </div>
+              </div>
+            ) : (
               <CreateCampaingButton
                 nextCampaingAddress={nextCampaingAddress}
                 amountInSMC={amountInSMC}

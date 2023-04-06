@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import { usePrepareContractWrite, useContractWrite, useProvider } from "wagmi";
+import {
+  usePrepareContractWrite,
+  useContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
 import abi from "../../abi/contracts.json";
-import listenerForTxMine from "../helpers/listenerForTxMine";
 
 import { client, Profiles } from "../pages/api/Profile";
 
@@ -22,11 +25,8 @@ export default function CreateCampaingButton({
   const [lensProfile, setLensProfile] = useState<any>();
   const [body, setBody] = useState<any>();
   const [noLensProfile, setNoLensProfile] = useState<boolean>(false);
-  const [onSendClicked, setOnSendClicked] = useState<boolean>(false);
 
   const amount = ethers.utils.parseEther(amountInSMC.toString());
-
-  const provider = useProvider();
 
   const { config: createCampaignContractConfig } = usePrepareContractWrite({
     address: "0x9Eb19d1A3D7bb955A81a5e246aa0f524d835CA59",
@@ -42,12 +42,20 @@ export default function CreateCampaingButton({
     args: [nextCampaingAddress, amount],
   });
 
-  const { writeAsync: transferTokensContractTx } = useContractWrite(
-    transferTokensContractConfig
-  );
-  const { writeAsync: createCampaignContractTx } = useContractWrite(
-    createCampaignContractConfig
-  );
+  const { writeAsync: transferTokensContractTx, data: dataTransfer } =
+    useContractWrite(transferTokensContractConfig);
+  const { writeAsync: createCampaignContractTx, data: dataCampaign } =
+    useContractWrite(createCampaignContractConfig);
+
+  const { data: txReceiptTransfer } = useWaitForTransaction({
+    confirmations: 2,
+    hash: dataTransfer?.hash,
+  });
+
+  const { isSuccess: txSuccessCampaign } = useWaitForTransaction({
+    confirmations: 5,
+    hash: dataCampaign?.hash,
+  });
 
   async function fetchProfiles(typeQuery: string) {
     const queryBody = `query Profiles {
@@ -171,24 +179,7 @@ export default function CreateCampaingButton({
     }
   }
 
-  useEffect(() => {
-    fetchProfiles("ownedBy");
-  }, []);
-
-  useEffect(() => {
-    setBody(
-      JSON.stringify({
-        clientProfile: lensProfile?.id,
-        clientAddress: clientInfo,
-        flowSenderAddress: nextCampaingAddress,
-        followNftAddress: lensProfile?.followNftAddress,
-        amountFlowRate: Number(amountFlowRate),
-      })
-    );
-  }, [lensProfile]);
-
   async function postClient() {
-    console.log(body);
     try {
       const response = await fetch(
         "https://qfgg4yahcg.execute-api.eu-north-1.amazonaws.com/fluidSense/clients",
@@ -212,13 +203,7 @@ export default function CreateCampaingButton({
 
   const onSendClick = async () => {
     try {
-      const txResponseCreateFlowSender = await transferTokensContractTx?.();
-      await listenerForTxMine(
-        txResponseCreateFlowSender?.hash,
-        provider,
-        "transfer"
-      );
-      setOnSendClicked(true);
+      await transferTokensContractTx?.();
     } catch (error) {
       console.log(error);
     }
@@ -226,41 +211,59 @@ export default function CreateCampaingButton({
 
   const onCreateClick = async () => {
     try {
-      const txResponseCampaignSender = await createCampaignContractTx?.();
-      await listenerForTxMine(
-        txResponseCampaignSender?.hash,
-        provider,
-        "Create Campaign"
-      );
-      postClient();
+      await createCampaignContractTx?.();
     } catch (error) {
       console.log(error);
     }
   };
 
+  useEffect(() => {
+    fetchProfiles("ownedBy");
+  }, []);
+
+  useEffect(() => {
+    if (txSuccessCampaign) {
+      postClient();
+    }
+  }, [txSuccessCampaign]);
+
+  useEffect(() => {
+    setBody(
+      JSON.stringify({
+        clientProfile: lensProfile?.id.toString(),
+        clientAddress: clientInfo,
+        flowSenderAddress: nextCampaingAddress,
+        followNftAddress: lensProfile?.followNftAddress,
+        amountFlowRate: Number(amountFlowRate),
+      })
+    );
+  }, [lensProfile]);
+
   return (
-    <div>
-      {noLensProfile ? (
-        <div>This address is not owner of a Lens Profile</div>
-      ) : !onSendClicked ? (
-        <div className="mt-10 flex justify-center ">
-          <button
-            onClick={() => onSendClick()}
-            className="border-2 border-grey-500 px-4 py-2 rounded-full hover:bg-green-100 h-12 bg-green-50"
-          >
-            Send tokens
-          </button>
-        </div>
-      ) : (
-        <div className="mt-10 flex justify-center ">
-          <button
-            onClick={() => onCreateClick()}
-            className="border-2 border-grey-500 px-4 py-2 rounded-full hover:bg-green-100 h-12 bg-green-50"
-          >
-            Create Campaign
-          </button>
-        </div>
-      )}
-    </div>
+    <>
+      <div>
+        {noLensProfile ? (
+          <div>This address is not owner of a Lens Profile</div>
+        ) : txReceiptTransfer === undefined ? (
+          <div className="mt-10 flex justify-center ">
+            <button
+              onClick={() => onSendClick()}
+              className="border-2 border-grey-500 px-4 py-2 rounded-full hover:bg-green-100 h-12 bg-green-50"
+            >
+              Send Tokens
+            </button>
+          </div>
+        ) : (
+          <div className="mt-10 flex justify-center ">
+            <button
+              onClick={() => onCreateClick()}
+              className="border-2 border-grey-500 px-4 py-2 rounded-full hover:bg-green-100 h-12 bg-green-50"
+            >
+              Create Campaign
+            </button>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
