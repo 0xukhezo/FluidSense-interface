@@ -98,7 +98,7 @@ export default function CreateCampaingButton({
   useEffect(() => {
     setTimeout(() => {
       setMessage(undefined);
-    }, 5000);
+    }, 10000);
   }, [txErrorCampaign, txErrorTransfer, txSuccessCampaign, txSuccessTransfer]);
 
   async function fetchProfiles(typeQuery: string) {
