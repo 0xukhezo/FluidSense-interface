@@ -4,6 +4,7 @@ import {
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
+  useContractRead,
 } from "wagmi";
 import abi from "../../abi/contracts.json";
 
@@ -30,6 +31,13 @@ export default function CreateCampaingButton({
   const [noLensProfile, setNoLensProfile] = useState<boolean>(false);
 
   const amount = ethers.utils.parseEther(amountInSMC.toString());
+
+  const { data } = useContractRead({
+    address: "0xbe49ac1EadAc65dccf204D4Df81d650B50122aB2",
+    abi: abi.abiFUSDC,
+    functionName: "balanceOf",
+    args: [nextCampaingAddress],
+  });
 
   const { config: createCampaignContractConfig } = usePrepareContractWrite({
     address: "0x90947A7BA76Ca935C5b72ecBC65142758ed0a010",
@@ -69,37 +77,11 @@ export default function CreateCampaingButton({
     hash: dataCampaign?.hash,
   });
 
-  useEffect(() => {
-    setType("loading");
-    if (txLoadingTransfer || txLoadingCampaign) {
-      setMessage("Your transaction is being processed");
-    }
-  }, [txLoadingTransfer, txLoadingCampaign]);
-
-  useEffect(() => {
-    setType("success");
-    if (txSuccessTransfer || txSuccessCampaign) {
-      if (txSuccessTransfer) {
-        setMessage("Tokens sent!");
-      }
-      if (txSuccessCampaign) {
-        setMessage("Your campaign has been successfully created!");
-      }
-    }
-  }, [txSuccessCampaign, txSuccessTransfer]);
-
-  useEffect(() => {
-    if (txErrorCampaign || txErrorTransfer) {
-      setType("fail");
-      setMessage("Your transaction failed");
-    }
-  }, [txErrorCampaign, txErrorTransfer]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setMessage(undefined);
-    }, 10000);
-  }, [txErrorCampaign, txErrorTransfer, txSuccessCampaign, txSuccessTransfer]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setMessage(undefined);
+  //   }, 20000);
+  // }, [txErrorCampaign, txErrorTransfer, txSuccessCampaign, txSuccessTransfer]);
 
   async function fetchProfiles(typeQuery: string) {
     const queryBody = `query Profiles {
@@ -261,6 +243,10 @@ export default function CreateCampaingButton({
     }
   };
 
+  const getCloseAlert = (closeAlert: boolean) => {
+    closeAlert && setMessage(undefined);
+  };
+
   useEffect(() => {
     fetchProfiles("ownedBy");
   }, []);
@@ -288,14 +274,47 @@ export default function CreateCampaingButton({
     );
   }, [lensProfile]);
 
+  useEffect(() => {
+    if (txLoadingTransfer || txLoadingCampaign) {
+      setType("loading");
+      setMessage(
+        "Your transaction is being processed, don't close or reload the page!"
+      );
+    }
+  }, [txLoadingTransfer, txLoadingCampaign]);
+
+  useEffect(() => {
+    if (txSuccessTransfer || txSuccessCampaign) {
+      if (txSuccessTransfer) {
+        setType("success");
+        setMessage("Tokens sent!");
+      }
+      if (txSuccessCampaign) {
+        setType("success");
+        setMessage("Your campaign has been successfully created!");
+      }
+    }
+  }, [txSuccessCampaign, txSuccessTransfer]);
+
+  useEffect(() => {
+    if (txErrorCampaign || txErrorTransfer) {
+      setType("fail");
+      setMessage("Your transaction failed");
+    }
+  }, [txErrorCampaign, txErrorTransfer]);
+
   return (
     <>
       <div>
         {type !== undefined && message !== undefined && (
-          <Alert type={type} message={message} />
+          <Alert type={type} message={message} getCloseAlert={getCloseAlert} />
         )}
         {noLensProfile ? (
-          <div>This address is not owner of a Lens Profile</div>
+          <Alert
+            type={"fail"}
+            message={"This address is not owner of a Lens Profile"}
+            getCloseAlert={getCloseAlert}
+          />
         ) : txReceiptTransfer === undefined && amount !== undefined ? (
           amountInSMC === 0 || amountFlowRate === 0 ? (
             <div className="mt-5 flex justify-center ">

@@ -2,14 +2,22 @@ import {
   CheckCircleIcon,
   XMarkIcon,
   InformationCircleIcon,
+  XCircleIcon,
+  ArrowTopRightOnSquareIcon,
 } from "@heroicons/react/20/solid";
+import React from "react";
 
 interface AlertInterface {
   type: string;
   message: string;
+  getCloseAlert: (closeAlert: boolean) => void;
 }
 
-export default function Alert({ type, message }: AlertInterface) {
+export default function Alert({
+  type,
+  message,
+  getCloseAlert,
+}: AlertInterface) {
   return (
     <div
       className={
@@ -28,7 +36,7 @@ export default function Alert({ type, message }: AlertInterface) {
               aria-hidden="true"
             />
           ) : type === "fail" ? (
-            <XMarkIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
+            <XCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
           ) : (
             <InformationCircleIcon
               className="h-5 w-5 text-blue-400"
@@ -61,8 +69,11 @@ export default function Alert({ type, message }: AlertInterface) {
                   : "inline-flex rounded-md bg-blue-50 p-1.5 text-blue-500 hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-blue-50"
               }
             >
-              <span className="sr-only">Dismiss</span>
-              <XMarkIcon className="h-5 w-5" aria-hidden="true" />
+              <XMarkIcon
+                className="h-5 w-5"
+                aria-hidden="true"
+                onClick={() => getCloseAlert(true)}
+              />
             </button>
           </div>
         </div>

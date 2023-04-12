@@ -127,7 +127,7 @@ export default function CampaignForm() {
             htmlFor="address"
             className="block text-xl font-bold leading-6 text-gray-900 pb-2"
           >
-            Address with lens profile
+            Address with Lens profile
           </label>
           <div className="text-base leading-5 pb-2">
             Provide the address of the Lens Profile that will be used in the
