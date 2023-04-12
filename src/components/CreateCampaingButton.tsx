@@ -47,10 +47,11 @@ export default function CreateCampaingButton({
   const { writeAsync: createCampaignContractTx, data: dataCampaign } =
     useContractWrite(createCampaignContractConfig);
 
-  const { data: txReceiptTransfer } = useWaitForTransaction({
-    confirmations: 5,
-    hash: dataTransfer?.hash,
-  });
+  const { data: txReceiptTransfer, isSuccess: txSuccessTransfer } =
+    useWaitForTransaction({
+      confirmations: 10,
+      hash: dataTransfer?.hash,
+    });
 
   const { isSuccess: txSuccessCampaign } = useWaitForTransaction({
     confirmations: 2,
@@ -228,6 +229,11 @@ export default function CreateCampaingButton({
   }, [txSuccessCampaign]);
 
   useEffect(() => {
+    setNoLensProfile(false);
+    fetchProfiles("ownedBy");
+  }, [clientInfo]);
+
+  useEffect(() => {
     setBody(
       JSON.stringify({
         clientProfile: lensProfile?.id.toString(),
@@ -245,19 +251,33 @@ export default function CreateCampaingButton({
         {noLensProfile ? (
           <div>This address is not owner of a Lens Profile</div>
         ) : txReceiptTransfer === undefined && amount !== undefined ? (
-          <div className="mt-10 flex justify-center ">
-            <button
-              onClick={() => onSendClick()}
-              className="border-2 border-grey-500 px-4 py-2 rounded-full hover:bg-green-100 h-12 bg-green-50"
-            >
-              Send Tokens
-            </button>
+          amountInSMC === 0 || amountFlowRate === 0 ? (
+            <div className="mt-5 flex justify-center ">
+              <div className="px-20 py-5 rounded-full text-gray-600 bg-gray-200 leading-8 font-bold opacity-50 tracking-wide">
+                Send tokens
+              </div>
+            </div>
+          ) : (
+            <div className="mt-5 flex justify-center ">
+              <button
+                onClick={() => onSendClick()}
+                className=" px-20 py-5 rounded-full bg-superfluid-100 leading-8 font-bold tracking-wide"
+              >
+                Send Tokens
+              </button>
+            </div>
+          )
+        ) : amountInSMC === 0 || amountFlowRate === 0 ? (
+          <div className="mt-5 flex justify-center ">
+            <div className="px-20 py-5 rounded-full text-gray-600 bg-gray-200 leading-8 font-bold opacity-50 tracking-wide">
+              Create Campaign
+            </div>
           </div>
         ) : (
-          <div className="mt-10 flex justify-center ">
+          <div className="mt-5 flex justify-center ">
             <button
               onClick={() => onCreateClick()}
-              className="border-2 border-grey-500 px-4 py-2 rounded-full hover:bg-green-100 h-12 bg-green-50"
+              className=" px-20 py-5 rounded-full bg-superfluid-100 leading-8 font-bold tracking-wide"
             >
               Create Campaign
             </button>

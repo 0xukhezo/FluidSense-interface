@@ -56,22 +56,18 @@ export default function CampaignForm() {
   }, [clientInfo]);
 
   return (
-    <div className="border-b border-gray-900/10 pb-12 mx-20">
-      <h2 className="text-base font-semibold leading-7 text-gray-900">
-        Personal Information
-      </h2>
-      <p className="mt-1 text-sm leading-6 text-gray-600">
-        Use a permanent address where you can receive mail.
-      </p>
-
+    <div className="mx-14">
       <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-4">
         <div className="sm:col-span-2">
           <label
             htmlFor="flow"
-            className="block text-sm font-medium leading-6 text-gray-900"
+            className="block text-xl font-bold leading-6 text-gray-900 pb-2"
           >
             Flow in fUSDC
           </label>
+          <div className="text-base leading-5 pb-2">
+            Define how much each user will get with your campaign.
+          </div>
           <div className="mt-2">
             <input
               value={amountFlowRate}
@@ -90,18 +86,20 @@ export default function CampaignForm() {
               name="flow"
               id="flow"
               autoComplete="given-name"
-              className="px-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 text-superfluid-100 shadow-sm placeholder:text-superfluid-100 sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
             />
           </div>
         </div>
-
         <div className="sm:col-span-2">
           <label
             htmlFor="amount"
-            className="block text-sm font-medium leading-6 text-gray-900"
+            className="block text-xl font-bold leading-6 text-gray-900 pb-2"
           >
             Amount in fUSDC
           </label>
+          <div className="text-base leading-5 pb-2">
+            Define the total investment for your campaign.
+          </div>
           <div className="mt-2">
             <input
               value={amountInSMC}
@@ -120,18 +118,21 @@ export default function CampaignForm() {
               name="amount"
               id="amount"
               autoComplete="family-name"
-              className="px-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 text-superfluid-100 shadow-sm placeholder:text-superfluid-100 sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
             />
           </div>
         </div>
-
-        <div className="sm:col-span-4">
+        <div className="sm:col-span-4 mt-4">
           <label
             htmlFor="address"
-            className="block text-sm font-medium leading-6 text-gray-900"
+            className="block text-xl font-bold leading-6 text-gray-900 pb-2"
           >
             Address with lens profile
           </label>
+          <div className="text-base leading-5 pb-2">
+            Provide the address of the Lens Profile that will be used in the
+            campaign.
+          </div>
           <div className="mt-2">
             <input
               placeholder="0x......"
@@ -140,7 +141,7 @@ export default function CampaignForm() {
               id="address"
               name="address"
               type="text"
-              className="px-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 text-superfluid-100 shadow-sm placeholder:text-superfluid-100 sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
             />
           </div>
         </div>
@@ -164,9 +165,9 @@ export default function CampaignForm() {
               />
             )
           ) : (
-            <div className="mt-10 flex justify-center ">
-              <div className="border-2 border-grey-500 px-4 py-2 rounded-full hover:bg-green-100 h-12 bg-green-50 opacity-25">
-                Create Campaign
+            <div className="mt-5 flex justify-center ">
+              <div className="px-20 py-5 rounded-full text-gray-600 bg-gray-200 leading-8 font-bold opacity-50 tracking-wide">
+                Send tokens
               </div>
             </div>
           )}
