@@ -73,7 +73,6 @@ export default function CreateCampaingButton({
   });
 
   const getBalance = async (nextCampaingAddress: string) => {
-    console.log(nextCampaingAddress);
     const contract = new ethers.Contract(
       "0xbe49ac1EadAc65dccf204D4Df81d650B50122aB2",
       abi.abiFUSDC,
@@ -248,7 +247,12 @@ export default function CreateCampaingButton({
   };
 
   useEffect(() => {
-    fetchProfiles("ownedBy");
+    if (clientInfo.slice(0, 2) === "0x") {
+      fetchProfiles("ownedBy");
+    }
+    if (clientInfo.slice(-5) === ".lens") {
+      fetchProfiles("handles");
+    }
   }, []);
 
   useEffect(() => {
@@ -259,14 +263,19 @@ export default function CreateCampaingButton({
 
   useEffect(() => {
     setNoLensProfile(false);
-    fetchProfiles("ownedBy");
+    if (clientInfo.slice(0, 2) === "0x") {
+      fetchProfiles("ownedBy");
+    }
+    if (clientInfo.slice(-5) === ".lens") {
+      fetchProfiles("handles");
+    }
   }, [clientInfo]);
 
   useEffect(() => {
     setBody(
       JSON.stringify({
         clientProfile: lensProfile?.id.toString(),
-        clientAddress: clientInfo,
+        clientAddress: lensProfile?.ownedBy.toString(),
         flowSenderAddress: nextCampaingAddress,
         followNftAddress: lensProfile?.followNftAddress,
         amountFlowRate: Number(amountFlowRate),
