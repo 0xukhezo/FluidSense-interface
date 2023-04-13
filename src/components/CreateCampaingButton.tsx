@@ -4,7 +4,7 @@ import {
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
-  useContractRead,
+  useProvider,
 } from "wagmi";
 import abi from "../../abi/contracts.json";
 
@@ -30,14 +30,9 @@ export default function CreateCampaingButton({
   const [message, setMessage] = useState<string>();
   const [noLensProfile, setNoLensProfile] = useState<boolean>(false);
 
-  const amount = ethers.utils.parseEther(amountInSMC.toString());
+  const provider = useProvider();
 
-  const { data } = useContractRead({
-    address: "0xbe49ac1EadAc65dccf204D4Df81d650B50122aB2",
-    abi: abi.abiFUSDC,
-    functionName: "balanceOf",
-    args: [nextCampaingAddress],
-  });
+  const amount = ethers.utils.parseEther(amountInSMC.toString());
 
   const { config: createCampaignContractConfig } = usePrepareContractWrite({
     address: "0x90947A7BA76Ca935C5b72ecBC65142758ed0a010",
@@ -77,11 +72,16 @@ export default function CreateCampaingButton({
     hash: dataCampaign?.hash,
   });
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setMessage(undefined);
-  //   }, 20000);
-  // }, [txErrorCampaign, txErrorTransfer, txSuccessCampaign, txSuccessTransfer]);
+  const getBalance = async (nextCampaingAddress: string) => {
+    console.log(nextCampaingAddress);
+    const contract = new ethers.Contract(
+      "0xbe49ac1EadAc65dccf204D4Df81d650B50122aB2",
+      abi.abiFUSDC,
+      provider
+    );
+    const balance = await contract.balanceOf(nextCampaingAddress);
+    return balance.toString();
+  };
 
   async function fetchProfiles(typeQuery: string) {
     const queryBody = `query Profiles {
