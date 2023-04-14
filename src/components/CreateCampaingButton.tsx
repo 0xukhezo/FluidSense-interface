@@ -226,17 +226,14 @@ export default function CreateCampaingButton({
 
   async function postClient() {
     try {
-      const response = await fetch(
-        "https://qfgg4yahcg.execute-api.eu-north-1.amazonaws.com/fluidSense/clients",
-        {
-          method: "POST",
-          headers: {
-            accept: "application/json",
-          },
-          body: body,
-          mode: "no-cors" as RequestMode,
-        }
-      ).catch((err) => console.error(err));
+      await fetch(process.env.NEXT_PUBLIC_API as string, {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+        },
+        body: body,
+        mode: "no-cors" as RequestMode,
+      }).catch((err) => console.error(err));
     } catch (err) {
       console.log(err);
     }

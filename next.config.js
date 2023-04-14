@@ -4,6 +4,7 @@ const nextConfig = {
   transpilePackages: ["@lens-protocol"],
   env: {
     NEXT_PUBLIC_ALCHEMY_KEY_MUMBAI: process.env.NEXT_PUBLIC_ALCHEMY_KEY_MUMBAI,
+    NEXT_PUBLIC_API: process.env.NEXT_PUBLIC_API,
   },
 };
 
