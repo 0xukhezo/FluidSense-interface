@@ -35,7 +35,7 @@ export default function CreateCampaingButton({
   const amount = ethers.utils.parseEther(amountInSMC.toString());
 
   const { config: createCampaignContractConfig } = usePrepareContractWrite({
-    address: "0x90947A7BA76Ca935C5b72ecBC65142758ed0a010",
+    address: "0x2e341337B0b8Db534c4fDacb6F28605396dF46E5",
     abi: abi.abiCampaignFactory,
     functionName: "deployCampaign",
     args: [],
@@ -95,6 +95,25 @@ export default function CreateCampaingButton({
             traitType
             key
             value
+          }
+          onChainIdentity{
+            ens{
+              name
+              __typename
+            }
+            proofOfHumanity
+            __typename
+            worldcoin{
+              isHuman
+              __typename
+            }
+            sybilDotOrg{
+              source{
+                __typename
+              }
+              __typename
+              verified
+            }
           }
           followNftAddress
           metadata
@@ -199,6 +218,7 @@ export default function CreateCampaingButton({
       } else {
         setLensProfile(profileData[0]);
       }
+      console.log(profileData[0]);
     } catch (err) {
       console.log({ err });
     }

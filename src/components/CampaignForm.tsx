@@ -10,7 +10,7 @@ export default function CampaignForm() {
   const [amountInSMC, setAmountInSMC] = useState<number>();
 
   const [nextCampaingAddress, setNextCampaingAddress] = useState<string>();
-  const campaignsFactoryAddress = "0x90947A7BA76Ca935C5b72ecBC65142758ed0a010";
+  const campaignsFactoryAddress = "0x2e341337B0b8Db534c4fDacb6F28605396dF46E5";
 
   const getNonce = async () => {
     const provider = ethers.getDefaultProvider(
