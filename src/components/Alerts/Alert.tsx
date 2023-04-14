@@ -57,21 +57,23 @@ export default function Alert({
             }
           >
             {message}
-            <a
-              href={`https://mumbai.polygonscan.com/tx/${hash}`}
-              target="_blank"
-            >
-              <ArrowTopRightOnSquareIcon
-                className={
-                  type === "success"
-                    ? "h-4 w-4 text-green-800 ml-1"
-                    : type === "fail"
-                    ? "h-4 w-4 text-red-800 ml-1"
-                    : "h-4 w-4 text-blue-800 ml-1"
-                }
-                aria-hidden="true"
-              />
-            </a>
+            {hash && (
+              <a
+                href={`https://mumbai.polygonscan.com/tx/${hash}`}
+                target="_blank"
+              >
+                <ArrowTopRightOnSquareIcon
+                  className={
+                    type === "success"
+                      ? "h-4 w-4 text-green-800 ml-1"
+                      : type === "fail"
+                      ? "h-4 w-4 text-red-800 ml-1"
+                      : "h-4 w-4 text-blue-800 ml-1"
+                  }
+                  aria-hidden="true"
+                />
+              </a>
+            )}
           </p>
         </div>
         <div className="ml-auto pl-3">
