@@ -7,6 +7,7 @@ export default function CampaignForm() {
 
   const [amountFlowRate, setAmountFlowRate] = useState<number>();
   const [amountInSMC, setAmountInSMC] = useState<number>();
+  const [isHuman, setIsHuman] = useState<boolean>(false);
 
   const handleAmountFlowRateChange = (val: string) => {
     setAmountFlowRate(Number(val));
@@ -19,6 +20,11 @@ export default function CampaignForm() {
   const handleClientChange = (e: any) => {
     setClientInfo(e.target.value);
   };
+
+  const handleIsHumanChange = (e: any) => {
+    setIsHuman(e.target.checked);
+  };
+
 
   return (
     <div className="mx-14">
@@ -110,6 +116,27 @@ export default function CampaignForm() {
             />
           </div>
         </div>
+        <div className="sm:col-span-4 mt-4">
+          <span
+            className="block text-xl font-bold leading-6 text-gray-900 pb-2"
+          >
+            Settings
+          </span>
+          <div className="text-base leading-5 pb-2">
+            <input
+                checked={isHuman}
+                onChange={(e) => handleIsHumanChange(e)}
+                id="isHuman"
+                name="isHuman"
+                type="checkbox"
+                className="inline-block rounded-md mr-2 border-1 border-superfluid-100 py-1.5 text-superfluid-100 shadow-sm placeholder:text-superfluid-100 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
+            />
+              <label
+              htmlFor="isHuman">
+                Only Worldcoin human verified accounts
+              </label>
+          </div>
+        </div>
         <div className="sm:col-span-4">
           {amountInSMC !== undefined &&
           amountFlowRate !== undefined &&
@@ -124,6 +151,7 @@ export default function CampaignForm() {
               <CreateCampaingButton
                 amountInSMC={amountInSMC}
                 clientInfo={clientInfo}
+                isHuman={isHuman}
                 amountFlowRate={amountFlowRate}
               />
             )

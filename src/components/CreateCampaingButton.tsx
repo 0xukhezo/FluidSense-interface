@@ -15,12 +15,14 @@ interface EventIdInputInterface {
   amountInSMC: number;
   amountFlowRate: number;
   clientInfo: string;
+  isHuman: boolean;
 }
 
 export default function CreateCampaingButton({
   amountInSMC,
   amountFlowRate,
   clientInfo,
+  isHuman,
 }: EventIdInputInterface) {
   const [lensProfile, setLensProfile] = useState<any>();
   const [body, setBody] = useState<any>();
@@ -294,6 +296,7 @@ export default function CreateCampaingButton({
         flowSenderAddress: campaign,
         followNftAddress: lensProfile?.followNftAddress,
         amountFlowRate: Number(amountFlowRate),
+        isHuman: isHuman,
       })
     );
   }, [lensProfile]);
