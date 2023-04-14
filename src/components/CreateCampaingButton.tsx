@@ -19,6 +19,7 @@ interface EventIdInputInterface {
   txErrorApprove: boolean;
   txSuccessApprove: boolean;
   dataApproveHash: `0x${string}` | undefined;
+  isHuman: boolean;
 }
 
 export default function CreateCampaingButton({
@@ -29,6 +30,7 @@ export default function CreateCampaingButton({
   txLoadingApprove,
   txErrorApprove,
   dataApproveHash,
+  isHuman,
 }: EventIdInputInterface) {
   const [lensProfile, setLensProfile] = useState<any>();
   const [body, setBody] = useState<any>();
@@ -268,6 +270,7 @@ export default function CreateCampaingButton({
         flowSenderAddress: campaign,
         followNftAddress: lensProfile?.followNftAddress,
         amountFlowRate: Number(amountFlowRate),
+        isHuman: isHuman,
       })
     );
   }, [lensProfile, campaign]);
