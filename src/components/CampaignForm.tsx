@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { ethers } from "ethers";
+import React, { useState } from "react";
 
 import CreateCampaingButton from "./CreateCampaingButton";
 
@@ -8,36 +7,6 @@ export default function CampaignForm() {
 
   const [amountFlowRate, setAmountFlowRate] = useState<number>();
   const [amountInSMC, setAmountInSMC] = useState<number>();
-
-  const [nextCampaingAddress, setNextCampaingAddress] = useState<string>();
-  const campaignsFactoryAddress = "0x2e341337B0b8Db534c4fDacb6F28605396dF46E5";
-
-  const getNonce = async () => {
-    const provider = ethers.getDefaultProvider(
-      `https://polygon-mumbai.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_KEY_MUMBAI}`
-    );
-    const _nonce = await provider.getTransactionCount(
-      campaignsFactoryAddress,
-      "latest"
-    );
-
-    return _nonce;
-  };
-
-  const getContractAddress = async () => {
-    let _nonce = 0;
-
-    _nonce = await getNonce();
-
-    let rlpEncoded = ethers.utils.RLP.encode([
-      campaignsFactoryAddress,
-      ethers.BigNumber.from(_nonce.toString()).toHexString(),
-    ]);
-    let contractAddressLong = ethers.utils.keccak256(rlpEncoded);
-    let contractAddress = "0x".concat(contractAddressLong.substring(26));
-
-    setNextCampaingAddress(contractAddress);
-  };
 
   const handleAmountFlowRateChange = (val: string) => {
     setAmountFlowRate(Number(val));
@@ -50,10 +19,6 @@ export default function CampaignForm() {
   const handleClientChange = (e: any) => {
     setClientInfo(e.target.value);
   };
-
-  useEffect(() => {
-    getContractAddress();
-  }, [clientInfo]);
 
   return (
     <div className="mx-14">
@@ -146,8 +111,7 @@ export default function CampaignForm() {
           </div>
         </div>
         <div className="sm:col-span-4">
-          {nextCampaingAddress !== undefined &&
-          amountInSMC !== undefined &&
+          {amountInSMC !== undefined &&
           amountFlowRate !== undefined &&
           clientInfo !== undefined ? (
             amountInSMC < 0 && amountFlowRate < 0 ? (
@@ -158,7 +122,6 @@ export default function CampaignForm() {
               </div>
             ) : (
               <CreateCampaingButton
-                nextCampaingAddress={nextCampaingAddress}
                 amountInSMC={amountInSMC}
                 clientInfo={clientInfo}
                 amountFlowRate={amountFlowRate}
@@ -167,7 +130,7 @@ export default function CampaignForm() {
           ) : (
             <div className="mt-5 flex justify-center ">
               <div className="px-20 py-5 rounded-full text-gray-600 bg-gray-200 leading-8 font-bold opacity-50 tracking-wide">
-                Send tokens
+                Approve USDC
               </div>
             </div>
           )}

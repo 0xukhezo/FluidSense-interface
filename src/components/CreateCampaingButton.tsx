@@ -4,22 +4,20 @@ import {
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
-  useProvider,
 } from "wagmi";
+import { watchContractEvent } from "@wagmi/core";
 import abi from "../../abi/contracts.json";
 
 import { client, Profiles } from "../pages/api/Profile";
 import Alert from "./Alerts/Alert";
 
 interface EventIdInputInterface {
-  nextCampaingAddress: string;
   amountInSMC: number;
   amountFlowRate: number;
   clientInfo: string;
 }
 
 export default function CreateCampaingButton({
-  nextCampaingAddress,
   amountInSMC,
   amountFlowRate,
   clientInfo,
@@ -28,24 +26,36 @@ export default function CreateCampaingButton({
   const [body, setBody] = useState<any>();
   const [type, setType] = useState<string>();
   const [message, setMessage] = useState<string>();
+  const [campaign, setCampaing] = useState<string>();
   const [noLensProfile, setNoLensProfile] = useState<boolean>(false);
 
-  const provider = useProvider();
+  const campaignsFactoryAddress = "0xA061D7Fc57e5155b1a71DCC9c8f48AF3830244C9";
 
-  const amount = ethers.utils.parseEther(amountInSMC.toString());
+  const amount = ethers.utils.parseEther(amountInSMC.toString()).toString();
+
+  const unwatch = watchContractEvent(
+    {
+      address: campaignsFactoryAddress,
+      abi: abi.abiCampaignFactory,
+      eventName: "NewCampaign",
+    },
+    (campaign: any) => {
+      setCampaing(campaign);
+    }
+  );
 
   const { config: createCampaignContractConfig } = usePrepareContractWrite({
-    address: "0x2e341337B0b8Db534c4fDacb6F28605396dF46E5",
+    address: campaignsFactoryAddress,
     abi: abi.abiCampaignFactory,
     functionName: "deployCampaign",
-    args: [],
+    args: [amount],
   });
 
   const { config: transferTokensContractConfig } = usePrepareContractWrite({
     address: "0xbe49ac1EadAc65dccf204D4Df81d650B50122aB2",
     abi: abi.abiFUSDC,
-    functionName: "transfer",
-    args: [nextCampaingAddress, amount],
+    functionName: "approve",
+    args: [campaignsFactoryAddress, amount],
   });
 
   const { writeAsync: transferTokensContractTx, data: dataTransfer } =
@@ -71,16 +81,6 @@ export default function CreateCampaingButton({
     confirmations: 2,
     hash: dataCampaign?.hash,
   });
-
-  const getBalance = async (nextCampaingAddress: string) => {
-    const contract = new ethers.Contract(
-      "0xbe49ac1EadAc65dccf204D4Df81d650B50122aB2",
-      abi.abiFUSDC,
-      provider
-    );
-    const balance = await contract.balanceOf(nextCampaingAddress);
-    return balance.toString();
-  };
 
   async function fetchProfiles(typeQuery: string) {
     const queryBody = `query Profiles {
@@ -218,7 +218,6 @@ export default function CreateCampaingButton({
       } else {
         setLensProfile(profileData[0]);
       }
-      console.log(profileData[0]);
     } catch (err) {
       console.log({ err });
     }
@@ -257,6 +256,7 @@ export default function CreateCampaingButton({
   const onCreateClick = async () => {
     try {
       await createCampaignContractTx?.();
+      unwatch();
     } catch (error) {
       console.log(error);
     }
@@ -276,12 +276,6 @@ export default function CreateCampaingButton({
   }, []);
 
   useEffect(() => {
-    if (txSuccessCampaign) {
-      postClient();
-    }
-  }, [txSuccessCampaign]);
-
-  useEffect(() => {
     setNoLensProfile(false);
     if (clientInfo.slice(0, 2) === "0x") {
       fetchProfiles("ownedBy");
@@ -296,7 +290,7 @@ export default function CreateCampaingButton({
       JSON.stringify({
         clientProfile: lensProfile?.id.toString(),
         clientAddress: lensProfile?.ownedBy.toString(),
-        flowSenderAddress: nextCampaingAddress,
+        flowSenderAddress: campaign,
         followNftAddress: lensProfile?.followNftAddress,
         amountFlowRate: Number(amountFlowRate),
       })
@@ -332,6 +326,12 @@ export default function CreateCampaingButton({
     }
   }, [txErrorCampaign, txErrorTransfer]);
 
+  useEffect(() => {
+    if (txSuccessCampaign) {
+      postClient();
+    }
+  }, [txSuccessCampaign]);
+
   return (
     <>
       <div>
@@ -348,7 +348,7 @@ export default function CreateCampaingButton({
           amountInSMC === 0 || amountFlowRate === 0 ? (
             <div className="mt-5 flex justify-center ">
               <div className="px-20 py-5 rounded-full text-gray-600 bg-gray-200 leading-8 font-bold opacity-50 tracking-wide">
-                Send tokens
+                Approve USDC
               </div>
             </div>
           ) : (
@@ -357,7 +357,7 @@ export default function CreateCampaingButton({
                 onClick={() => onSendClick()}
                 className=" px-20 py-5 rounded-full bg-superfluid-100 leading-8 font-bold tracking-wide"
               >
-                Send Tokens
+                Approve USDC
               </button>
             </div>
           )
