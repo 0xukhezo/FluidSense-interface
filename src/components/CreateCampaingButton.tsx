@@ -28,6 +28,7 @@ export default function CreateCampaingButton({
   const [message, setMessage] = useState<string>();
   const [campaign, setCampaing] = useState<string>();
   const [noLensProfile, setNoLensProfile] = useState<boolean>(false);
+  const [hash, setHash] = useState<string>();
 
   const campaignsFactoryAddress = "0xA061D7Fc57e5155b1a71DCC9c8f48AF3830244C9";
 
@@ -51,26 +52,26 @@ export default function CreateCampaingButton({
     args: [amount],
   });
 
-  const { config: transferTokensContractConfig } = usePrepareContractWrite({
+  const { config: approveTokensContractConfig } = usePrepareContractWrite({
     address: "0xbe49ac1EadAc65dccf204D4Df81d650B50122aB2",
     abi: abi.abiFUSDC,
     functionName: "approve",
     args: [campaignsFactoryAddress, amount],
   });
 
-  const { writeAsync: transferTokensContractTx, data: dataTransfer } =
-    useContractWrite(transferTokensContractConfig);
+  const { writeAsync: ApproveTokensContractTx, data: dataApprove } =
+    useContractWrite(approveTokensContractConfig);
   const { writeAsync: createCampaignContractTx, data: dataCampaign } =
     useContractWrite(createCampaignContractConfig);
 
   const {
-    data: txReceiptTransfer,
-    isSuccess: txSuccessTransfer,
-    isError: txErrorTransfer,
-    isLoading: txLoadingTransfer,
+    data: txReceiptApprove,
+    isSuccess: txSuccessApprove,
+    isError: txErrorApprove,
+    isLoading: txLoadingApprove,
   } = useWaitForTransaction({
     confirmations: 10,
-    hash: dataTransfer?.hash,
+    hash: dataApprove?.hash,
   });
 
   const {
@@ -247,7 +248,7 @@ export default function CreateCampaingButton({
 
   const onSendClick = async () => {
     try {
-      await transferTokensContractTx?.();
+      await ApproveTokensContractTx?.();
     } catch (error) {
       console.log(error);
     }
@@ -298,33 +299,45 @@ export default function CreateCampaingButton({
   }, [lensProfile]);
 
   useEffect(() => {
-    if (txLoadingTransfer || txLoadingCampaign) {
+    if (txLoadingApprove || txLoadingCampaign) {
+      if (txLoadingApprove) {
+        setHash(dataApprove?.hash);
+      } else {
+        setHash(dataCampaign?.hash);
+      }
       setType("loading");
       setMessage(
         "Your transaction is being processed, don't close or reload the page!"
       );
     }
-  }, [txLoadingTransfer, txLoadingCampaign]);
+  }, [txLoadingApprove, txLoadingCampaign]);
 
   useEffect(() => {
-    if (txSuccessTransfer || txSuccessCampaign) {
-      if (txSuccessTransfer) {
+    if (txSuccessApprove || txSuccessCampaign) {
+      if (txSuccessApprove) {
+        setHash(dataApprove?.hash);
         setType("success");
-        setMessage("Tokens sent!");
+        setMessage("USDC approved!");
       }
       if (txSuccessCampaign) {
+        setHash(dataCampaign?.hash);
         setType("success");
         setMessage("Your campaign has been successfully created!");
       }
     }
-  }, [txSuccessCampaign, txSuccessTransfer]);
+  }, [txSuccessCampaign, txSuccessApprove]);
 
   useEffect(() => {
-    if (txErrorCampaign || txErrorTransfer) {
+    if (txErrorCampaign || txErrorApprove) {
+      if (txErrorApprove) {
+        setHash(dataApprove?.hash);
+      } else {
+        setHash(dataCampaign?.hash);
+      }
       setType("fail");
       setMessage("Your transaction failed");
     }
-  }, [txErrorCampaign, txErrorTransfer]);
+  }, [txErrorCampaign, txErrorApprove]);
 
   useEffect(() => {
     if (txSuccessCampaign) {
@@ -336,7 +349,12 @@ export default function CreateCampaingButton({
     <>
       <div>
         {type !== undefined && message !== undefined && (
-          <Alert type={type} message={message} getCloseAlert={getCloseAlert} />
+          <Alert
+            type={type}
+            message={message}
+            getCloseAlert={getCloseAlert}
+            hash={hash}
+          />
         )}
         {noLensProfile ? (
           <Alert
@@ -344,7 +362,7 @@ export default function CreateCampaingButton({
             message={"This address is not owner of a Lens Profile"}
             getCloseAlert={getCloseAlert}
           />
-        ) : txReceiptTransfer === undefined && amount !== undefined ? (
+        ) : txReceiptApprove === undefined && amount !== undefined ? (
           amountInSMC === 0 || amountFlowRate === 0 ? (
             <div className="mt-5 flex justify-center ">
               <div className="px-20 py-5 rounded-full text-gray-600 bg-gray-200 leading-8 font-bold opacity-50 tracking-wide">

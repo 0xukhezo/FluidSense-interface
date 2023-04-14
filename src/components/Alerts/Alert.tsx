@@ -9,6 +9,7 @@ import React from "react";
 
 interface AlertInterface {
   type: string;
+  hash?: string;
   message: string;
   getCloseAlert: (closeAlert: boolean) => void;
 }
@@ -16,6 +17,7 @@ interface AlertInterface {
 export default function Alert({
   type,
   message,
+  hash,
   getCloseAlert,
 }: AlertInterface) {
   return (
@@ -48,13 +50,28 @@ export default function Alert({
           <p
             className={
               type === "success"
-                ? "text-sm font-medium text-green-800"
+                ? "text-sm font-medium text-green-800 flex items-center"
                 : type === "fail"
-                ? "text-sm font-medium text-red-800"
-                : "text-sm font-medium text-blue-800"
+                ? "text-sm font-medium text-red-800 flex items-center"
+                : "text-sm font-medium text-blue-800 flex items-center"
             }
           >
             {message}
+            <a
+              href={`https://mumbai.polygonscan.com/tx/${hash}`}
+              target="_blank"
+            >
+              <ArrowTopRightOnSquareIcon
+                className={
+                  type === "success"
+                    ? "h-4 w-4 text-green-800 ml-1"
+                    : type === "fail"
+                    ? "h-4 w-4 text-red-800 ml-1"
+                    : "h-4 w-4 text-blue-800 ml-1"
+                }
+                aria-hidden="true"
+              />
+            </a>
           </p>
         </div>
         <div className="ml-auto pl-3">
