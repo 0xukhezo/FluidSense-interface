@@ -11,7 +11,7 @@ import { Profile } from "@/components/Profile";
 
 function CampaignDetails() {
   const { query } = useRouter();
-
+  let amount = 500;
   return (
     <div className="bg-[url('../../public/bg1.jpg')] h-screen bg-no-repeat bg-center bg-cover pt-10 overflow-auto">
       <div className="flex pb-10 pt-20 relative ">
@@ -44,9 +44,12 @@ function CampaignDetails() {
                 Your campaign
               </h2>
             </div>
-            <div className="flex px-10 my-8 justify-center">
-              <span className="font-bold">Campaign Address: </span>
-              {query.campaign}
+            <div className="flex px-10 my-8 mx-auto flex-col">
+              <div>
+                <span className="font-bold">Campaign Address: </span>
+                {query.campaign}
+              </div>
+              <div>{amount}</div>
             </div>
           </div>
         </div>

@@ -10,15 +10,15 @@ import Logo from "../../public/Iso.svg";
 
 export default function Home() {
   const { address, isConnected } = useAccount();
-  const [campaigns, setCampaigns] = useState<any>([]);
+  // const [campaigns, setCampaigns] = useState<any>([]);
 
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-    },
-    mode: "no-cors" as RequestMode,
-  };
+  // const options = {
+  //   method: "GET",
+  //   headers: {
+  //     accept: "application/json",
+  //   },
+  //   mode: "no-cors" as RequestMode,
+  // };
 
   // async function getClients() {
   //   try {
@@ -64,7 +64,7 @@ export default function Home() {
             <CampaignForm />
           </div>
         </div>
-        {isConnected &&
+        {/* {isConnected &&
           (campaigns.length !== 0 ? (
             <div className="h-containerCampaign w-containerCampaign rounded-3xl bg-white mx-auto my-10">
               <div className="flex justify-center mt-4 flex-col px-10">
@@ -100,7 +100,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          ))}
+          ))} */}
       </div>
     </div>
   );
