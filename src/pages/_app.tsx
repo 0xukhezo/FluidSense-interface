@@ -23,7 +23,7 @@ const lensConfig: LensConfig = {
 };
 
 const { connectors } = getDefaultWallets({
-  appName: "My RainbowKit App",
+  appName: "Fluid Sense",
   chains,
 });
 
