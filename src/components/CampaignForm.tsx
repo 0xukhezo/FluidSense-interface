@@ -144,7 +144,7 @@ export default function CampaignForm() {
             htmlFor="address"
             className="block text-xl font-bold leading-6 text-gray-900 pb-2"
           >
-            Address with Lens profile
+            Address with Lens profile or Lens profile
           </label>
           <div className="text-base leading-5 pb-2">
             Provide the address of the Lens Profile that will be used in the
@@ -162,13 +162,14 @@ export default function CampaignForm() {
             />
           </div>
         </div>
-        <div className="sm:col-span-4 mt-4">
+        <div className="sm:col-span-4 mt-4 opacity-20">
           <span className="block text-xl font-bold leading-6 text-gray-900 pb-2">
-            Settings
+            Settings comming soon
           </span>
           <div className="text-base leading-5 pb-2">
             <input
               checked={isHuman}
+              disabled={true}
               onChange={(e) => handleIsHumanChange(e)}
               id="isHuman"
               name="isHuman"
@@ -176,7 +177,7 @@ export default function CampaignForm() {
               className="inline-block rounded-md mr-2 border-1 border-superfluid-100 py-1.5 text-superfluid-100 shadow-sm placeholder:text-superfluid-100 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
             />
             <label htmlFor="isHuman">
-              Only Worldcoin human verified accounts
+              Only Worldcoin human verified accounts comming soon
             </label>
           </div>
         </div>

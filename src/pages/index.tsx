@@ -1,42 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { useAccount } from "wagmi";
+import React from "react";
 import CampaignForm from "@/components/CampaignForm";
-import CampaignShows from "@/components/CampaignShows";
-
 import { Profile } from "@/components/Profile";
 
 import Image from "next/image";
 import Logo from "../../public/Iso.svg";
 
 export default function Home() {
-  const { address, isConnected } = useAccount();
-  // const [campaigns, setCampaigns] = useState<any>([]);
-
-  // const options = {
-  //   method: "GET",
-  //   headers: {
-  //     accept: "application/json",
-  //   },
-  //   mode: "no-cors" as RequestMode,
-  // };
-
-  // async function getClients() {
-  //   try {
-  //     const response = await fetch(
-  //       process.env.NEXT_PUBLIC_API as string,
-  //       options
-  //     );
-  //     // console.log(response.body);
-  //     // setCampaigns(response.body);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   getClients();
-  // }, [isConnected]);
-
   return (
     <div className="bg-[url('../../public/bg1.jpg')] h-screen bg-no-repeat bg-center bg-cover pt-4 overflow-auto">
       <div className="flex pb-10 pt-20 relative ">
@@ -64,43 +33,6 @@ export default function Home() {
             <CampaignForm />
           </div>
         </div>
-        {/* {isConnected &&
-          (campaigns.length !== 0 ? (
-            <div className="h-containerCampaign w-containerCampaign rounded-3xl bg-white mx-auto my-10">
-              <div className="flex justify-center mt-4 flex-col px-10">
-                <h2 className="text-2xl mx-auto mt-2 mb-4 text-superfluid-100 leading-8 font-bold">
-                  Your Campaign
-                </h2>
-                <div className="grid grid-cols-3 align-center px-10 mr-4">
-                  <div className="flex justify-center">Campaign</div>
-                  <div className="flex justify-center">Status</div>
-                  <div className="flex justify-center">Amount</div>
-                </div>
-                {campaigns.map((campaign: any) => {
-                  return (
-                    <CampaignShows
-                      campaign={campaign.flowSenderAddress}
-                      amount={campaign.amount}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          ) : (
-            <div className="h-containerCampaign w-containerCampaign rounded-3xl bg-white mx-auto my-10">
-              <div className="flex justify-center mt-4 flex-col px-10">
-                <h2 className="text-2xl mx-auto mt-2 mb-4 text-superfluid-100 leading-8 font-bold">
-                  Your Campaign
-                </h2>
-                <div className="text-xl mx-auto mt-6 mb-4 text-superfluid-100 leading-4 font-semibold">
-                  Sorry but you haven't got campaigns actives!
-                </div>
-                <div className="text-xl mx-auto  text-superfluid-100 leading-4 font-semibold">
-                  Please create a campaign for your Lens profile
-                </div>
-              </div>
-            </div>
-          ))} */}
       </div>
     </div>
   );
