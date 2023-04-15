@@ -15,17 +15,18 @@ export default function CampaignForm() {
   const [message, setMessage] = useState<string>();
   const [amountFlowRate, setAmountFlowRate] = useState<number>();
   const [amountInSMC, setAmountInSMC] = useState<number>();
+  const [isHuman, setIsHuman] = useState<boolean>(false);
 
-  const campaignsFactoryAddress = "0xA061D7Fc57e5155b1a71DCC9c8f48AF3830244C9";
+  const campaignsFactoryAddress = "0x7b6620E0371ca6496fC2b1774e71EcAfe13594e8";
 
   const { config: approveTokensContractConfig } = usePrepareContractWrite({
-    address: "0xbe49ac1EadAc65dccf204D4Df81d650B50122aB2",
+    address: "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
     abi: abi.abiFUSDC,
     functionName: "approve",
     args: [
       campaignsFactoryAddress,
       amountInSMC
-        ? ethers.utils.parseEther(amountInSMC.toString()).toString()
+        ? ethers.utils.parseUnits(amountInSMC.toString(), "6").toString()
         : undefined,
     ],
   });
@@ -42,7 +43,6 @@ export default function CampaignForm() {
     confirmations: 10,
     hash: dataApprove?.hash,
   });
-  const [isHuman, setIsHuman] = useState<boolean>(false);
 
   const handleAmountFlowRateChange = (val: string) => {
     setAmountFlowRate(Number(val));
@@ -71,7 +71,6 @@ export default function CampaignForm() {
   const handleIsHumanChange = (e: any) => {
     setIsHuman(e.target.checked);
   };
-
 
   return (
     <div className="mx-14">
@@ -164,24 +163,21 @@ export default function CampaignForm() {
           </div>
         </div>
         <div className="sm:col-span-4 mt-4">
-          <span
-            className="block text-xl font-bold leading-6 text-gray-900 pb-2"
-          >
+          <span className="block text-xl font-bold leading-6 text-gray-900 pb-2">
             Settings
           </span>
           <div className="text-base leading-5 pb-2">
             <input
-                checked={isHuman}
-                onChange={(e) => handleIsHumanChange(e)}
-                id="isHuman"
-                name="isHuman"
-                type="checkbox"
-                className="inline-block rounded-md mr-2 border-1 border-superfluid-100 py-1.5 text-superfluid-100 shadow-sm placeholder:text-superfluid-100 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
+              checked={isHuman}
+              onChange={(e) => handleIsHumanChange(e)}
+              id="isHuman"
+              name="isHuman"
+              type="checkbox"
+              className="inline-block rounded-md mr-2 border-1 border-superfluid-100 py-1.5 text-superfluid-100 shadow-sm placeholder:text-superfluid-100 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
             />
-              <label
-              htmlFor="isHuman">
-                Only Worldcoin human verified accounts
-              </label>
+            <label htmlFor="isHuman">
+              Only Worldcoin human verified accounts
+            </label>
           </div>
         </div>
         <div className="sm:col-span-4">

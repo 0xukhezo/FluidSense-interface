@@ -40,9 +40,11 @@ export default function CreateCampaingButton({
   const [noLensProfile, setNoLensProfile] = useState<boolean>(false);
   const [hash, setHash] = useState<string>();
 
-  const campaignsFactoryAddress = "0xA061D7Fc57e5155b1a71DCC9c8f48AF3830244C9";
+  const campaignsFactoryAddress = "0x7b6620E0371ca6496fC2b1774e71EcAfe13594e8";
 
-  const amount = ethers.utils.parseEther(amountInSMC.toString()).toString();
+  const amount = ethers.utils
+    .parseUnits(amountInSMC.toString(), "6")
+    .toString();
 
   const unwatch = watchContractEvent(
     {
@@ -50,7 +52,7 @@ export default function CreateCampaingButton({
       abi: abi.abiCampaignFactory,
       eventName: "NewCampaign",
     },
-    (campaign: any) => {
+    (sender: any, campaign: any) => {
       setCampaing(campaign);
     }
   );
