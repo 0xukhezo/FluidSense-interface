@@ -20,22 +20,22 @@ export default function Home() {
     mode: "no-cors" as RequestMode,
   };
 
-  async function getClients() {
-    try {
-      const response = await fetch(
-        process.env.NEXT_PUBLIC_API as string,
-        options
-      );
-      // console.log(response.body);
-      // setCampaigns(response.body);
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  // async function getClients() {
+  //   try {
+  //     const response = await fetch(
+  //       process.env.NEXT_PUBLIC_API as string,
+  //       options
+  //     );
+  //     // console.log(response.body);
+  //     // setCampaigns(response.body);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
-  useEffect(() => {
-    getClients();
-  }, [isConnected]);
+  // useEffect(() => {
+  //   getClients();
+  // }, [isConnected]);
 
   return (
     <div className="bg-[url('../../public/bg1.jpg')] h-screen bg-no-repeat bg-center bg-cover pt-4 overflow-auto">
@@ -76,10 +76,14 @@ export default function Home() {
                   <div className="flex justify-center">Status</div>
                   <div className="flex justify-center">Amount</div>
                 </div>
-                <CampaignShows
-                  campaign={campaigns.flowSenderAddress}
-                  amount={campaigns.amount}
-                />
+                {campaigns.map((campaign: any) => {
+                  return (
+                    <CampaignShows
+                      campaign={campaign.flowSenderAddress}
+                      amount={campaign.amount}
+                    />
+                  );
+                })}
               </div>
             </div>
           ) : (
