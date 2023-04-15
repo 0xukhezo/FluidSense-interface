@@ -26,7 +26,7 @@ export default function Home() {
         process.env.NEXT_PUBLIC_API as string,
         options
       );
-      console.log(response.body);
+      // console.log(response.body);
       // setCampaigns(response.body);
     } catch (err) {
       console.log(err);
@@ -65,7 +65,7 @@ export default function Home() {
           </div>
         </div>
         {isConnected &&
-          (campaigns.lenght !== 0 ? (
+          (campaigns.length !== 0 ? (
             <div className="h-containerCampaign w-containerCampaign rounded-3xl bg-white mx-auto my-10">
               <div className="flex justify-center mt-4 flex-col px-10">
                 <h2 className="text-2xl mx-auto mt-2 mb-4 text-superfluid-100 leading-8 font-bold">
@@ -76,8 +76,10 @@ export default function Home() {
                   <div className="flex justify-center">Status</div>
                   <div className="flex justify-center">Amount</div>
                 </div>
-                {/* <CampaignShows /> */}
-                {/* <CampaignShows campaign={campaign} amount={amount} /> */}
+                <CampaignShows
+                  campaign={campaigns.flowSenderAddress}
+                  amount={campaigns.amount}
+                />
               </div>
             </div>
           ) : (
@@ -86,7 +88,12 @@ export default function Home() {
                 <h2 className="text-2xl mx-auto mt-2 mb-4 text-superfluid-100 leading-8 font-bold">
                   Your Campaign
                 </h2>
-                <div>Create a campaign for your Lens profile</div>
+                <div className="text-xl mx-auto mt-6 mb-4 text-superfluid-100 leading-4 font-semibold">
+                  Sorry but you haven't got campaigns actives!
+                </div>
+                <div className="text-xl mx-auto  text-superfluid-100 leading-4 font-semibold">
+                  Please create a campaign for your Lens profile
+                </div>
               </div>
             </div>
           ))}
