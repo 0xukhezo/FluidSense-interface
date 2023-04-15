@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 
 import Link from "next/link";
@@ -7,11 +7,9 @@ import Logo from "../../public/Iso.svg";
 
 import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 
-import AppContext from "../components/AppContext";
 import { Profile } from "@/components/Profile";
 
 function CampaignDetails() {
-  const context = useContext(AppContext);
   const { query } = useRouter();
 
   return (

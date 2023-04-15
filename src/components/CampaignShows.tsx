@@ -27,7 +27,7 @@ export default function CampaignShows({
               </div>
             </div>
             <div className="flex justify-center font-bold text-superfluid-100">
-              {amount}USDCx
+              {amount} USDCx
             </div>
           </div>
           <ChevronRightIcon

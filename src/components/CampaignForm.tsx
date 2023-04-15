@@ -10,18 +10,14 @@ import abi from "../../abi/contracts.json";
 import CreateCampaingButton from "./CreateCampaingButton";
 import Alert from "./Alerts/Alert";
 
-interface CampaignFormInterface {
-  getCampaing: (campaing: string, amount: number) => void;
-}
-
-export default function CampaignForm({ getCampaing }: CampaignFormInterface) {
+export default function CampaignForm() {
   const [clientInfo, setClientInfo] = useState<string>();
   const [message, setMessage] = useState<string>();
   const [amountFlowRate, setAmountFlowRate] = useState<number>();
   const [amountInSMC, setAmountInSMC] = useState<number>();
   const [isHuman, setIsHuman] = useState<boolean>(false);
 
-  const campaignsFactoryAddress = "0x7b6620E0371ca6496fC2b1774e71EcAfe13594e8";
+  const campaignsFactoryAddress = "0x4a460aF5C541099166A42f5B9Fb5a2bc4Ea8622A";
 
   const { config: approveTokensContractConfig } = usePrepareContractWrite({
     address: "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
@@ -44,7 +40,7 @@ export default function CampaignForm({ getCampaing }: CampaignFormInterface) {
     isError: txErrorApprove,
     isLoading: txLoadingApprove,
   } = useWaitForTransaction({
-    confirmations: 10,
+    confirmations: 12,
     hash: dataApprove?.hash,
   });
 
@@ -249,7 +245,6 @@ export default function CampaignForm({ getCampaing }: CampaignFormInterface) {
                 txErrorApprove={txErrorApprove}
                 txSuccessApprove={txSuccessApprove}
                 dataApproveHash={dataApprove?.hash}
-                getCampaing={getCampaing}
               />
             )
           ) : (

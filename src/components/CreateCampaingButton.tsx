@@ -4,10 +4,10 @@ import {
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
+  useAccount,
 } from "wagmi";
 import { watchContractEvent } from "@wagmi/core";
 import abi from "../../abi/contracts.json";
-import AppContext from "./AppContext";
 
 import { client, Profiles } from "../pages/api/Profile";
 import Alert from "./Alerts/Alert";
@@ -21,7 +21,6 @@ interface EventIdInputInterface {
   txSuccessApprove: boolean;
   dataApproveHash: `0x${string}` | undefined;
   isHuman: boolean;
-  getCampaing: (campaing: string, amount: number) => void;
 }
 
 export default function CreateCampaingButton({
@@ -33,8 +32,8 @@ export default function CreateCampaingButton({
   txErrorApprove,
   dataApproveHash,
   isHuman,
-  getCampaing,
 }: EventIdInputInterface) {
+  const { address } = useAccount();
   const [lensProfile, setLensProfile] = useState<any>();
   const [body, setBody] = useState<any>();
   const [type, setType] = useState<string>();
@@ -43,7 +42,7 @@ export default function CreateCampaingButton({
   const [noLensProfile, setNoLensProfile] = useState<boolean>(false);
   const [hash, setHash] = useState<string>();
 
-  const campaignsFactoryAddress = "0x5559A0293C33dEC68A10dEaF9D89021134609382";
+  const campaignsFactoryAddress = "0x4a460aF5C541099166A42f5B9Fb5a2bc4Ea8622A";
 
   const amount = ethers.utils
     .parseUnits(amountInSMC.toString(), "6")
@@ -275,6 +274,8 @@ export default function CreateCampaingButton({
         flowSenderAddress: campaign,
         followNftAddress: lensProfile?.followNftAddress,
         amountFlowRate: Number(amountFlowRate),
+        amount: Number(amountInSMC),
+        owner: address,
         isHuman: isHuman,
       })
     );

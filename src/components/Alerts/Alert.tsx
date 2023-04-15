@@ -58,10 +58,7 @@ export default function Alert({
           >
             {message}
             {hash && (
-              <a
-                href={`https://mumbai.polygonscan.com/tx/${hash}`}
-                target="_blank"
-              >
+              <a href={`https://polygonscan.com/tx/${hash}`} target="_blank">
                 <ArrowTopRightOnSquareIcon
                   className={
                     type === "success"
