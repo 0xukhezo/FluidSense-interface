@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { ethers } from "ethers";
 import {
   usePrepareContractWrite,
@@ -10,7 +10,11 @@ import abi from "../../abi/contracts.json";
 import CreateCampaingButton from "./CreateCampaingButton";
 import Alert from "./Alerts/Alert";
 
-export default function CampaignForm() {
+interface CampaignFormInterface {
+  getCampaing: (campaing: string, amount: number) => void;
+}
+
+export default function CampaignForm({ getCampaing }: CampaignFormInterface) {
   const [clientInfo, setClientInfo] = useState<string>();
   const [message, setMessage] = useState<string>();
   const [amountFlowRate, setAmountFlowRate] = useState<number>();
@@ -186,13 +190,13 @@ export default function CampaignForm() {
           clientInfo !== undefined ? (
             txReceiptApprove === undefined ? (
               amountInSMC === 0 || amountFlowRate === 0 ? (
-                <div className="mt-5 flex justify-center ">
+                <div className="mt-2 flex justify-center ">
                   <div className="px-20 py-5 rounded-full text-gray-600 bg-gray-200 leading-8 font-bold opacity-50 tracking-wide">
                     Approve USDC
                   </div>
                 </div>
               ) : !txLoadingApprove ? (
-                <div className="mt-5 flex justify-center ">
+                <div className="mt-2 flex justify-center ">
                   <button
                     onClick={() => onApproveClick()}
                     className=" px-20 py-5 rounded-full bg-superfluid-100 leading-8 font-bold tracking-wide"
@@ -210,7 +214,7 @@ export default function CampaignForm() {
                     getCloseAlert={getCloseAlert}
                     hash={dataApprove?.hash}
                   />
-                  <div className="mt-5 flex justify-center ">
+                  <div className="mt-2 flex justify-center ">
                     <div className=" px-20 py-5 rounded-full bg-superfluid-100 leading-8 font-bold tracking-wide flex">
                       <div role="status">
                         <svg
@@ -245,10 +249,11 @@ export default function CampaignForm() {
                 txErrorApprove={txErrorApprove}
                 txSuccessApprove={txSuccessApprove}
                 dataApproveHash={dataApprove?.hash}
+                getCampaing={getCampaing}
               />
             )
           ) : (
-            <div className="mt-5 flex justify-center ">
+            <div className="mt-2 flex justify-center ">
               <div className="px-20 py-5 rounded-full text-gray-600 bg-gray-200 leading-8 font-bold opacity-50 tracking-wide">
                 Approve USDC
               </div>

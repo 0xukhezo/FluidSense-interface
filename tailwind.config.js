@@ -5,8 +5,10 @@ module.exports = {
     extend: {
       height: {
         container: "700px",
+        containerCampaign: "200px",
+        containerDetails: "600px",
       },
-      width: { container: "798px" },
+      width: { container: "798px", containerCampaign: "798px" },
       colors: {
         superfluid: {
           100: "#6AC886",

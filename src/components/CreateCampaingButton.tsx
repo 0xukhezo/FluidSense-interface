@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { ethers } from "ethers";
 import {
   usePrepareContractWrite,
@@ -7,6 +7,7 @@ import {
 } from "wagmi";
 import { watchContractEvent } from "@wagmi/core";
 import abi from "../../abi/contracts.json";
+import AppContext from "./AppContext";
 
 import { client, Profiles } from "../pages/api/Profile";
 import Alert from "./Alerts/Alert";
@@ -20,6 +21,7 @@ interface EventIdInputInterface {
   txSuccessApprove: boolean;
   dataApproveHash: `0x${string}` | undefined;
   isHuman: boolean;
+  getCampaing: (campaing: string, amount: number) => void;
 }
 
 export default function CreateCampaingButton({
@@ -31,6 +33,7 @@ export default function CreateCampaingButton({
   txErrorApprove,
   dataApproveHash,
   isHuman,
+  getCampaing,
 }: EventIdInputInterface) {
   const [lensProfile, setLensProfile] = useState<any>();
   const [body, setBody] = useState<any>();
@@ -40,7 +43,7 @@ export default function CreateCampaingButton({
   const [noLensProfile, setNoLensProfile] = useState<boolean>(false);
   const [hash, setHash] = useState<string>();
 
-  const campaignsFactoryAddress = "0x7b6620E0371ca6496fC2b1774e71EcAfe13594e8";
+  const campaignsFactoryAddress = "0x5559A0293C33dEC68A10dEaF9D89021134609382";
 
   const amount = ethers.utils
     .parseUnits(amountInSMC.toString(), "6")
