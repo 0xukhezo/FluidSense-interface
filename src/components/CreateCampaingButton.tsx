@@ -626,6 +626,7 @@ export default function CreateCampaingButton({
         amount: Number(amountInSMC),
         owner: address,
         isHuman: isHuman,
+        publicationId: "0x00000",
       })
     );
   }, [lensProfile, campaign]);
