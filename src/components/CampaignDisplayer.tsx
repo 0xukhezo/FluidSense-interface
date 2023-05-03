@@ -43,7 +43,7 @@ function CampaignDisplayer({
             Your Campaign
           </h2>
           <div className="text-xl mx-auto mt-6 mb-4 text-superfluid-100 leading-4 font-semibold">
-            Sorry but you haven't got campaigns actives!
+            Sorry but you have not got campaigns actives!
           </div>
           <div className="text-xl mx-auto  text-superfluid-100 leading-4 font-semibold">
             Please create a campaign for your Lens profile
