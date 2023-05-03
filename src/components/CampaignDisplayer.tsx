@@ -23,12 +23,14 @@ function CampaignDisplayer({
             <div className="flex justify-center">Amount</div>
           </div>
           <div>
-            {campaigns.map((campaign: any) => {
+            {campaigns.map((campaign: any, index: number) => {
               return (
-                <CampaignShows
-                  campaign={campaign.flowSenderAddress}
-                  amount={campaign.amount}
-                />
+                <div key={index}>
+                  <CampaignShows
+                    campaign={campaign.flowSenderAddress}
+                    amount={campaign.amount}
+                  />
+                </div>
               );
             })}
           </div>
