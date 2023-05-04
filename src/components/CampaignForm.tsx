@@ -17,7 +17,7 @@ export default function CampaignForm() {
   const [amountInSMC, setAmountInSMC] = useState<number>();
   const [isHuman, setIsHuman] = useState<boolean>(false);
 
-  const campaignsFactoryAddress = "0x68c3D3e6898c266f1d57F9b70029BE80E4BB248A";
+  const campaignsFactoryAddress = "0xf3Be3653C8b903c12215076F8e69463627a11501";
 
   const { config: approveTokensContractConfig } = usePrepareContractWrite({
     address: "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
@@ -80,7 +80,7 @@ export default function CampaignForm() {
             htmlFor="flow"
             className="block text-xl font-bold leading-6 text-gray-900 pb-2"
           >
-            Flow in fUSDC
+            Flow in USDC
           </label>
           <div className="text-base leading-5 pb-2">
             Define how much each user will get with your campaign.
@@ -112,7 +112,7 @@ export default function CampaignForm() {
             htmlFor="amount"
             className="block text-xl font-bold leading-6 text-gray-900 pb-2"
           >
-            Amount in fUSDC
+            Amount in USDC
           </label>
           <div className="text-base leading-5 pb-2">
             Define the total investment for your campaign.

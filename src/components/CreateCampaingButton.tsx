@@ -42,7 +42,7 @@ export default function CreateCampaingButton({
   const [noLensProfile, setNoLensProfile] = useState<boolean>(false);
   const [hash, setHash] = useState<string>();
 
-  const campaignsFactoryAddress = "0x68c3D3e6898c266f1d57F9b70029BE80E4BB248A";
+  const campaignsFactoryAddress = "0xf3Be3653C8b903c12215076F8e69463627a11501";
 
   const amount = ethers.utils
     .parseUnits(amountInSMC.toString(), "6")
