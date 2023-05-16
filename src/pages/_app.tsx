@@ -5,9 +5,9 @@ import type { AppProps } from "next/app";
 import { WagmiConfig, createClient, configureChains } from "wagmi";
 import { polygon } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
+import { LensConfig, development } from "@lens-protocol/react-web";
 import { bindings as wagmiBindings } from "@lens-protocol/wagmi";
-import { LensConfig, LensProvider, staging } from "@lens-protocol/react";
-import { localStorage } from "@lens-protocol/react/web";
+import { LensProvider } from "@lens-protocol/react-web";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import React, { useState } from "react";
 
@@ -18,8 +18,7 @@ const { chains, provider, webSocketProvider } = configureChains(
 
 const lensConfig: LensConfig = {
   bindings: wagmiBindings(),
-  environment: staging,
-  storage: localStorage(),
+  environment: development,
 };
 
 const { connectors } = getDefaultWallets({
@@ -45,11 +44,11 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
 
       <WagmiConfig client={client}>
-        <RainbowKitProvider chains={chains}>
-          <LensProvider config={lensConfig}>
+        <LensProvider config={lensConfig}>
+          <RainbowKitProvider chains={chains}>
             <Component {...pageProps} />
-          </LensProvider>
-        </RainbowKitProvider>
+          </RainbowKitProvider>{" "}
+        </LensProvider>
       </WagmiConfig>
     </>
   );

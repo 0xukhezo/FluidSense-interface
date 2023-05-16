@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import { ethers } from "ethers";
 import {
   usePrepareContractWrite,
@@ -16,6 +17,7 @@ interface EventIdInputInterface {
   amountInSMC: number;
   amountFlowRate: number;
   clientInfo: string;
+  publicationId: string;
   txLoadingApprove: boolean;
   txErrorApprove: boolean;
   txSuccessApprove: boolean;
@@ -27,6 +29,7 @@ export default function CreateCampaingButton({
   amountInSMC,
   amountFlowRate,
   clientInfo,
+  publicationId,
   txSuccessApprove,
   txLoadingApprove,
   txErrorApprove,
@@ -80,7 +83,7 @@ export default function CreateCampaingButton({
 
   async function fetchProfiles(typeQuery: string) {
     const queryBody = `query Profiles {
-      profiles(request: { ${typeQuery}: ["${clientInfo}"], limit: 1 }) {
+      profiles(request: { : ["${clientInfo}"], limit: 1 }) {
         items {
           id
           interests
@@ -626,7 +629,7 @@ export default function CreateCampaingButton({
         amount: Number(amountInSMC),
         owner: address,
         isHuman: isHuman,
-        publicationId: "0x00000",
+        publicationId: publicationId,
       })
     );
   }, [lensProfile, campaign]);

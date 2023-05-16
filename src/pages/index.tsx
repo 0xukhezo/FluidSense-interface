@@ -15,51 +15,51 @@ export default function Home() {
   const { address, isConnected } = useAccount();
   const [campaigns, setCampaigns] = useState<any>([]);
 
-  async function getClients() {
-    try {
-      fetch(process.env.NEXT_PUBLIC_API as string)
-        .then((res) => {
-          if (res.status >= 400) {
-            throw new Error("Bad response from server");
-          }
-          return res.json();
-        })
-        .then((user) => {
-          console.log(user);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-      // setCampaigns(response.body);
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  // async function getClients() {
+  //   try {
+  //     fetch(process.env.NEXT_PUBLIC_API as string)
+  //       .then((res) => {
+  //         if (res.status >= 400) {
+  //           throw new Error("Bad response from server");
+  //         }
+  //         return res.json();
+  //       })
+  //       .then((user) => {
+  //         console.log(user);
+  //       })
+  //       .catch((err) => {
+  //         console.error(err);
+  //       });
+  //     // setCampaigns(response.body);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
-  useEffect(() => {
-    getClients();
-  }, [isConnected]);
+  // useEffect(() => {
+  //   getClients();
+  // }, [isConnected]);
 
-  async function fetchMirror() {
-    const queryBody = `query Publication {
-      publication(request: {
-        publicationId: "0x7868-0x0582"
-      }) {
-       __typenawme 
-        ... on Post {
-          mirrors(by: "0xacaf")
-        }
-      }
-    }`;
-    try {
-      let response = await client.query({ query: Profiles(queryBody) });
-      console.log(response);
-    } catch (err) {
-      console.log({ err });
-    }
-  }
+  // async function fetchMirror() {
+  //   const queryBody = `query Publication {
+  //     publication(request: {
+  //       publicationId: "0x7868-0x0582"
+  //     }) {
+  //      __typenawme
+  //       ... on Post {
+  //         mirrors(by: "0xacaf")
+  //       }
+  //     }
+  //   }`;
+  //   try {
+  //     let response = await client.query({ query: Profiles(queryBody) });
+  //     console.log(response);
+  //   } catch (err) {
+  //     console.log({ err });
+  //   }
+  // }
 
-  fetchMirror();
+  // fetchMirror();
 
   return (
     <div className="bg-[url('../../public/bg1.jpg')] h-screen bg-no-repeat bg-center bg-cover pt-4 overflow-auto">

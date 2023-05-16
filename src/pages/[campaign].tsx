@@ -9,7 +9,7 @@ import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 
 import { Profile } from "@/components/Profile";
 
-function CampaignDetails() {
+export default function CampaignDetails() {
   const { query } = useRouter();
   let amount = 500;
   return (
@@ -57,5 +57,3 @@ function CampaignDetails() {
     </div>
   );
 }
-
-export default CampaignDetails;

@@ -6,13 +6,18 @@ import {
   useWaitForTransaction,
 } from "wagmi";
 import abi from "../../abi/contracts.json";
-
+// import { PublicationId, usePublication } from "@lens-protocol/react-web";
 import CreateCampaingButton from "./CreateCampaingButton";
 import Alert from "./Alerts/Alert";
 
 export default function CampaignForm() {
+  // const { data: publication, loading } = usePublication({
+  //   publicationId: "0x9773-0x08",
+  // });
+  // console.log(publication);
   const [clientInfo, setClientInfo] = useState<string>();
   const [message, setMessage] = useState<string>();
+  const [publicationId, setPublicationId] = useState<string>();
   const [amountFlowRate, setAmountFlowRate] = useState<number>();
   const [amountInSMC, setAmountInSMC] = useState<number>();
   const [isHuman, setIsHuman] = useState<boolean>(false);
@@ -68,9 +73,14 @@ export default function CampaignForm() {
     closeAlert && setMessage(undefined);
   };
 
-  const handleIsHumanChange = (e: any) => {
-    setIsHuman(e.target.checked);
+  const handleMirrorChange = (e: string) => {
+    const value = e.split("/");
+    setPublicationId(value[value.length - 1]);
   };
+
+  // const handleIsHumanChange = (e: any) => {
+  //   setIsHuman(e.target.checked);
+  // };
 
   return (
     <div className="mx-14">
@@ -144,6 +154,28 @@ export default function CampaignForm() {
             htmlFor="address"
             className="block text-xl font-bold leading-6 text-gray-900 pb-2"
           >
+            Url of the post to mirror
+          </label>
+          <div className="text-base leading-5 pb-2">
+            Provide the url of the Lens post that will be used in the campaign
+            to check the mirror.
+          </div>
+          <div className="mt-2">
+            <input
+              placeholder="https://lenster.xyz/posts/0x01c728-0x01"
+              onChange={(e) => handleMirrorChange(e.target.value)}
+              id="address"
+              name="address"
+              type="text"
+              className="px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 text-superfluid-100 shadow-sm placeholder:text-superfluid-100 sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
+            />
+          </div>
+        </div>
+        <div className="sm:col-span-4 mt-4">
+          <label
+            htmlFor="address"
+            className="block text-xl font-bold leading-6 text-gray-900 pb-2"
+          >
             Address with Lens profile or Lens profile
           </label>
           <div className="text-base leading-5 pb-2">
@@ -152,7 +184,7 @@ export default function CampaignForm() {
           </div>
           <div className="mt-2">
             <input
-              placeholder="0x......"
+              placeholder="0x...... / fluidsense.lens"
               value={clientInfo}
               onChange={(e) => handleClientChange(e)}
               id="address"
@@ -162,7 +194,7 @@ export default function CampaignForm() {
             />
           </div>
         </div>
-        <div className="sm:col-span-4 mt-4 opacity-20">
+        {/* <div className="sm:col-span-4 mt-4 opacity-20">
           <span className="block text-xl font-bold leading-6 text-gray-900 pb-2">
             Settings comming soon
           </span>
@@ -180,9 +212,10 @@ export default function CampaignForm() {
               Only Worldcoin human verified accounts comming soon
             </label>
           </div>
-        </div>
+        </div> */}
         <div className="sm:col-span-4">
           {amountInSMC !== undefined &&
+          publicationId !== undefined &&
           amountFlowRate !== undefined &&
           clientInfo !== undefined ? (
             txReceiptApprove === undefined ? (
@@ -241,6 +274,7 @@ export default function CampaignForm() {
                 amountInSMC={amountInSMC}
                 clientInfo={clientInfo}
                 isHuman={isHuman}
+                publicationId={publicationId}
                 amountFlowRate={amountFlowRate}
                 txLoadingApprove={txLoadingApprove}
                 txErrorApprove={txErrorApprove}
