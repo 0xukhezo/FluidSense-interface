@@ -15,30 +15,33 @@ export default function Home() {
   const { address, isConnected } = useAccount();
   const [campaigns, setCampaigns] = useState<any>([]);
 
-  // async function getClients() {
-  //   try {
-  //     fetch(process.env.NEXT_PUBLIC_API as string)
-  //       .then((res) => {
-  //         if (res.status >= 400) {
-  //           throw new Error("Bad response from server");
-  //         }
-  //         return res.json();
-  //       })
-  //       .then((user) => {
-  //         console.log(user);
-  //       })
-  //       .catch((err) => {
-  //         console.error(err);
-  //       });
-  //     // setCampaigns(response.body);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
+  async function getClients() {
+    try {
+      const response = await fetch(process.env.NEXT_PUBLIC_API as string)
+        .then((res) => {
+          if (res.status >= 400) {
+            throw new Error("Bad response from server");
+          }
+          return res.json();
+        })
+        .then((res) => {
+          return res;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      const campaingsOwned = response.filter(
+        (campaing: any) => campaing.owner !== address
+      );
+      setCampaigns(campaingsOwned);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-  // useEffect(() => {
-  //   getClients();
-  // }, [isConnected]);
+  useEffect(() => {
+    getClients();
+  }, [isConnected]);
 
   // async function fetchMirror() {
   //   const queryBody = `query Publication {

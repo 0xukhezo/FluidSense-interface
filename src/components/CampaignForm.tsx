@@ -26,7 +26,7 @@ export default function CampaignForm() {
 
   const { config: approveTokensContractConfig } = usePrepareContractWrite({
     address: "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
-    abi: abi.abiFUSDC,
+    abi: abi.abiERC20,
     functionName: "approve",
     args: [
       campaignsFactoryAddress,

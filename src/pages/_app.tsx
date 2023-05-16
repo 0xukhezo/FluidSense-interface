@@ -5,7 +5,7 @@ import type { AppProps } from "next/app";
 import { WagmiConfig, createClient, configureChains } from "wagmi";
 import { polygon } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
-import { LensConfig, development } from "@lens-protocol/react-web";
+import { LensConfig, production } from "@lens-protocol/react-web";
 import { bindings as wagmiBindings } from "@lens-protocol/wagmi";
 import { LensProvider } from "@lens-protocol/react-web";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
@@ -18,7 +18,7 @@ const { chains, provider, webSocketProvider } = configureChains(
 
 const lensConfig: LensConfig = {
   bindings: wagmiBindings(),
-  environment: development,
+  environment: production,
 };
 
 const { connectors } = getDefaultWallets({

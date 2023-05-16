@@ -17,18 +17,18 @@ function CampaignDisplayer({
           <h2 className="text-2xl mx-auto mt-4 mb-4 text-superfluid-100 leading-8 font-bold">
             Your Campaign
           </h2>
-          <div className="grid grid-cols-3 align-center px-10 mr-4">
+          <div className="grid grid-cols-3 align-center">
             <div className="flex justify-center">Campaign</div>
             <div className="flex justify-center">Status</div>
             <div className="flex justify-center">Amount</div>
           </div>
-          <div>
+          <div className="overflow-auto">
             {campaigns.map((campaign: any, index: number) => {
               return (
                 <div key={index}>
                   <CampaignShows
-                    campaign={campaign.flowSenderAddress}
-                    amount={campaign.amount}
+                    flowSenderAddress={campaign.flowSenderAddress}
+                    clientAddress={campaign.clientAddress}
                   />
                 </div>
               );
