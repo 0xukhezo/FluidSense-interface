@@ -43,27 +43,6 @@ export default function Home() {
     getClients();
   }, [isConnected]);
 
-  // async function fetchMirror() {
-  //   const queryBody = `query Publication {
-  //     publication(request: {
-  //       publicationId: "0x7868-0x0582"
-  //     }) {
-  //      __typenawme
-  //       ... on Post {
-  //         mirrors(by: "0xacaf")
-  //       }
-  //     }
-  //   }`;
-  //   try {
-  //     let response = await client.query({ query: Profiles(queryBody) });
-  //     console.log(response);
-  //   } catch (err) {
-  //     console.log({ err });
-  //   }
-  // }
-
-  // fetchMirror();
-
   return (
     <div className="bg-[url('../../public/bg1.jpg')] h-screen bg-no-repeat bg-center bg-cover pt-4 overflow-auto">
       <div className="flex pb-10 pt-20 relative ">
