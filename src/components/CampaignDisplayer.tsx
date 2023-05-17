@@ -17,7 +17,7 @@ function CampaignDisplayer({
           <h2 className="text-2xl mx-auto mt-4 mb-4 text-superfluid-100 leading-8 font-bold">
             Your Campaign
           </h2>
-          <div className="grid grid-cols-3 align-center">
+          <div className="grid grid-cols-3 align-center mb-6">
             <div className="flex justify-center">Campaign</div>
             <div className="flex justify-center">Status</div>
             <div className="flex justify-center">Amount</div>
@@ -36,7 +36,7 @@ function CampaignDisplayer({
           </div>
         </div>
       </div>
-    ) : (
+    ) : campaigns.length === 0 ? (
       <div className="h-containerCampaign w-containerCampaign rounded-3xl bg-white mx-auto my-10">
         <div className="flex justify-center mt-4 flex-col px-10">
           <h2 className="text-2xl mx-auto mt-4 mb-4 text-superfluid-100 leading-8 font-bold">
@@ -48,6 +48,14 @@ function CampaignDisplayer({
           <div className="text-xl mx-auto  text-superfluid-100 leading-4 font-semibold">
             Please create a campaign for your Lens profile
           </div>
+        </div>
+      </div>
+    ) : (
+      <div className="h-containerCampaign w-containerCampaign rounded-3xl bg-white mx-auto my-10">
+        <div className="flex justify-center mt-4 flex-col px-10">
+          <h2 className="text-2xl mx-auto mt-4 mb-4 text-superfluid-100 leading-8 font-bold">
+            Loading...
+          </h2>
         </div>
       </div>
     );

@@ -31,7 +31,7 @@ export default function Home() {
           console.error(err);
         });
       const campaingsOwned = response.filter(
-        (campaing: any) => campaing.owner === address
+        (campaing: any) => campaing.owner !== address
       );
       setCampaigns(campaingsOwned);
     } catch (err) {

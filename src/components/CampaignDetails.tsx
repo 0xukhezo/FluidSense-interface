@@ -1,0 +1,64 @@
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+
+import { useProfilesOwnedBy } from "@lens-protocol/react-web";
+import { useContractRead } from "wagmi";
+
+import abi from "../../abi/contracts.json";
+import { ethers } from "ethers";
+
+interface CampaignDetailsInterface {
+  amount: number;
+  flowSenderAddress: string;
+  amountFlowRate: number;
+}
+
+export default function CampaignDetails({
+  amount,
+  flowSenderAddress,
+  amountFlowRate,
+}: CampaignDetailsInterface) {
+  const [balance, setBalance] = useState<string>();
+  const { data, isSuccess } = useContractRead({
+    address: "0xCAa7349CEA390F89641fe306D93591f87595dc1F",
+    abi: abi.abiSuperUSDCx,
+    functionName: "balanceOf",
+    args: [flowSenderAddress],
+  });
+
+  useEffect(() => {
+    const dataSuccess = data as any;
+    setBalance(ethers.utils.formatEther(dataSuccess.toString()).toString());
+  }, [isSuccess]);
+
+  return (
+    <div className="text-center">
+      <div className="flex px-10 mt-2 mx-auto flex-col">
+        <div>
+          <span className="font-bold">Campaign Address: </span>
+          {flowSenderAddress}
+        </div>
+        <div className="flex flex-col mt-9">
+          <span className="text-3xl font-semibold text-superfluid-100 ">
+            {Number(balance).toFixed(2)} USDCx{" "}
+          </span>
+          <span className="font-bold">Total Amount </span>
+        </div>
+        <div className="grid grid-cols-3 mt-8">
+          <div className="flex flex-col text-semibold text-xl">
+            <span className="text-bold">120</span>
+            <span>initial followers</span>
+          </div>
+          <div className="flex flex-col text-semibold text-xl">
+            <span className="text-bold">20 (12%)</span>
+            <span>adquired followers</span>
+          </div>
+          <div className="flex flex-col text-semibold text-xl">
+            <span className="text-bold">{amountFlowRate} USDCx</span>
+            <span>price per follower</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

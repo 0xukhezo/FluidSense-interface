@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {
       height: {
-        container: "700px",
-        containerCampaign: "350px",
+        container: "800px",
+        containerCampaign: "370px",
         containerDetails: "600px",
       },
       width: { container: "798px", containerCampaign: "798px" },

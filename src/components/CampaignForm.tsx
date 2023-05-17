@@ -6,15 +6,10 @@ import {
   useWaitForTransaction,
 } from "wagmi";
 import abi from "../../abi/contracts.json";
-// import { PublicationId, usePublication } from "@lens-protocol/react-web";
 import CreateCampaingButton from "./CreateCampaingButton";
 import Alert from "./Alerts/Alert";
 
 export default function CampaignForm() {
-  // const { data: publication, loading } = usePublication({
-  //   publicationId: "0x9773-0x08",
-  // });
-  // console.log(publication);
   const [clientInfo, setClientInfo] = useState<string>();
   const [message, setMessage] = useState<string>();
   const [publicationId, setPublicationId] = useState<string>();
