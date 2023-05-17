@@ -83,7 +83,7 @@ export default function CreateCampaingButton({
 
   async function fetchProfiles(typeQuery: string) {
     const queryBody = `query Profiles {
-      profiles(request: { : ["${clientInfo}"], limit: 1 }) {
+      profiles(request: { ${typeQuery}: ["${clientInfo}"], limit: 1 }) {
         items {
           id
           interests
