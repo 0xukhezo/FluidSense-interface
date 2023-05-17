@@ -162,7 +162,7 @@ export default function CampaignForm() {
               id="address"
               name="address"
               type="text"
-              className="placeholder:text-slate-400 px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 text-superfluid-100 shadow-sm placeholder:text-superfluid-100 sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
+              className="placeholder:text-gray-300 px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 text-superfluid-100 shadow-sm placeholder:text-superfluid-100 sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
             />
           </div>
         </div>
@@ -185,7 +185,7 @@ export default function CampaignForm() {
               id="address"
               name="address"
               type="text"
-              className="placeholder:text-slate-400 px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 text-superfluid-100 shadow-sm placeholder:text-superfluid-100 sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
+              className="placeholder:text-gray-300 px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 text-superfluid-100 shadow-sm placeholder:text-superfluid-100 sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
             />
           </div>
         </div>
