@@ -12,7 +12,7 @@ function CampaignDisplayer({
 }: CampaignDisplayerInterface) {
   const campaignsInfo =
     campaigns.length !== 0 ? (
-      <div className="h-containerCampaign w-containerCampaign rounded-3xl bg-white mx-auto my-10">
+      <div className="h-containerCampaign w-containerCampaign rounded-3xl bg-white mx-auto my-10 overflow-auto">
         <div className="flex justify-center mt-4 flex-col px-10">
           <h2 className="text-2xl mx-auto mt-4 mb-4 text-superfluid-100 leading-8 font-bold">
             Your Campaign
@@ -22,7 +22,7 @@ function CampaignDisplayer({
             <div className="flex justify-center">Status</div>
             <div className="flex justify-center">Amount</div>
           </div>
-          <div className="overflow-auto">
+          <div>
             {campaigns.map((campaign: any, index: number) => {
               return (
                 <div key={index}>
