@@ -17,7 +17,7 @@ export default function CampaignForm() {
   const [amountInSMC, setAmountInSMC] = useState<number>();
   const [isHuman, setIsHuman] = useState<boolean>(false);
 
-  const campaignsFactoryAddress = "0x1503181307594728fBA4E73Ca882Cfe075D99204";
+  const campaignsFactoryAddress = "0x7C2A78A46c18EaE1d98f5408798D8393D7675F1f";
 
   const { config: approveTokensContractConfig } = usePrepareContractWrite({
     address: "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
