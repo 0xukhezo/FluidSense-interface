@@ -78,6 +78,7 @@ export default function CampaignPage() {
                 amount={campaign.amount}
                 flowSenderAddress={campaign.flowSenderAddress}
                 amountFlowRate={campaign.amountFlowRate}
+                token={campaign.token}
               />
             </div>
           </div>

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 
-import { useProfilesOwnedBy } from "@lens-protocol/react-web";
 import { useContractRead } from "wagmi";
 
 import abi from "../../abi/contracts.json";
@@ -11,12 +9,14 @@ interface CampaignDetailsInterface {
   amount: number;
   flowSenderAddress: string;
   amountFlowRate: number;
+  token: string;
 }
 
 export default function CampaignDetails({
   amount,
   flowSenderAddress,
   amountFlowRate,
+  token,
 }: CampaignDetailsInterface) {
   const [balance, setBalance] = useState<string>();
 
@@ -42,7 +42,7 @@ export default function CampaignDetails({
           </div>
           <div className="flex flex-col mt-9">
             <span className="text-3xl font-semibold text-superfluid-100 ">
-              {Number(balance).toFixed(2)} DAIx{" "}
+              {Number(balance).toFixed(2)} {token}{" "}
             </span>
             <span className="font-bold">Total Amount </span>
           </div>
@@ -56,7 +56,9 @@ export default function CampaignDetails({
               <span>adquired followers</span>
             </div>
             <div className="flex flex-col text-semibold text-xl">
-              <span className="text-bold">{amountFlowRate} DAIx</span>
+              <span className="text-bold">
+                {amountFlowRate} {token}
+              </span>
               <span>price per follower</span>
             </div>
           </div>

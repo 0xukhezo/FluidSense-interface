@@ -11,11 +11,13 @@ import { ethers } from "ethers";
 interface CampaignShowsInterface {
   flowSenderAddress: string;
   clientAddress: string;
+  token: string;
 }
 
 export default function CampaignShows({
   flowSenderAddress,
   clientAddress,
+  token,
 }: CampaignShowsInterface) {
   const { data: profiles } = useProfilesOwnedBy({
     address: clientAddress,
@@ -56,7 +58,7 @@ export default function CampaignShows({
               </div>
               <div className="flex justify-between font-bold text-superfluid-100">
                 <span className="pl-20">
-                  {Number(balance).toFixed(2)} USDCx
+                  {Number(balance).toFixed(2)} {token}
                 </span>
                 <ChevronRightIcon
                   className="h-8 w-8 text-superfluid-100"

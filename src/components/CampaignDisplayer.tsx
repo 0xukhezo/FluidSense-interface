@@ -6,7 +6,7 @@ interface CampaignDisplayerInterface {
   campaigns: any;
 }
 
-function CampaignDisplayer({
+export default function CampaignDisplayer({
   isConnected,
   campaigns,
 }: CampaignDisplayerInterface) {
@@ -29,6 +29,7 @@ function CampaignDisplayer({
                   <CampaignShows
                     flowSenderAddress={campaign.flowSenderAddress}
                     clientAddress={campaign.clientAddress}
+                    token={campaign.token}
                   />
                 </div>
               );
@@ -61,5 +62,3 @@ function CampaignDisplayer({
     );
   return <div>{isConnected ? <div>{campaignsInfo}</div> : <div></div>}</div>;
 }
-
-export default CampaignDisplayer;
