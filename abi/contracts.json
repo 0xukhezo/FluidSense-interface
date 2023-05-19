@@ -172,7 +172,7 @@
       "type": "function"
     }
   ],
-  "abiCampaignFactory": [
+  "abiCampaignFactoryUSDC": [
     {
       "inputs": [
         {
@@ -253,7 +253,7 @@
       "type": "function"
     }
   ],
-  "abiSuperUSDCx": [
+  "abiSuperTokenX": [
     {
       "inputs": [
         {
@@ -1522,6 +1522,49 @@
         { "internalType": "bytes", "name": "data", "type": "bytes" }
       ],
       "name": "upgradeTo",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "abiCampaignFactoryDAI": [
+    {
+      "inputs": [
+        {
+          "internalType": "contract ISuperToken",
+          "name": "_tokenX",
+          "type": "address"
+        },
+        { "internalType": "address", "name": "_owner", "type": "address" },
+        { "internalType": "contract ERC20", "name": "_usdc", "type": "address" }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "campaign",
+          "type": "address"
+        }
+      ],
+      "name": "NewCampaign",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        { "internalType": "uint256", "name": "amount", "type": "uint256" }
+      ],
+      "name": "deployCampaign",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

@@ -85,7 +85,7 @@ export default function CampaignForm() {
             htmlFor="flow"
             className="block text-xl font-bold leading-6 text-gray-900 pb-2"
           >
-            Flow in USDC
+            Flow in DAI
           </label>
           <div className="text-base leading-5 pb-2">
             Define how much each user will get with your campaign.
@@ -117,7 +117,7 @@ export default function CampaignForm() {
             htmlFor="amount"
             className="block text-xl font-bold leading-6 text-gray-900 pb-2"
           >
-            Amount in USDC
+            Amount in DAI
           </label>
           <div className="text-base leading-5 pb-2">
             Define the total investment for your campaign.
@@ -217,7 +217,7 @@ export default function CampaignForm() {
               amountInSMC === 0 || amountFlowRate === 0 ? (
                 <div className="mt-2 flex justify-center ">
                   <div className="px-20 py-5 rounded-full text-gray-600 bg-gray-200 leading-8 font-bold opacity-50 tracking-wide">
-                    Approve USDC
+                    Approve DAI
                   </div>
                 </div>
               ) : !txLoadingApprove ? (
@@ -226,7 +226,7 @@ export default function CampaignForm() {
                     onClick={() => onApproveClick()}
                     className=" px-20 py-5 rounded-full bg-superfluid-100 leading-8 font-bold tracking-wide"
                   >
-                    Approve USDC
+                    Approve DAI
                   </button>
                 </div>
               ) : (
@@ -280,7 +280,7 @@ export default function CampaignForm() {
           ) : (
             <div className="mt-2 flex justify-center ">
               <div className="px-20 py-5 rounded-full text-gray-600 bg-gray-200 leading-8 font-bold opacity-50 tracking-wide">
-                Approve USDC
+                Approve DAI
               </div>
             </div>
           )}

@@ -45,16 +45,16 @@ export default function CreateCampaingButton({
   const [noLensProfile, setNoLensProfile] = useState<boolean>(false);
   const [hash, setHash] = useState<string>();
 
-  const campaignsFactoryAddress = "0xf3Be3653C8b903c12215076F8e69463627a11501";
+  const campaignsFactoryAddress = "0x7C2A78A46c18EaE1d98f5408798D8393D7675F1f";
 
   const amount = ethers.utils
-    .parseUnits(amountInSMC.toString(), "6")
+    .parseUnits(amountInSMC.toString(), "18")
     .toString();
 
   const unwatch = watchContractEvent(
     {
       address: campaignsFactoryAddress,
-      abi: abi.abiCampaignFactory,
+      abi: abi.abiCampaignFactoryDAI,
       eventName: "NewCampaign",
     },
     (sender: any, campaign: any) => {
@@ -64,7 +64,7 @@ export default function CreateCampaingButton({
 
   const { config: createCampaignContractConfig } = usePrepareContractWrite({
     address: campaignsFactoryAddress,
-    abi: abi.abiCampaignFactory,
+    abi: abi.abiCampaignFactoryDAI,
     functionName: "deployCampaign",
     args: [amount],
   });
@@ -304,7 +304,7 @@ export default function CreateCampaingButton({
       if (txSuccessApprove) {
         setHash(dataApproveHash);
         setType("success");
-        setMessage("USDC approved!");
+        setMessage("DAI approved!");
       }
       if (txSuccessCampaign) {
         setHash(dataCampaign?.hash);

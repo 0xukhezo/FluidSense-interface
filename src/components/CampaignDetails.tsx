@@ -22,7 +22,7 @@ export default function CampaignDetails({
 
   const { data, isSuccess } = useContractRead({
     address: "0x1305F6B6Df9Dc47159D12Eb7aC2804d4A33173c2",
-    abi: abi.abiSuperUSDCx,
+    abi: abi.abiSuperTokenX,
     functionName: "balanceOf",
     args: [flowSenderAddress],
   });
@@ -42,7 +42,7 @@ export default function CampaignDetails({
           </div>
           <div className="flex flex-col mt-9">
             <span className="text-3xl font-semibold text-superfluid-100 ">
-              {Number(balance).toFixed(2)} USDCx{" "}
+              {Number(balance).toFixed(2)} DAIx{" "}
             </span>
             <span className="font-bold">Total Amount </span>
           </div>
@@ -56,7 +56,7 @@ export default function CampaignDetails({
               <span>adquired followers</span>
             </div>
             <div className="flex flex-col text-semibold text-xl">
-              <span className="text-bold">{amountFlowRate} USDCx</span>
+              <span className="text-bold">{amountFlowRate} DAIx</span>
               <span>price per follower</span>
             </div>
           </div>
