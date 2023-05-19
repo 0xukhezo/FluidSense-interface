@@ -23,7 +23,7 @@ export default function CampaignShows({
 
   const [balance, setBalance] = useState<string>();
   const { data, isSuccess } = useContractRead({
-    address: "0xCAa7349CEA390F89641fe306D93591f87595dc1F",
+    address: "0x1305F6B6Df9Dc47159D12Eb7aC2804d4A33173c2",
     abi: abi.abiSuperUSDCx,
     functionName: "balanceOf",
     args: [flowSenderAddress],

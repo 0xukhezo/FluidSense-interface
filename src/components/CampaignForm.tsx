@@ -17,16 +17,16 @@ export default function CampaignForm() {
   const [amountInSMC, setAmountInSMC] = useState<number>();
   const [isHuman, setIsHuman] = useState<boolean>(false);
 
-  const campaignsFactoryAddress = "0xf3Be3653C8b903c12215076F8e69463627a11501";
+  const campaignsFactoryAddress = "0x1503181307594728fBA4E73Ca882Cfe075D99204";
 
   const { config: approveTokensContractConfig } = usePrepareContractWrite({
-    address: "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    address: "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
     abi: abi.abiERC20,
     functionName: "approve",
     args: [
       campaignsFactoryAddress,
       amountInSMC
-        ? ethers.utils.parseUnits(amountInSMC.toString(), "6").toString()
+        ? ethers.utils.parseUnits(amountInSMC.toString(), "18").toString()
         : undefined,
     ],
   });
