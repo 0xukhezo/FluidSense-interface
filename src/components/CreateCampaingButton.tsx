@@ -281,6 +281,7 @@ export default function CreateCampaingButton({
         owner: address,
         isHuman: isHuman,
         publicationId: publicationId,
+        token: "DAIx",
       })
     );
   }, [lensProfile, campaign]);
