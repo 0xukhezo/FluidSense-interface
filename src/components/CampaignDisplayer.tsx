@@ -26,11 +26,13 @@ export default function CampaignDisplayer({
             {campaigns.map((campaign: any, index: number) => {
               return (
                 <div key={index}>
-                  <CampaignShows
-                    flowSenderAddress={campaign.flowSenderAddress}
-                    clientAddress={campaign.clientAddress}
-                    token={campaign.token}
-                  />
+                  {campaign.token !== "USDCx" && (
+                    <CampaignShows
+                      flowSenderAddress={campaign.flowSenderAddress}
+                      clientAddress={campaign.clientAddress}
+                      token={campaign.token}
+                    />
+                  )}
                 </div>
               );
             })}
