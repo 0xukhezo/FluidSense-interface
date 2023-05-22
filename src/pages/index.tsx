@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useAccount } from "wagmi";
 import CampaignForm from "@/components/CampaignForm";
-import CampaignShows from "@/components/CampaignShows";
 
 import { Profile } from "@/components/Profile";
-
-import { client, Profiles } from "../pages/api/Profile";
 
 import Image from "next/image";
 import Logo from "../../public/Iso.svg";
@@ -70,7 +67,9 @@ export default function Home() {
             <CampaignForm />
           </div>
         </div>
-        <CampaignDisplayer isConnected={isConnected} campaigns={campaigns} />
+        {campaigns.length !== 0 && (
+          <CampaignDisplayer isConnected={isConnected} campaigns={campaigns} />
+        )}
       </div>
     </div>
   );
