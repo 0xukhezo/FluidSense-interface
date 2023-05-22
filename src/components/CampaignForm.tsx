@@ -44,8 +44,6 @@ export default function CampaignForm() {
     ],
   });
 
-  console.log(approveTokensContractConfig);
-
   const { writeAsync: ApproveTokensContractTx, data: dataApprove } =
     useContractWrite(approveTokensContractConfig);
 
@@ -104,11 +102,10 @@ export default function CampaignForm() {
             htmlFor="address"
             className="block text-xl font-bold leading-6 text-gray-900 pb-2"
           >
-            Address with Lens profile or Lens profile
+            Token to create the campaing
           </label>
           <div className="text-base leading-5 pb-2">
-            Provide the address of the Lens Profile that will be used in the
-            campaign.
+            Provide the token that will be used in the campaign.
           </div>
         </div>
         <div className="sm:col-span-1">
