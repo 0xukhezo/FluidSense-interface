@@ -5,21 +5,19 @@ import type { AppProps } from "next/app";
 import { WagmiConfig, createClient, configureChains } from "wagmi";
 import { polygon, polygonMumbai } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
+import { alchemyProvider } from "wagmi/providers/alchemy";
 import { LensConfig, production } from "@lens-protocol/react-web";
 import { bindings as wagmiBindings } from "@lens-protocol/wagmi";
 import { LensProvider } from "@lens-protocol/react-web";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import React from "react";
 
-const { chains, provider, webSocketProvider } = configureChains(
-  [polygon, polygonMumbai],
-  [publicProvider()]
-);
-
 const alchemyId = process.env.ALCHEMY_KEY_POLYGON;
 
-// ALCHEMY_KEY_POLYGON=TbsKPVlY8dmW-k84QjxZfDkbwE_9uuKr
-// RPC_ENDPOINT_POLYGON=https://polygon-mainnet.g.alchemy.com/v2/
+const { chains, provider, webSocketProvider } = configureChains(
+  [polygon, polygonMumbai],
+  [alchemyProvider({ apiKey: alchemyId as string }), publicProvider()]
+);
 
 const lensConfig: LensConfig = {
   bindings: wagmiBindings(),

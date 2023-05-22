@@ -69,8 +69,6 @@ export default function CreateCampaingButton({
     args: [amount],
   });
 
-  console.log(createCampaignContractConfig);
-
   const { writeAsync: createCampaignContractTx, data: dataCampaign } =
     useContractWrite(createCampaignContractConfig);
 
@@ -242,7 +240,6 @@ export default function CreateCampaingButton({
   const onCreateClick = async () => {
     try {
       await createCampaignContractTx?.();
-
       unwatch();
     } catch (error) {
       console.log(error);
