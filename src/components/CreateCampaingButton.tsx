@@ -18,10 +18,10 @@ interface EventIdInputInterface {
   amountFlowRate: number;
   clientInfo: string;
   publicationId: string;
-  txLoadingApprove: boolean;
-  txErrorApprove: boolean;
-  txSuccessApprove: boolean;
-  dataApproveHash: `0x${string}` | undefined;
+  txLoadingApprove?: boolean;
+  txErrorApprove?: boolean;
+  txSuccessApprove?: boolean;
+  dataApproveHash?: `0x${string}` | undefined;
   isHuman: boolean;
   token: any;
 }
@@ -269,6 +269,36 @@ export default function CreateCampaingButton({
     }
   }, [clientInfo]);
 
+  // console.log(
+  //   lensProfile?.id.toString(),
+  //   lensProfile?.ownedBy.toString(),
+  //   campaign,
+  //   lensProfile?.followNftAddress,
+  //   Number(amountFlowRate),
+  //   Number(amountInSMC),
+  //   address,
+  //   isHuman,
+  //   publicationId,
+  //   token.symbol + "x"
+  // );
+
+  // console.log(body);
+
+  // console.log(
+  //   JSON.stringify({
+  //     clientProfile: lensProfile?.id.toString(),
+  //     clientAddress: lensProfile?.ownedBy.toString(),
+  //     flowSenderAddress: campaign,
+  //     followNftAddress: lensProfile?.followNftAddress,
+  //     amountFlowRate: Number(amountFlowRate),
+  //     amount: Number(amountInSMC),
+  //     owner: address,
+  //     isHuman: isHuman,
+  //     publicationId: publicationId,
+  //     tokenX: token.symbol + "x",
+  //   })
+  // );
+
   useEffect(() => {
     setBody(
       JSON.stringify({
@@ -329,6 +359,7 @@ export default function CreateCampaingButton({
 
   useEffect(() => {
     if (txSuccessCampaign) {
+      console.log(body);
       postClient();
     }
   }, [txSuccessCampaign]);

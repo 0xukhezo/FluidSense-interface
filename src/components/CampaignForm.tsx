@@ -53,7 +53,7 @@ export default function CampaignForm() {
     isError: txErrorApprove,
     isLoading: txLoadingApprove,
   } = useWaitForTransaction({
-    confirmations: 12,
+    confirmations: 6,
     hash: dataApprove?.hash,
   });
 
