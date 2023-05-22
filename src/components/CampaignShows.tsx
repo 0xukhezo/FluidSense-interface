@@ -32,10 +32,6 @@ export default function CampaignShows({
     args: [flowSenderAddress],
   });
 
-  const tokenfilter = "USDC" + "x";
-
-  const test = tokens.filter((token) => tokenfilter === tokenX);
-
   useEffect(() => {
     const dataSuccess = data as any;
     setBalance(ethers.utils.formatEther(dataSuccess?.toString()).toString());
