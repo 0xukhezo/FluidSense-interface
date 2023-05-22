@@ -9,12 +9,17 @@ import { LensConfig, production } from "@lens-protocol/react-web";
 import { bindings as wagmiBindings } from "@lens-protocol/wagmi";
 import { LensProvider } from "@lens-protocol/react-web";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import React, { useState } from "react";
+import React from "react";
 
 const { chains, provider, webSocketProvider } = configureChains(
   [polygon, polygonMumbai],
   [publicProvider()]
 );
+
+const alchemyId = process.env.ALCHEMY_KEY_POLYGON;
+
+// ALCHEMY_KEY_POLYGON=TbsKPVlY8dmW-k84QjxZfDkbwE_9uuKr
+// RPC_ENDPOINT_POLYGON=https://polygon-mainnet.g.alchemy.com/v2/
 
 const lensConfig: LensConfig = {
   bindings: wagmiBindings(),

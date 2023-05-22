@@ -30,7 +30,7 @@ export default function CampaignDisplayer({
                     <CampaignShows
                       flowSenderAddress={campaign.flowSenderAddress}
                       clientAddress={campaign.clientAddress}
-                      token={campaign.token}
+                      tokenX={campaign.tokenX}
                     />
                   )}
                 </div>

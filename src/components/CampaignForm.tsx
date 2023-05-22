@@ -6,8 +6,12 @@ import {
   useWaitForTransaction,
 } from "wagmi";
 import abi from "../../abi/contracts.json";
+
+import TokenSelector from "@/components/TokenSelector/TokenSelector";
 import CreateCampaingButton from "./CreateCampaingButton";
 import Alert from "./Alerts/Alert";
+
+import daiLogo from "../../public/dai.png";
 
 export default function CampaignForm() {
   const [clientInfo, setClientInfo] = useState<string>();
@@ -16,20 +20,31 @@ export default function CampaignForm() {
   const [amountFlowRate, setAmountFlowRate] = useState<number>();
   const [amountInSMC, setAmountInSMC] = useState<number>();
   const [isHuman, setIsHuman] = useState<boolean>(false);
-
-  const campaignsFactoryAddress = "0x7C2A78A46c18EaE1d98f5408798D8393D7675F1f";
+  const [token, setToken] = useState({
+    address: "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
+    img: daiLogo,
+    symbol: "DAI",
+    factory: "0x7C2A78A46c18EaE1d98f5408798D8393D7675F1f",
+  });
 
   const { config: approveTokensContractConfig } = usePrepareContractWrite({
-    address: "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
+    address: token.address as `0x${string}`,
     abi: abi.abiERC20,
     functionName: "approve",
     args: [
-      campaignsFactoryAddress,
+      token.factory,
       amountInSMC
-        ? ethers.utils.parseUnits(amountInSMC.toString(), "18").toString()
+        ? ethers.utils
+            .parseUnits(
+              amountInSMC.toString(),
+              token.symbol === "USDC" ? "6" : "18"
+            )
+            .toString()
         : undefined,
     ],
   });
+
+  console.log(approveTokensContractConfig);
 
   const { writeAsync: ApproveTokensContractTx, data: dataApprove } =
     useContractWrite(approveTokensContractConfig);
@@ -56,6 +71,10 @@ export default function CampaignForm() {
     setClientInfo(e.target.value);
   };
 
+  const getTokenSelected = (token: any) => {
+    setToken(token);
+  };
+
   const onApproveClick = async () => {
     try {
       await ApproveTokensContractTx?.();
@@ -80,6 +99,21 @@ export default function CampaignForm() {
   return (
     <div className="mx-14">
       <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-4">
+        <div className="sm:col-span-3">
+          <label
+            htmlFor="address"
+            className="block text-xl font-bold leading-6 text-gray-900 pb-2"
+          >
+            Address with Lens profile or Lens profile
+          </label>
+          <div className="text-base leading-5 pb-2">
+            Provide the address of the Lens Profile that will be used in the
+            campaign.
+          </div>
+        </div>
+        <div className="sm:col-span-1">
+          <TokenSelector getTokenSelected={getTokenSelected} token={token} />
+        </div>
         <div className="sm:col-span-2">
           <label
             htmlFor="flow"
@@ -212,6 +246,7 @@ export default function CampaignForm() {
           {amountInSMC !== undefined &&
           publicationId !== undefined &&
           amountFlowRate !== undefined &&
+          token !== undefined &&
           clientInfo !== undefined ? (
             txReceiptApprove === undefined ? (
               amountInSMC === 0 || amountFlowRate === 0 ? (
@@ -275,6 +310,7 @@ export default function CampaignForm() {
                 txErrorApprove={txErrorApprove}
                 txSuccessApprove={txSuccessApprove}
                 dataApproveHash={dataApprove?.hash}
+                token={token}
               />
             )
           ) : (

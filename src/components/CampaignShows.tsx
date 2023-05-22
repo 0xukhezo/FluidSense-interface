@@ -7,17 +7,18 @@ import { ChevronRightIcon } from "@heroicons/react/20/solid";
 
 import abi from "../../abi/contracts.json";
 import { ethers } from "ethers";
+import { tokens } from "@/utils/tokens";
 
 interface CampaignShowsInterface {
   flowSenderAddress: string;
   clientAddress: string;
-  token: string;
+  tokenX: string;
 }
 
 export default function CampaignShows({
   flowSenderAddress,
   clientAddress,
-  token,
+  tokenX,
 }: CampaignShowsInterface) {
   const { data: profiles } = useProfilesOwnedBy({
     address: clientAddress,
@@ -30,6 +31,10 @@ export default function CampaignShows({
     functionName: "balanceOf",
     args: [flowSenderAddress],
   });
+
+  const tokenfilter = "USDC" + "x";
+
+  const test = tokens.filter((token) => tokenfilter === tokenX);
 
   useEffect(() => {
     const dataSuccess = data as any;
@@ -58,7 +63,7 @@ export default function CampaignShows({
               </div>
               <div className="flex justify-between font-bold text-superfluid-100">
                 <span className="pl-20">
-                  {Number(balance).toFixed(2)} {token}
+                  {Number(balance).toFixed(2)} {tokenX}
                 </span>
                 <ChevronRightIcon
                   className="h-8 w-8 text-superfluid-100"

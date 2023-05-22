@@ -23,6 +23,7 @@ interface EventIdInputInterface {
   txSuccessApprove: boolean;
   dataApproveHash: `0x${string}` | undefined;
   isHuman: boolean;
+  token: any;
 }
 
 export default function CreateCampaingButton({
@@ -35,6 +36,7 @@ export default function CreateCampaingButton({
   txErrorApprove,
   dataApproveHash,
   isHuman,
+  token,
 }: EventIdInputInterface) {
   const { address } = useAccount();
   const [lensProfile, setLensProfile] = useState<any>();
@@ -45,15 +47,13 @@ export default function CreateCampaingButton({
   const [noLensProfile, setNoLensProfile] = useState<boolean>(false);
   const [hash, setHash] = useState<string>();
 
-  const campaignsFactoryAddress = "0x7C2A78A46c18EaE1d98f5408798D8393D7675F1f";
-
   const amount = ethers.utils
-    .parseUnits(amountInSMC.toString(), "18")
+    .parseUnits(amountInSMC.toString(), token.symbol === "USDC" ? "6" : "18")
     .toString();
 
   const unwatch = watchContractEvent(
     {
-      address: campaignsFactoryAddress,
+      address: token.factory,
       abi: abi.abiCampaignFactoryDAI,
       eventName: "NewCampaign",
     },
@@ -63,11 +63,13 @@ export default function CreateCampaingButton({
   );
 
   const { config: createCampaignContractConfig } = usePrepareContractWrite({
-    address: campaignsFactoryAddress,
+    address: token.factory,
     abi: abi.abiCampaignFactoryDAI,
     functionName: "deployCampaign",
     args: [amount],
   });
+
+  console.log(createCampaignContractConfig);
 
   const { writeAsync: createCampaignContractTx, data: dataCampaign } =
     useContractWrite(createCampaignContractConfig);
@@ -240,6 +242,7 @@ export default function CreateCampaingButton({
   const onCreateClick = async () => {
     try {
       await createCampaignContractTx?.();
+
       unwatch();
     } catch (error) {
       console.log(error);
@@ -281,7 +284,7 @@ export default function CreateCampaingButton({
         owner: address,
         isHuman: isHuman,
         publicationId: publicationId,
-        tokenX: "DAIx",
+        tokenX: token.symbol + "x",
       })
     );
   }, [lensProfile, campaign]);
@@ -305,7 +308,7 @@ export default function CreateCampaingButton({
       if (txSuccessApprove) {
         setHash(dataApproveHash);
         setType("success");
-        setMessage("DAI approved!");
+        setMessage(token.symbol + " approved!");
       }
       if (txSuccessCampaign) {
         setHash(dataCampaign?.hash);
