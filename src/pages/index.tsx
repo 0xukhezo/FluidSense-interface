@@ -70,7 +70,9 @@ export default function Home() {
             <CampaignForm />
           </div>
         </div>
-        <CampaignDisplayer isConnected={isConnected} campaigns={campaigns} />
+        {campaigns.length !== 0 && (
+          <CampaignDisplayer isConnected={isConnected} campaigns={campaigns} />
+        )}
       </div>
     </div>
   );

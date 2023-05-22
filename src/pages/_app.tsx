@@ -12,11 +12,9 @@ import { LensProvider } from "@lens-protocol/react-web";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import React from "react";
 
-const alchemyId = process.env.ALCHEMY_KEY_POLYGON;
-
 const { chains, provider, webSocketProvider } = configureChains(
   [polygon, polygonMumbai],
-  [alchemyProvider({ apiKey: alchemyId as string }), publicProvider()]
+  [publicProvider()]
 );
 
 const lensConfig: LensConfig = {
