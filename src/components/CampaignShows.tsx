@@ -13,20 +13,22 @@ interface CampaignShowsInterface {
   flowSenderAddress: string;
   clientAddress: string;
   tokenX: string;
+  tokenAddress: `0x${string}`;
 }
 
 export default function CampaignShows({
   flowSenderAddress,
   clientAddress,
   tokenX,
+  tokenAddress,
 }: CampaignShowsInterface) {
   const { data: profiles } = useProfilesOwnedBy({
     address: clientAddress,
   });
-
   const [balance, setBalance] = useState<string>();
+
   const { data, isSuccess } = useContractRead({
-    address: "0x1305F6B6Df9Dc47159D12Eb7aC2804d4A33173c2",
+    address: tokenAddress,
     abi: abi.abiSuperTokenX,
     functionName: "balanceOf",
     args: [flowSenderAddress],
@@ -34,6 +36,7 @@ export default function CampaignShows({
 
   useEffect(() => {
     const dataSuccess = data as any;
+    console.log(dataSuccess);
     setBalance(ethers.utils.formatEther(dataSuccess?.toString()).toString());
   }, [isSuccess]);
 

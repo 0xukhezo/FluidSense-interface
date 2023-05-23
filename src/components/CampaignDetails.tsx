@@ -38,7 +38,12 @@ export default function CampaignDetails({
         <div className="flex px-10 mt-2 mx-auto flex-col">
           <div>
             <span className="font-bold">Campaign Address: </span>
-            {flowSenderAddress}
+            <a
+              target="_blank"
+              href={`https://console.superfluid.finance/matic/accounts/${flowSenderAddress}?tab=streams`}
+            >
+              {flowSenderAddress}
+            </a>
           </div>
           <div className="flex flex-col mt-9">
             <span className="text-3xl font-semibold text-superfluid-100 ">
