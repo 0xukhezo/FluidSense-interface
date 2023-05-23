@@ -5,8 +5,8 @@ module.exports = {
     extend: {
       height: {
         container: "850px",
-        containerCampaign: "370px",
-        containerDetails: "600px",
+        containerCampaign: "420px",
+        containerDetails: "790px",
         containerCampaignEmpty: "175px",
       },
       width: { container: "798px", containerCampaign: "798px" },

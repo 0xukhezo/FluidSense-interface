@@ -36,21 +36,21 @@ export default function CampaignShows({
 
   useEffect(() => {
     const dataSuccess = data as any;
-    console.log(dataSuccess);
-    setBalance(ethers.utils.formatEther(dataSuccess?.toString()).toString());
+    dataSuccess !== undefined &&
+      setBalance(ethers.utils.formatEther(dataSuccess?.toString()).toString());
   }, [isSuccess]);
 
   return (
     <>
       {balance !== undefined && (
-        <Link href={`/${flowSenderAddress}`} className="py-4 rounded-full my-4">
+        <Link href={`/${flowSenderAddress}`}>
           {profiles !== undefined && (
-            <div className="flex py-4 grid grid-cols-3 text-center">
-              <div className="truncate justify-center">
+            <div className="flex py-4 grid grid-cols-3 text-center border-2 border-superfluid-100 my-3 rounded-full hover:bg-superfluid-200">
+              <div className="truncate justify-center font-semibold">
                 {profiles[0].handle}
               </div>
               <div className="flex justify-center">
-                {Number(balance) >= 0 ? (
+                {Number(balance) !== 0.0 ? (
                   <div className="font-bold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
                     Active
                   </div>
@@ -64,10 +64,6 @@ export default function CampaignShows({
                 <span className="pl-20">
                   {Number(balance).toFixed(2)} {tokenX}
                 </span>
-                <ChevronRightIcon
-                  className="h-8 w-8 text-superfluid-100"
-                  aria-hidden="true"
-                />
               </div>
             </div>
           )}
