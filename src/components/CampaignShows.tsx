@@ -13,20 +13,22 @@ interface CampaignShowsInterface {
   flowSenderAddress: string;
   clientAddress: string;
   tokenX: string;
+  tokenAddress: `0x${string}`;
 }
 
 export default function CampaignShows({
   flowSenderAddress,
   clientAddress,
   tokenX,
+  tokenAddress,
 }: CampaignShowsInterface) {
   const { data: profiles } = useProfilesOwnedBy({
     address: clientAddress,
   });
-
   const [balance, setBalance] = useState<string>();
+
   const { data, isSuccess } = useContractRead({
-    address: "0x1305F6B6Df9Dc47159D12Eb7aC2804d4A33173c2",
+    address: tokenAddress,
     abi: abi.abiSuperTokenX,
     functionName: "balanceOf",
     args: [flowSenderAddress],
@@ -34,20 +36,21 @@ export default function CampaignShows({
 
   useEffect(() => {
     const dataSuccess = data as any;
-    setBalance(ethers.utils.formatEther(dataSuccess?.toString()).toString());
+    dataSuccess !== undefined &&
+      setBalance(ethers.utils.formatEther(dataSuccess?.toString()).toString());
   }, [isSuccess]);
 
   return (
     <>
       {balance !== undefined && (
-        <Link href={`/${flowSenderAddress}`} className="py-4 rounded-full my-4">
+        <Link href={`/${flowSenderAddress}`}>
           {profiles !== undefined && (
-            <div className="flex py-4 grid grid-cols-3 text-center">
-              <div className="truncate justify-center">
+            <div className="flex py-4 grid grid-cols-3 text-center border-2 border-superfluid-100 my-3 rounded-full hover:bg-superfluid-200">
+              <div className="truncate justify-center font-semibold">
                 {profiles[0].handle}
               </div>
               <div className="flex justify-center">
-                {Number(balance) >= 0 ? (
+                {Number(balance) !== 0.0 ? (
                   <div className="font-bold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
                     Active
                   </div>
@@ -61,10 +64,6 @@ export default function CampaignShows({
                 <span className="pl-20">
                   {Number(balance).toFixed(2)} {tokenX}
                 </span>
-                <ChevronRightIcon
-                  className="h-8 w-8 text-superfluid-100"
-                  aria-hidden="true"
-                />
               </div>
             </div>
           )}

@@ -9,10 +9,13 @@ import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 
 import { Profile } from "@/components/Profile";
 import CampaignDetails from "@/components/CampaignDetails";
+import { tokens } from "@/utils/tokens";
 
 export default function CampaignPage() {
   const { query } = useRouter();
   const [campaign, setCampaign] = useState<any>();
+  const [tokenAddress, setTokenAddress] = useState<any>();
+
   async function getCampaign() {
     try {
       const response = await fetch(process.env.NEXT_PUBLIC_API as string)
@@ -31,7 +34,11 @@ export default function CampaignPage() {
       const campaingsOwned = response.filter(
         (campaing: any) => campaing.flowSenderAddress === query.campaign
       );
+      const tokenAddress = tokens.filter(
+        (token) => token.symbol + "x" === campaingsOwned[0].tokenX
+      );
       setCampaign(campaingsOwned[0]);
+      setTokenAddress(tokenAddress[0].addressX as `0x${string}`);
     } catch (err) {
       console.log(err);
     }
@@ -59,7 +66,7 @@ export default function CampaignPage() {
         </h1>
         <Profile />
       </div>
-      {campaign !== undefined && (
+      {campaign !== undefined && tokenAddress !== undefined && (
         <div className="flex justify-center flex-col">
           <div className="h-containerDetails w-container rounded-3xl bg-white mx-auto">
             <div className="flex justify-center mt-10 flex-col">
@@ -75,10 +82,10 @@ export default function CampaignPage() {
                 </h2>
               </div>
               <CampaignDetails
-                amount={campaign.amount}
                 flowSenderAddress={campaign.flowSenderAddress}
                 amountFlowRate={campaign.amountFlowRate}
-                token={campaign.token}
+                tokenX={campaign.tokenX}
+                tokenAddress={tokenAddress}
               />
             </div>
           </div>

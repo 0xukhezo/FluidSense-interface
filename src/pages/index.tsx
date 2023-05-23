@@ -11,6 +11,7 @@ import CampaignDisplayer from "@/components/CampaignDisplayer";
 export default function Home() {
   const { address, isConnected } = useAccount();
   const [campaigns, setCampaigns] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   async function getClients() {
     try {
@@ -40,6 +41,10 @@ export default function Home() {
     getClients();
   }, [isConnected]);
 
+  useEffect(() => {
+    setLoading(true);
+  }, [campaigns]);
+
   return (
     <div className="bg-[url('../../public/bg1.jpg')] h-screen bg-no-repeat bg-center bg-cover pt-4 overflow-auto">
       <div className="flex pb-10 pt-20 relative ">
@@ -67,8 +72,22 @@ export default function Home() {
             <CampaignForm />
           </div>
         </div>
-        {campaigns.length !== 0 && (
+        {loading ? (
           <CampaignDisplayer isConnected={isConnected} campaigns={campaigns} />
+        ) : (
+          <div className="h-containerCampaign w-containerCampaign rounded-3xl bg-white mx-auto my-10 overflow-auto">
+            <div className="flex justify-center mt-4 flex-col px-10">
+              <h2 className="text-2xl mx-auto mt-4 mb-4 text-superfluid-100 leading-8 font-bold">
+                Your Campaign
+              </h2>
+              <div className="grid grid-cols-3 align-center mb-6">
+                <div className="flex justify-center">Campaign</div>
+                <div className="flex justify-center">Status</div>
+                <div className="flex justify-center">Amount</div>
+              </div>
+              <div>Loading Campaings</div>
+            </div>
+          </div>
         )}
       </div>
     </div>
