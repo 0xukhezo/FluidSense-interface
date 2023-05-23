@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import Head from "next/head";
 import type { AppProps } from "next/app";
-import { WagmiConfig, createClient, configureChains } from "wagmi";
+import { WagmiConfig, createClient, configureChains, mainnet } from "wagmi";
 import { polygon, polygonMumbai } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { LensConfig, production } from "@lens-protocol/react-web";
@@ -12,7 +12,7 @@ import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import React from "react";
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [polygon, polygonMumbai],
+  [polygon, polygonMumbai, mainnet],
   [publicProvider()]
 );
 
