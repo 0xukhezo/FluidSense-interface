@@ -121,7 +121,7 @@ export default function CampaignDetails({
             </div>
             <div className="flex flex-col font-semibold ">
               <span className="text-2xl">
-                {amountFlowRate} {tokenX}
+                {Number(amountFlowRate).toFixed(2)} {tokenX}
               </span>
               <span className="text-xl">price per follower</span>
             </div>
