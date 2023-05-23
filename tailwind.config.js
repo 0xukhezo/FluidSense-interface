@@ -7,6 +7,7 @@ module.exports = {
         container: "850px",
         containerCampaign: "370px",
         containerDetails: "600px",
+        containerCampaignEmpty: "175px",
       },
       width: { container: "798px", containerCampaign: "798px" },
       colors: {
