@@ -7,8 +7,8 @@ import Logo from "../../public/Iso.svg";
 
 import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 
-import { Profile } from "@/components/Profile";
-import CampaignDetails from "@/components/CampaignDetails";
+import { Profile } from "@/components/Buttons/Profile";
+import CampaignDetails from "@/components/CampaingInfo/CampaignDetails";
 import { tokens } from "@/utils/tokens";
 
 export default function CampaignPage() {
@@ -73,17 +73,19 @@ export default function CampaignPage() {
               <div className="flex">
                 <Link href="/">
                   <ChevronLeftIcon
-                    className="h-10 w-10 text-superfluid-100"
+                    className="h-10 text-superfluid-100 ml-4"
                     aria-hidden="true"
                   />
                 </Link>
-                <h2 className="text-2xl mx-auto my-2 text-superfluid-100 leading-8 font-bold">
-                  Your campaign
+                <h2 className="text-2xl mx-auto my-2 text-superfluid-100 leading-8 font-bold ">
+                  <span className="-ml-14">Your campaign</span>
                 </h2>
               </div>
               <CampaignDetails
+                lensProfile={campaign.clientProfile}
                 flowSenderAddress={campaign.flowSenderAddress}
                 amountFlowRate={campaign.amountFlowRate}
+                initialFollowers={campaign.totalFollowers}
                 tokenX={campaign.tokenX}
                 tokenAddress={tokenAddress}
               />

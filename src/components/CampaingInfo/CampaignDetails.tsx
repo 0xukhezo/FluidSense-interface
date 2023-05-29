@@ -1,25 +1,33 @@
 import React, { useState, useEffect } from "react";
-
 import { useContractRead } from "wagmi";
+import { ProfileId, useProfile } from "@lens-protocol/react-web";
 
-import abi from "../../abi/contracts.json";
+import abi from "../../../abi/contracts.json";
 import { ethers } from "ethers";
 import { clientSuperfluid, Superfluid } from "@/pages/api/Superfluid";
-import SteamCard from "./SteamCard";
+import SteamCard from "../Cards/SteamCard";
 
 interface CampaignDetailsInterface {
+  lensProfile: string;
   flowSenderAddress: string;
   amountFlowRate: number;
+  initialFollowers: number;
   tokenX: string;
   tokenAddress: `0x${string}`;
 }
 
 export default function CampaignDetails({
+  lensProfile,
   flowSenderAddress,
   amountFlowRate,
+  initialFollowers,
   tokenX,
   tokenAddress,
 }: CampaignDetailsInterface) {
+  const { data: profile } = useProfile({
+    profileId: lensProfile as ProfileId,
+  });
+
   const [balance, setBalance] = useState<string>();
   const [steams, setSteams] = useState<any[]>();
   const [loadingSteams, setLoadingSteams] = useState<boolean>(false);
@@ -36,7 +44,7 @@ export default function CampaignDetails({
     dataSuccess &&
       setBalance(ethers.utils.formatEther(dataSuccess?.toString()).toString());
   }, [isSuccess]);
-  console.log(balance);
+
   async function fetchSteams() {
     const queryBody = `query Steams {
       accounts(where: {id: "${flowSenderAddress.toLowerCase()}"}) {
@@ -112,11 +120,18 @@ export default function CampaignDetails({
           </div>
           <div className="grid grid-cols-3 mt-8">
             <div className="flex flex-col font-semibold">
-              <span className="text-2xl">120</span>
+              <span className="text-2xl">{Number(initialFollowers)}</span>
               <span className="text-xl">initial followers</span>
             </div>
             <div className="flex flex-col font-semibold ">
-              <span className="text-2xl">20 (12%)</span>
+              <span className="text-2xl">
+                {Number(profile?.stats.totalFollowers)} ({" "}
+                {((Number(profile?.stats.totalFollowers) -
+                  Number(initialFollowers)) /
+                  Number(profile?.stats.totalFollowers)) *
+                  100}
+                % )
+              </span>
               <span className="text-xl">adquired followers</span>
             </div>
             <div className="flex flex-col font-semibold ">
