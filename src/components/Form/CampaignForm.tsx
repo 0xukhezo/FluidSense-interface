@@ -1,24 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import {
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
 } from "wagmi";
-import abi from "../../abi/contracts.json";
+import abi from "../../../abi/contracts.json";
 
 import TokenSelector from "@/components/TokenSelector/TokenSelector";
-import CreateCampaingButton from "./CreateCampaingButton";
-import Alert from "./Alerts/Alert";
+import CreateCampaingButton from "../Buttons/CreateCampaingButton";
+import Alert from "../Alerts/Alert";
 
-import daiLogo from "../../public/dai.png";
+import daiLogo from "../../../public/dai.png";
 
 export default function CampaignForm() {
   const [clientInfo, setClientInfo] = useState<string>();
   const [message, setMessage] = useState<string>();
+  const [publication, setPublication] = useState<string>();
   const [publicationId, setPublicationId] = useState<string>();
   const [amountFlowRate, setAmountFlowRate] = useState<number>();
   const [amountInSMC, setAmountInSMC] = useState<number>();
+  const [campaingDone, setCampaingDone] = useState<boolean>(false);
   const [isHuman, setIsHuman] = useState<boolean>(false);
   const [token, setToken] = useState({
     address: "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
@@ -81,14 +83,26 @@ export default function CampaignForm() {
     }
   };
 
+  const getCampaingDone = (campaingComplete: boolean) => {
+    setCampaingDone(campaingComplete);
+  };
+
   const getCloseAlert = (closeAlert: boolean) => {
     closeAlert && setMessage(undefined);
   };
 
   const handleMirrorChange = (e: string) => {
+    setPublication(e);
     const value = e.split("/");
     setPublicationId(value[value.length - 1]);
   };
+
+  useEffect(() => {
+    setPublication("");
+    setAmountFlowRate(0);
+    setAmountInSMC(0);
+    setClientInfo("");
+  }, [campaingDone]);
 
   // const handleIsHumanChange = (e: any) => {
   //   setIsHuman(e.target.checked);
@@ -139,7 +153,7 @@ export default function CampaignForm() {
               name="flow"
               id="flow"
               autoComplete="given-name"
-              className="px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 text-superfluid-100 shadow-sm placeholder:text-superfluid-100 sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
+              className="px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 shadow-sm sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
             />
           </div>
         </div>
@@ -171,7 +185,7 @@ export default function CampaignForm() {
               name="amount"
               id="amount"
               autoComplete="family-name"
-              className="px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 text-superfluid-100 shadow-sm placeholder:text-superfluid-100 sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
+              className="px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 shadow-sm sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
             />
           </div>
         </div>
@@ -190,10 +204,11 @@ export default function CampaignForm() {
             <input
               placeholder="https://lenster.xyz/posts/0x01c728-0x01"
               onChange={(e) => handleMirrorChange(e.target.value)}
+              value={publication}
               id="address"
               name="address"
               type="text"
-              className="placeholder:text-gray-300 px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 text-superfluid-100 shadow-sm placeholder:text-superfluid-100 sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
+              className="placeholder:text-gray-300 px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5  shadow-sm sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
             />
           </div>
         </div>
@@ -216,7 +231,7 @@ export default function CampaignForm() {
               id="address"
               name="address"
               type="text"
-              className="placeholder:text-gray-300 px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 text-superfluid-100 shadow-sm placeholder:text-superfluid-100 sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
+              className="placeholder:text-gray-300 px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 shadow-sm sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
             />
           </div>
         </div>
@@ -232,7 +247,7 @@ export default function CampaignForm() {
               id="isHuman"
               name="isHuman"
               type="checkbox"
-              className="inline-block rounded-md mr-2 border-1 border-superfluid-100 py-1.5 text-superfluid-100 shadow-sm placeholder:text-superfluid-100 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
+              className="inline-block rounded-md mr-2 border-1 border-superfluid-100 py-1.5 shadow-sm focus:outline-none focus:ring-1 focus:ring-superfluid-100"
             />
             <label htmlFor="isHuman">
               Only Worldcoin human verified accounts comming soon
@@ -242,6 +257,8 @@ export default function CampaignForm() {
         <div className="sm:col-span-4">
           {amountInSMC !== undefined &&
           publicationId !== undefined &&
+          publicationId !== "" &&
+          clientInfo !== "" &&
           amountFlowRate !== undefined &&
           token !== undefined &&
           clientInfo !== undefined ? (
@@ -306,6 +323,7 @@ export default function CampaignForm() {
                 txLoadingApprove={txLoadingApprove}
                 txErrorApprove={txErrorApprove}
                 txSuccessApprove={txSuccessApprove}
+                getCampaingDone={getCampaingDone}
                 dataApproveHash={dataApprove?.hash}
                 token={token}
               />

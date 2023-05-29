@@ -1,7 +1,7 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 import Image from "next/image";
-import Wallet from "../../public/wallet.svg";
+import Wallet from "../../../public/wallet.svg";
 
 export const Profile = () => {
   return (

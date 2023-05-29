@@ -8,10 +8,10 @@ import {
   useAccount,
 } from "wagmi";
 import { watchContractEvent } from "@wagmi/core";
-import abi from "../../abi/contracts.json";
+import abi from "../../../abi/contracts.json";
 
-import { client, Profiles } from "../pages/api/Profile";
-import Alert from "./Alerts/Alert";
+import { client, Profiles } from "../../pages/api/Profile";
+import Alert from "../Alerts/Alert";
 
 interface EventIdInputInterface {
   amountInSMC: number;
@@ -21,6 +21,7 @@ interface EventIdInputInterface {
   txLoadingApprove?: boolean;
   txErrorApprove?: boolean;
   txSuccessApprove?: boolean;
+  getCampaingDone: (campaignDone: boolean) => void;
   dataApproveHash?: `0x${string}` | undefined;
   isHuman: boolean;
   token: any;
@@ -34,6 +35,7 @@ export default function CreateCampaingButton({
   txSuccessApprove,
   txLoadingApprove,
   txErrorApprove,
+  getCampaingDone,
   dataApproveHash,
   isHuman,
   token,
@@ -269,41 +271,18 @@ export default function CreateCampaingButton({
     }
   }, [clientInfo]);
 
-  // console.log(
-  //   lensProfile?.id.toString(),
-  //   lensProfile?.ownedBy.toString(),
-  //   campaign,
-  //   lensProfile?.followNftAddress,
-  //   Number(amountFlowRate),
-  //   Number(amountInSMC),
-  //   address,
-  //   isHuman,
-  //   publicationId,
-  //   token.symbol + "x"
-  // );
-
-  // console.log(body);
-
-  // console.log(
-  //   JSON.stringify({
-  //     clientProfile: lensProfile?.id.toString(),
-  //     clientAddress: lensProfile?.ownedBy.toString(),
-  //     flowSenderAddress: campaign,
-  //     followNftAddress: lensProfile?.followNftAddress,
-  //     amountFlowRate: Number(amountFlowRate),
-  //     amount: Number(amountInSMC),
-  //     owner: address,
-  //     isHuman: isHuman,
-  //     publicationId: publicationId,
-  //     tokenX: token.symbol + "x",
-  //   })
-  // );
+  useEffect(() => {
+    if (txSuccessCampaign) {
+      postClient();
+    }
+  }, [txSuccessCampaign]);
 
   useEffect(() => {
     setBody(
       JSON.stringify({
         clientProfile: lensProfile?.id.toString(),
         clientAddress: lensProfile?.ownedBy.toString(),
+        totalFollowers: lensProfile?.stats.totalFollowers,
         flowSenderAddress: campaign,
         followNftAddress: lensProfile?.followNftAddress,
         amountFlowRate: Number(amountFlowRate),
@@ -340,6 +319,7 @@ export default function CreateCampaingButton({
       if (txSuccessCampaign) {
         setHash(dataCampaign?.hash);
         setType("success");
+        getCampaingDone(true);
         setMessage("Your campaign has been successfully created!");
       }
     }
@@ -356,13 +336,6 @@ export default function CreateCampaingButton({
       setMessage("Your transaction failed");
     }
   }, [txErrorCampaign, txErrorApprove]);
-
-  useEffect(() => {
-    if (txSuccessCampaign) {
-      console.log(body);
-      postClient();
-    }
-  }, [txSuccessCampaign]);
 
   return (
     <>

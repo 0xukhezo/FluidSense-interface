@@ -5,7 +5,7 @@ import { useProfilesOwnedBy } from "@lens-protocol/react-web";
 import { useContractRead } from "wagmi";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 
-import abi from "../../abi/contracts.json";
+import abi from "../../../abi/contracts.json";
 import { ethers } from "ethers";
 import { tokens } from "@/utils/tokens";
 

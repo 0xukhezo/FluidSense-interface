@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useAccount } from "wagmi";
-import CampaignForm from "@/components/CampaignForm";
+import CampaignForm from "@/components/Form/CampaignForm";
 
-import { Profile } from "@/components/Profile";
+import { Profile } from "@/components/Buttons/Profile";
 
 import Image from "next/image";
 import Logo from "../../public/Iso.svg";
-import CampaignDisplayer from "@/components/CampaignDisplayer";
+import CampaignDisplayer from "@/components/CampaingInfo/CampaignDisplayer";
 
 export default function Home() {
   const { address, isConnected } = useAccount();
