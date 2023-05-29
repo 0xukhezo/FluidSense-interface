@@ -15,6 +15,7 @@ module.exports = {
           100: "#6AC886",
           200: "#6FD08C33",
         },
+        darkBlue: "#001B2E",
       },
       borderWidth: {
         1: "1px",

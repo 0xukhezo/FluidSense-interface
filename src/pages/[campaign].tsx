@@ -71,7 +71,7 @@ export default function CampaignPage() {
           <div className="h-containerDetails w-container rounded-3xl bg-white mx-auto">
             <div className="flex justify-center mt-10 flex-col">
               <div className="flex">
-                <Link href="/">
+                <Link href="/newCampaign">
                   <ChevronLeftIcon
                     className="h-10 text-superfluid-100 ml-4"
                     aria-hidden="true"
