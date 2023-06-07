@@ -35,7 +35,7 @@ export const Profile = () => {
             {(() => {
               if (!connected) {
                 return (
-                  <div className="absolute top-1/3 end-10">
+                  <div>
                     <button
                       onClick={openConnectModal}
                       type="button"
@@ -48,7 +48,7 @@ export const Profile = () => {
               }
               if (chain.unsupported) {
                 return (
-                  <div className="absolute top-1/3 end-10">
+                  <div>
                     <button
                       onClick={openChainModal}
                       type="button"
@@ -60,10 +60,7 @@ export const Profile = () => {
                 );
               }
               return (
-                <div
-                  style={{ display: "flex", gap: 12 }}
-                  className="absolute top-1/3 end-10"
-                >
+                <div style={{ display: "flex", gap: 12 }}>
                   <button
                     onClick={openChainModal}
                     style={{ display: "flex", alignItems: "center" }}
