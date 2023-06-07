@@ -9,6 +9,7 @@ import SteamsDisplayer from "@/components/Steams/SteamsDisplayer";
 import { Profile } from "@/components/Buttons/Profile";
 
 import { clientSuperfluid, Superfluid } from "@/pages/api/Superfluid";
+import NavbarApp from "@/components/Layout/NavbarApp";
 
 export default function Dashboard() {
   const { address, isConnected } = useAccount();
@@ -103,22 +104,7 @@ export default function Dashboard() {
 
   return (
     <div className="bg-[url('../../public/bg1.jpg')] h-screen bg-no-repeat bg-center bg-cover pt-4 overflow-auto">
-      <div className="flex pb-10 pt-20 relative ">
-        <h1 className="text-4xl text-superfluid-100 flex font-bold tracking-wider absolute inset-0 w-screen">
-          <div className="m-auto flex items-center">
-            <Image
-              priority
-              src={Logo}
-              height={64}
-              width={70}
-              alt="Fluid sense logo"
-              className="mx-4"
-            />
-            FluidSense
-          </div>
-        </h1>
-        <Profile />
-      </div>
+      <NavbarApp />
       <div className="flex justify-center flex-col mb-10">
         <div className="h-container w-container rounded-3xl bg-white mx-auto overflow-auto">
           <div className="flex justify-center mt-6 flex-col">

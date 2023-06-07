@@ -31,7 +31,7 @@ export default function SteamValue({
   );
 
   useEffect(() => {
-    const flowPerSecond =
+    const flowPerHalfSecond =
       (Number(
         ethers.utils.formatUnits(Number(steam.time.flowRate).toString(), "18")
       ) *
@@ -39,11 +39,12 @@ export default function SteamValue({
       365 /
       24 /
       60 /
-      5;
+      5 /
+      2;
 
     const timer = setInterval(() => {
-      setFlow((prevCount: number) => prevCount + flowPerSecond);
-    }, 1000);
+      setFlow((prevCount: number) => prevCount + flowPerHalfSecond);
+    }, 500);
 
     return () => {
       clearInterval(timer);

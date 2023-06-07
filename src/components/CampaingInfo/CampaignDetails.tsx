@@ -126,10 +126,12 @@ export default function CampaignDetails({
             <div className="flex flex-col font-semibold ">
               <span className="text-2xl">
                 {Number(profile?.stats.totalFollowers)} ({" "}
-                {((Number(profile?.stats.totalFollowers) -
-                  Number(initialFollowers)) /
-                  Number(profile?.stats.totalFollowers)) *
-                  100}
+                {(
+                  ((Number(profile?.stats.totalFollowers) -
+                    Number(initialFollowers)) /
+                    Number(profile?.stats.totalFollowers)) *
+                  100
+                ).toFixed(2)}
                 % )
               </span>
               <span className="text-xl">adquired followers</span>
