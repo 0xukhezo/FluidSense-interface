@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
 
-import Logo from "../../public/Iso.svg";
-
-import { Profile } from "@/components/Buttons/Profile";
 import CampaingCard from "@/components/Cards/CampaingCard";
-import Link from "next/link";
 import NavbarApp from "@/components/Layout/NavbarApp";
 
 type Campaign = {
