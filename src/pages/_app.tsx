@@ -40,7 +40,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>FluidSense</title>
         <meta name="description" content="Fluid Sense Official Page" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* <link rel="icon" href="/favicon.ico" /> */}
+        <link rel="icon" href="/RocketInfo.svg" />
       </Head>
 
       <WagmiConfig client={client}>
