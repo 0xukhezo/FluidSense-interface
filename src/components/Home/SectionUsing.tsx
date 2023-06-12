@@ -15,7 +15,6 @@ type Sponsor = {
 };
 
 type Profile = {
-  title: string;
   description: string;
   image: string;
   name: string;
@@ -31,21 +30,19 @@ const sponsors = [
 
 const profiles = [
   {
-    title: "Lorem",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus.",
+      "Fluidsense has been a game-changer for my business. I was able to reach and engage with my ideal customers in a fast and effective way. Thanks to Fluidsense, I increased my brand awareness, traffic, and sales.",
     image: Especulacion.src,
     name: "especulacion.lens",
     profileInfo:
-      "Founder of Crypto Plaza, and Manager of Roble Venture Capital. Delegate in AAVE Ambassador of Superfluid and MakerDAO.",
+      "CEO and Co-Founder of Fluidsense. Founder of Crypto Plaza, and Manager of Roble Venture Capital. Delegate in AAVE Ambassador of Superfluid and MakerDAO.",
   },
   {
-    title: "Lorem",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus.",
+      "This is an amazing platform for web 3 developers. It allows me to showcase my projects and get feedback from the community. I also get rewarded for interacting with other developers and learning from their work.",
     image: Ukhezo.src,
     name: "ukhezo.lens",
-    profileInfo: "Web3 Developer",
+    profileInfo: "Co-Founder of Fluidsense. Web3 Developer",
   },
 ];
 
@@ -55,10 +52,10 @@ export default function SectionUsing() {
       <h1 className="mt-[112px] text-center font-bold text-4xl">
         Who is using FluidSense?
       </h1>
-      <div className="flex flex-row mx-6 justify-between mt-[67px] border-b-1 border-b-superfluid-100 mx-[120px] px-[24px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mx-6 justify-between mt-[67px] border-b-1 border-b-superfluid-100 mx-[120px] px-[24px] mx-auto gap-x-10">
         {sponsors.map((sponsor: Sponsor, index: number) => {
           return (
-            <div key={index} className="flex pb-16">
+            <div key={index} className="flex pb-16 mx-auto">
               <Image
                 priority
                 src={sponsor.image}
@@ -70,20 +67,14 @@ export default function SectionUsing() {
           );
         })}{" "}
       </div>
-      <h2 className="mt-[72px] text-center font-bold text-4xl">
+      <h2 className="mt-[72px] text-center font-bold text-4xl mb-9">
         What they say about us
       </h2>
-      <div className="text-center max-w-[728px] mt-8 mx-auto mb-[40px]">
-        Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi.
-        Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla,
-        mattis ligula consectetur, ultrices mauris.
-      </div>
-      <div className="flex flex-row px-32 ">
+      <div className="grid grid-cols-1 md:grid-cols-2  lg:px-32 max-h-fit">
         {profiles.map((profile: Profile, index: number) => {
           return (
             <div key={index}>
               <ProfileCard
-                title={profile.title}
                 description={profile.description}
                 image={profile.image}
                 name={profile.name}

@@ -4,13 +4,11 @@ import Image from "next/image";
 interface LandingWorkCardInterface {
   image: string;
   title: string;
-  description: string;
 }
 
 export default function LandingWorkCard({
   image,
   title,
-  description,
 }: LandingWorkCardInterface) {
   return (
     <div className="items-center flex flex-col text-center">
@@ -22,8 +20,7 @@ export default function LandingWorkCard({
         alt="Fluid sense logo"
         className="mx-4"
       />
-      <h1>{title}</h1>
-      <div className="max-w-[310px]">{description}</div>
+      <h1 className="text-2xl font-bold">{title}</h1>
     </div>
   );
 }
