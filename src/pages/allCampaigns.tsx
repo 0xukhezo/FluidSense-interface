@@ -18,7 +18,7 @@ type Campaign = {
   totalFollowers: number | null;
 };
 
-export default function allCampaings() {
+export default function AllCampaings() {
   const [campaigns, setCampaigns] = useState<any[]>();
 
   async function getCampaigns() {

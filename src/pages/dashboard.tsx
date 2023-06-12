@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useAccount } from "wagmi";
 import Link from "next/link";
-import Image from "next/image";
-
-import Logo from "../../public/Iso.svg";
 
 import SteamsDisplayer from "@/components/Steams/SteamsDisplayer";
-import { Profile } from "@/components/Buttons/Profile";
 
 import { clientSuperfluid, Superfluid } from "@/pages/api/Superfluid";
 import NavbarApp from "@/components/Layout/NavbarApp";
