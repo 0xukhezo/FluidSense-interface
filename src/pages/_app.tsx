@@ -12,7 +12,7 @@ import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import React from "react";
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [polygon, polygonMumbai, mainnet],
+  [polygon],
   [publicProvider()]
 );
 

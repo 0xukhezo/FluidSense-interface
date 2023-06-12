@@ -10,6 +10,7 @@ import { ChevronLeftIcon } from "@heroicons/react/20/solid";
 import { Profile } from "@/components/Buttons/Profile";
 import CampaignDetails from "@/components/CampaingInfo/CampaignDetails";
 import { tokens } from "@/utils/tokens";
+import NavbarApp from "@/components/Layout/NavbarApp";
 
 export default function CampaignPage() {
   const { query } = useRouter();
@@ -50,28 +51,13 @@ export default function CampaignPage() {
 
   return (
     <div className="bg-[url('../../public/bg1.jpg')] h-screen bg-no-repeat bg-center bg-cover pt-10 overflow-auto">
-      <div className="flex pb-10 pt-20 relative ">
-        <h1 className="text-4xl text-superfluid-100 flex font-bold tracking-wider absolute inset-0 w-screen">
-          <div className="m-auto flex items-center">
-            <Image
-              priority
-              src={Logo}
-              height={64}
-              width={70}
-              alt="Fluid sense logo"
-              className="mx-4"
-            />
-            FluidSense
-          </div>
-        </h1>
-        <Profile />
-      </div>
+      <NavbarApp />
       {campaign !== undefined && tokenAddress !== undefined && (
         <div className="flex justify-center flex-col">
           <div className="h-containerDetails w-container rounded-3xl bg-white mx-auto">
             <div className="flex justify-center mt-10 flex-col">
               <div className="flex">
-                <Link href="/">
+                <Link href="/newCampaign">
                   <ChevronLeftIcon
                     className="h-10 text-superfluid-100 ml-4"
                     aria-hidden="true"
