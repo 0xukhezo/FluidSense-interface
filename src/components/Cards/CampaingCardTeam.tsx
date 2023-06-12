@@ -5,7 +5,6 @@ import { useContractRead } from "wagmi";
 import abi from "../../../abi/contracts.json";
 
 import { tokens } from "../../utils/tokens";
-import Link from "next/link";
 import { ethers } from "ethers";
 import { clientSuperfluid, Superfluid } from "@/pages/api/Superfluid";
 
