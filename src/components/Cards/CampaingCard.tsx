@@ -13,19 +13,6 @@ interface CampaingCardInterface {
   campaign: any;
 }
 
-// amount: number;
-// amountFlowRate: number;
-// clientAddress: string;
-// clientProfile: string;
-// flowSenderAddress: string;
-// followNftAddress: string;
-// idclients: number;
-// isHuman: number;
-// owner: string;
-// publicationId: string;
-// tokenX: string;
-// totalFollowers: number | null;
-
 export default function CampaingCard({ campaign }: CampaingCardInterface) {
   const [steamActive, setSteamActive] = useState();
 
@@ -116,25 +103,30 @@ export default function CampaingCard({ campaign }: CampaingCardInterface) {
             {steamActive && <div>End: {dateFormated}</div>}
           </div>
           <div className="flex flex-row justify-between mb-4 text-lg">
-            <a
-              className="text-center hover:text-superfluid-100 "
-              href={`https://lenster.xyz/u/${profile.handle}`}
-              target="_blank"
-            >
-              {profile.handle}{" "}
-            </a>
+            <div>
+              <span className="font-bold">Follow:</span> {profile.handle}
+              <a
+                className="text-center hover:text-superfluid-100 "
+                href={`https://lenster.xyz/u/${profile.handle}`}
+                target="_blank"
+              ></a>
+            </div>
             <div className="text-center">
               {campaign.amountFlowRate.toFixed(2)} {campaign.tokenX} / mo
             </div>
           </div>
           {campaign.publicationId !== "0x00000" && (
-            <a
-              className="flex justify-center text-center hover:text-superfluid-100 mb-4 text-lg"
-              href={`https://lenster.xyz/posts/${campaign.publicationId}`}
-              target="_blank"
-            >
-              https://lenster.xyz/posts/${campaign.publicationId}
-            </a>
+            <div className="flex flex-row justify-center text-center mb-4 text-lg">
+              <span className="font-bold ">Mirror: </span>
+              <a
+                className="hover:text-superfluid-100 "
+                href={`https://lenster.xyz/posts/${campaign.publicationId}`}
+                target="_blank"
+              >
+                {" "}
+                https://lenster.xyz/posts/${campaign.publicationId}
+              </a>
+            </div>
           )}
           <div className="text-center text-xl font-bold text-superfluid-100 mb-4">
             <div>

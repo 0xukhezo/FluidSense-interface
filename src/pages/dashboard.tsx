@@ -125,19 +125,6 @@ export default function Dashboard() {
             ) : (
               <>
                 <div className="px-20">
-                  {(currentSteams === undefined ||
-                    pastSteams === undefined ||
-                    inputAddress) && (
-                    <div className="text-center">
-                      <h2 className="text-2xl mx-auto my-2 text-superfluid-100 leading-8 font-bold">
-                        No campaigns founded in your profile,find a friend who
-                        have one or create{" "}
-                        <Link href="/newcampaing" className="underline">
-                          a new campaign here
-                        </Link>
-                      </h2>
-                    </div>
-                  )}
                   <label
                     htmlFor="amount"
                     className="block text-xl font-bold leading-6 text-gray-900 pb-2 mt-[50px] px-10"
