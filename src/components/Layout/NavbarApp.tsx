@@ -29,9 +29,9 @@ export default function NavbarApp() {
             New Campaign
           </Link>
         )}
-        {router.asPath !== "/allCampaigns" && (
+        {router.asPath !== "/earn" && (
           <Link
-            href="/allCampaigns"
+            href="/earn"
             className={
               router.asPath !== "/newCampaign" ? "mx-2 mt-2" : "mx-2 mt-2 ml-6"
             }
