@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 
 export default function NavbarApp() {
   const router = useRouter();
-  console.log(router.asPath);
+
   return (
     <div className="flex flex-row justify-between items-center mx-10 my-4">
       <div className="flex flex-row items-center text-superfluid-100 font-bold">
@@ -29,14 +29,14 @@ export default function NavbarApp() {
             New Campaign
           </Link>
         )}
-        {router.asPath !== "/allCampaigns" && (
+        {router.asPath !== "/earn" && (
           <Link
-            href="/allCampaigns"
+            href="/earn"
             className={
               router.asPath !== "/newCampaign" ? "mx-2 mt-2" : "mx-2 mt-2 ml-6"
             }
           >
-            All Campaigns
+            Earn
           </Link>
         )}
         {router.asPath !== "/dashboard" && (

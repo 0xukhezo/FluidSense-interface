@@ -65,7 +65,7 @@ export default function TokensModal({
                   <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
                     <Dialog.Title
                       as="h3"
-                      className="text-base font-semibold leading-6 text-gray-900"
+                      className="text-xl font-semibold leading-6 text-gray-900"
                     >
                       Select a token
                     </Dialog.Title>
@@ -75,7 +75,7 @@ export default function TokensModal({
                           <button
                             key={index}
                             onClick={() => closeModal(token)}
-                            className="flex items-center w-full p-2 hover:bg-gray-100 rounded-lg "
+                            className="flex items-center w-full p-2 hover:bg-superfluid-200 rounded-lg"
                           >
                             <TokenCard token={token} />
                           </button>
