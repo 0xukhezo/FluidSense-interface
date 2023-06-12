@@ -1,6 +1,6 @@
 import React from "react";
 
-import LandingWorkCard from "../Cards/LandingWorkcard";
+import LandingWorkCard from "../Cards/LandingWorkCard";
 
 import Wallet from "../../../public/WalletInfo.svg";
 import Content from "../../../public/ContentInfo.svg";
@@ -9,52 +9,39 @@ import Rocket from "../../../public/RocketInfo.svg";
 
 type Info = {
   title: string;
-  description: string;
   image: string;
 };
 
 const cardInfo = [
   {
     title: "Connect your Wallet",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna.",
     image: Wallet.src,
   },
   {
-    title: "Connect your Wallet",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna.",
+    title: "Select the profile or the post to boost ",
     image: Content.src,
   },
   {
-    title: "Connect your Wallet",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna.",
+    title: "Select the reward ",
     image: Rewards.src,
   },
   {
-    title: "Connect your Wallet",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi. Aliquam in hendrerit urna.",
+    title: "Launch your campaign",
     image: Rocket.src,
   },
 ];
 
 export default function SectionWork() {
   return (
-    <div className="text-center px-32">
-      <h1 className="font-bold text-4xl mb-[45px] mt-[101px]">
+    <div className="text-center lg:px-32">
+      <h1 className="font-bold text-4xl mb-[45px] lg:mt-[101px]">
         How does it work?
       </h1>
-      <div className="flex flex-row items-center justify-center mb-[102px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mb-[102px] mx-auto">
         {cardInfo.map((info: Info, index: number) => {
           return (
-            <div className="mx-6 max-w-[310px]" key={index}>
-              <LandingWorkCard
-                title={info.title}
-                description={info.description}
-                image={info.image}
-              />{" "}
+            <div className=" max-w-[310px] mt-6 mx-auto" key={index}>
+              <LandingWorkCard title={info.title} image={info.image} />{" "}
             </div>
           );
         })}{" "}
