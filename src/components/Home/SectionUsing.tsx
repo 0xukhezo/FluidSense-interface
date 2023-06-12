@@ -25,7 +25,7 @@ const sponsors = [
   { image: CryptoPlaza.src },
   { image: SuperFluid.src },
   { image: Maker.src },
-  { image: CoinShift.src },
+  // { image: CoinShift.src },
 ];
 
 const profiles = [
@@ -52,7 +52,7 @@ export default function SectionUsing() {
       <h1 className="mt-[112px] text-center font-bold text-4xl">
         Who is using FluidSense?
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mx-6 justify-between mt-[67px] border-b-1 border-b-superfluid-100 mx-[120px] px-[24px] mx-auto gap-x-10">
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 mx-6 justify-between mt-[67px] border-b-1 border-b-superfluid-100 mx-[120px] px-[24px] mx-auto gap-x-10">
         {sponsors.map((sponsor: Sponsor, index: number) => {
           return (
             <div key={index} className="flex pb-16 mx-auto">
