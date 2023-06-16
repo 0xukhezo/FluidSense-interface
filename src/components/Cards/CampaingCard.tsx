@@ -15,6 +15,7 @@ interface CampaingCardInterface {
 
 export default function CampaingCard({ campaign }: CampaingCardInterface) {
   const [steamActive, setSteamActive] = useState();
+  const [steams, setSteams] = useState<any[]>();
 
   const { data: profile } = useProfile({
     profileId: campaign.clientProfile as ProfileId,
@@ -40,8 +41,15 @@ export default function CampaingCard({ campaign }: CampaingCardInterface) {
         accountTokenSnapshots {
           maybeCriticalAtTimestamp
         }
+        outflows {
+          receiver {
+            id
+          }
+          currentFlowRate
+        }
       }
     }`;
+
     try {
       let response = await clientSuperfluid.query({
         query: Superfluid(queryBody),
@@ -49,6 +57,29 @@ export default function CampaingCard({ campaign }: CampaingCardInterface) {
       setSteamActive(
         response.data.account.accountTokenSnapshots[0].maybeCriticalAtTimestamp
       );
+      let data = response.data.account.outflows;
+
+      const steams: string[] = [];
+      const flows: number[] = [];
+
+      for (var i = 0; i < data.length; i++) {
+        const elemento = data[i].receiver.id;
+        const currentFlowRate = data[i].currentFlowRate;
+
+        if (!steams.includes(data[i].receiver.id)) {
+          steams.push(elemento);
+          flows.push(currentFlowRate);
+        }
+      }
+
+      const mergedData = steams.reduce(
+        (result: any, receiver: any, index: number) => {
+          return [...result, { receiver, flow: flows[index] }];
+        },
+        []
+      );
+
+      setSteams(mergedData);
     } catch (err) {
       console.log(err);
     }
@@ -78,7 +109,7 @@ export default function CampaingCard({ campaign }: CampaingCardInterface) {
           : "px-2 pt-8 border-1 border-superfluid-100 rounded-lg m-4 min-h-[340px]"
       }
     >
-      {profile && (
+      {profile && steams && (
         <div className="p-6">
           <div className="flex flex-row justify-between mb-4 text-lg">
             <a
@@ -144,14 +175,9 @@ export default function CampaingCard({ campaign }: CampaingCardInterface) {
           <div className="grid grid-cols-4 text-center text-lg font-semibold text-superfluid-100">
             <div>{campaign.totalFollowers}</div>
             <div>{profile.stats.totalFollowers}</div>
-            <div>+{profile.stats.totalFollowers - campaign.totalFollowers}</div>
+            <div>+{steams?.length}</div>
             <div>
-              {(
-                ((profile.stats.totalFollowers - campaign.totalFollowers) *
-                  100) /
-                profile.stats.totalFollowers
-              ).toFixed(2)}
-              %
+              {((steams?.length * 100) / campaign.totalFollowers).toFixed(2)}%
             </div>
           </div>
         </div>

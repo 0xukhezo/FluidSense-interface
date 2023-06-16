@@ -30,6 +30,7 @@ export default function CampaignDetails({
 
   const [balance, setBalance] = useState<string>();
   const [steams, setSteams] = useState<any[]>();
+  const [steamsCreated, setSteamsCreated] = useState<any[]>();
   const [loadingSteams, setLoadingSteams] = useState<boolean>(false);
 
   const { data, isSuccess } = useContractRead({
@@ -82,7 +83,7 @@ export default function CampaignDetails({
         },
         []
       );
-
+      setSteamsCreated(mergedData);
       const filteredData = mergedData.filter((item) => item.flow !== "0");
       setSteams(filteredData);
     } catch (err) {
@@ -121,26 +122,24 @@ export default function CampaignDetails({
           <div className="grid grid-cols-3 mt-8">
             <div className="flex flex-col font-semibold">
               <span className="text-2xl">{Number(initialFollowers)}</span>
-              <span className="text-xl">initial followers</span>
+              <span className="text-xl">Initial followers</span>
             </div>
             <div className="flex flex-col font-semibold ">
               <span className="text-2xl">
-                {Number(profile?.stats.totalFollowers)} ({" "}
+                +{steamsCreated?.length} ({" "}
                 {(
-                  ((Number(profile?.stats.totalFollowers) -
-                    Number(initialFollowers)) /
-                    Number(profile?.stats.totalFollowers)) *
+                  (Number(steamsCreated?.length) / Number(initialFollowers)) *
                   100
                 ).toFixed(2)}
                 % )
               </span>
-              <span className="text-xl">adquired followers</span>
+              <span className="text-xl">Adquired followers</span>
             </div>
             <div className="flex flex-col font-semibold ">
               <span className="text-2xl">
                 {Number(amountFlowRate).toFixed(2)} {tokenX}
               </span>
-              <span className="text-xl">price per follower</span>
+              <span className="text-xl">Price per follower</span>
             </div>
           </div>
           <div className="mt-10">
