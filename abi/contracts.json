@@ -172,87 +172,6 @@
       "type": "function"
     }
   ],
-  "abiCampaignFactoryUSDC": [
-    {
-      "inputs": [
-        {
-          "internalType": "contract ISuperToken",
-          "name": "_tokenX",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "_owner",
-          "type": "address"
-        },
-        {
-          "internalType": "contract ERC20",
-          "name": "_usdc",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "sender",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "address",
-          "name": "campaign",
-          "type": "address"
-        }
-      ],
-      "name": "NewCampaign",
-      "type": "event"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "deployCampaign",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "owner",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "token",
-      "outputs": [
-        {
-          "internalType": "contract ISuperToken",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    }
-  ],
   "abiSuperTokenX": [
     {
       "inputs": [
@@ -1535,8 +1454,16 @@
           "name": "_tokenX",
           "type": "address"
         },
-        { "internalType": "address", "name": "_owner", "type": "address" },
-        { "internalType": "contract ERC20", "name": "_usdc", "type": "address" }
+        {
+          "internalType": "address",
+          "name": "_owner",
+          "type": "address"
+        },
+        {
+          "internalType": "contract ERC20",
+          "name": "_token",
+          "type": "address"
+        }
       ],
       "stateMutability": "nonpayable",
       "type": "constructor"
@@ -1562,7 +1489,11 @@
     },
     {
       "inputs": [
-        { "internalType": "uint256", "name": "amount", "type": "uint256" }
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
       ],
       "name": "deployCampaign",
       "outputs": [],

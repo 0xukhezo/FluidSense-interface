@@ -54,6 +54,7 @@ export default function CampaingCard({ campaign }: CampaingCardInterface) {
       let response = await clientSuperfluid.query({
         query: Superfluid(queryBody),
       });
+      console.log(response);
       setSteamActive(
         response.data.account.accountTokenSnapshots[0].maybeCriticalAtTimestamp
       );
