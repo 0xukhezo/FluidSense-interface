@@ -99,7 +99,7 @@ export default function CampaignForm() {
 
   useEffect(() => {
     setPublication("");
-    setAmountFlowRate(0);
+    setAmountFlowRate(0.5);
     setAmountInSMC(0);
     setClientInfo("");
   }, [campaingDone]);
@@ -133,7 +133,8 @@ export default function CampaignForm() {
             Flow
           </label>
           <div className="text-base leading-5 pb-2">
-            Define how much each user will get with your campaign.
+            Define how much each user will get with your campaign, need to be at
+            least 0.5
           </div>
           <div className="mt-2">
             <input
@@ -156,6 +157,11 @@ export default function CampaignForm() {
               className="px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 shadow-sm sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
             />
           </div>
+          {amountFlowRate !== undefined && amountFlowRate < 0.5 && (
+            <div className="text-red-500 mt-2">
+              The minimum amount of steam needed to open a campaign is 0.5{" "}
+            </div>
+          )}
         </div>
         <div className="sm:col-span-2">
           <label
@@ -260,6 +266,7 @@ export default function CampaignForm() {
           publicationId !== "" &&
           clientInfo !== "" &&
           amountFlowRate !== undefined &&
+          amountFlowRate >= 0.5 &&
           token !== undefined &&
           clientInfo !== undefined ? (
             txReceiptApprove === undefined ? (
