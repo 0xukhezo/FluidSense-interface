@@ -157,11 +157,19 @@ export default function CampaignForm() {
               className="px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 shadow-sm sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
             />
           </div>
-          {amountFlowRate !== undefined && amountFlowRate < 0.5 && (
-            <div className="text-red-500 mt-2">
-              The minimum amount of steam needed to open a campaign is 0.5{" "}
-            </div>
-          )}
+          {token.symbol !== "ETH"
+            ? amountFlowRate !== undefined &&
+              amountFlowRate < 0.5 && (
+                <div className="text-red-500 mt-2">
+                  The minimum amount of steam needed to open a campaign is 0.5{" "}
+                </div>
+              )
+            : amountFlowRate !== undefined &&
+              amountFlowRate < 0.05 && (
+                <div className="text-red-500 mt-2">
+                  The minimum amount of steam needed to open a campaign is 0.05{" "}
+                </div>
+              )}
         </div>
         <div className="sm:col-span-2">
           <label
@@ -266,7 +274,6 @@ export default function CampaignForm() {
           publicationId !== "" &&
           clientInfo !== "" &&
           amountFlowRate !== undefined &&
-          amountFlowRate >= 0.5 &&
           token !== undefined &&
           clientInfo !== undefined ? (
             txReceiptApprove === undefined ? (
@@ -278,12 +285,19 @@ export default function CampaignForm() {
                 </div>
               ) : !txLoadingApprove ? (
                 <div className="mt-2 flex justify-center ">
-                  <button
-                    onClick={() => onApproveClick()}
-                    className=" px-20 py-5 rounded-full bg-superfluid-100 leading-8 font-bold tracking-wide"
-                  >
-                    Approve
-                  </button>
+                  {(amountFlowRate >= 0.5 && token.symbol !== "ETH") ||
+                  (token.symbol === "ETH" && amountFlowRate >= 0.05) ? (
+                    <button
+                      onClick={() => onApproveClick()}
+                      className=" px-20 py-5 rounded-full bg-superfluid-100 leading-8 font-bold tracking-wide"
+                    >
+                      Approve
+                    </button>
+                  ) : (
+                    <div className="px-20 py-5 rounded-full text-gray-600 bg-gray-200 leading-8 font-bold opacity-50 tracking-wide">
+                      Approve
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div>

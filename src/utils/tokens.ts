@@ -1,5 +1,6 @@
 import daiLogo from "../../public/dai.png";
 import usdcLogo from "../../public/usdc.svg";
+import ethLogo from "../../public/eth.svg";
 import wmaticLogo from "../../public/wmatic.png";
 
 export const tokens = [
@@ -16,6 +17,13 @@ export const tokens = [
     img: daiLogo,
     symbol: "DAI",
     factory: "0x33BD5F5639697E1d53e7453C17786b894A0870Dc",
+  },
+  {
+    address: "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+    addressX: "0x27e1e4E6BC79D93032abef01025811B7E4727e85",
+    img: ethLogo,
+    symbol: "ETH",
+    factory: "0xAE9be9bF33103523566096863faF0016deEfCa53",
   },
   {
     address: "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
