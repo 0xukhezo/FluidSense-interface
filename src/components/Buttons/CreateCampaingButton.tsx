@@ -278,6 +278,7 @@ export default function CreateCampaingButton({
   }, [txSuccessCampaign]);
 
   useEffect(() => {
+    console.log("Creating Body");
     setBody(
       JSON.stringify({
         clientProfile: lensProfile?.id.toString(),
