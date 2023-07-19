@@ -94,6 +94,7 @@ export default function CampaignForm() {
   const handleMirrorChange = (e: string) => {
     setPublication(e);
     const value = e.split("/");
+
     setPublicationId(value[value.length - 1]);
   };
 
