@@ -51,7 +51,7 @@ export default function Home() {
     <div className="bg-[url('../../public/bg1.jpg')] h-screen bg-no-repeat bg-center bg-cover pt-4 overflow-auto">
       <NavbarApp />
       <div className="flex justify-center flex-col mb-10">
-        <div className="h-container w-container rounded-3xl bg-white mx-auto">
+        <div className="h-fit w-container rounded-3xl bg-white mx-auto pb-6">
           <div className="flex justify-center mt-6 flex-col">
             <h2 className="text-2xl mx-auto my-2 text-superfluid-100 leading-8 font-bold">
               Set up your campaign
