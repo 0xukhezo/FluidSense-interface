@@ -17,7 +17,9 @@ export default function Home() {
 
   async function getClients() {
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_API as string)
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_API_CLIENTS as string
+      )
         .then((res) => {
           if (res.status >= 400) {
             throw new Error("Bad response from server");

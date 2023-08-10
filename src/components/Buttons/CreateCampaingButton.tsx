@@ -228,7 +228,7 @@ export default function CreateCampaingButton({
 
   async function postClient() {
     try {
-      await fetch(process.env.NEXT_PUBLIC_API as string, {
+      await fetch(process.env.NEXT_PUBLIC_API_CLIENTS as string, {
         method: "POST",
         headers: {
           accept: "application/json",
