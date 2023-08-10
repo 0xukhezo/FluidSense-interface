@@ -63,9 +63,9 @@ export default function SteamValue({
         </a>
       </span>
       <div className="grid grid-cols-2 text-end">
-        <span>
+        <span className="mr-1">
           {typeOfSteam === "current"
-            ? Number(flow).toFixed(8)
+            ? Number(flow).toFixed(6)
             : (flowInNumber * timeOn) / 365 / 24 / 5 / 60 > 1000
             ? ((flowInNumber * timeOn) / 365 / 24 / 5 / 60).toFixed(2)
             : ((flowInNumber * timeOn) / 365 / 24 / 5 / 60).toFixed(6)}

@@ -20,6 +20,7 @@ export default function CampaignForm() {
   const [publicationId, setPublicationId] = useState<string>();
   const [amountFlowRate, setAmountFlowRate] = useState<number>();
   const [amountInSMC, setAmountInSMC] = useState<number>();
+  const [minimumFollowers, setMinimumFollowers] = useState<number>(0);
   const [campaingDone, setCampaingDone] = useState<boolean>(false);
   const [isHuman, setIsHuman] = useState<boolean>(false);
   const [token, setToken] = useState({
@@ -65,6 +66,10 @@ export default function CampaignForm() {
 
   const handleAmountInSMCChange = (val: string) => {
     setAmountInSMC(Number(val));
+  };
+
+  const handleMinimumFollowersChange = (val: string) => {
+    setMinimumFollowers(Number(val));
   };
 
   const handleClientChange = (e: any) => {
@@ -154,7 +159,6 @@ export default function CampaignForm() {
               type="number"
               name="flow"
               id="flow"
-              autoComplete="given-name"
               className="px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 shadow-sm sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
             />
           </div>
@@ -199,7 +203,38 @@ export default function CampaignForm() {
               type="number"
               name="amount"
               id="amount"
-              autoComplete="family-name"
+              className="px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 shadow-sm sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
+            />
+          </div>
+        </div>
+        <div className="sm:col-span-2">
+          <label
+            htmlFor="amount"
+            className="block text-xl font-bold leading-6 text-gray-900 pb-2"
+          >
+            Minimum Followers
+          </label>
+          <div className="text-base leading-5 pb-2">
+            Define the minimum followers who needs to have the follower to
+            receive the campaign flow. That value es optional.
+          </div>
+          <div className="mt-2">
+            <input
+              value={minimumFollowers}
+              onChange={(e) => handleMinimumFollowersChange(e.target.value)}
+              onFocus={(e) =>
+                e.target.addEventListener(
+                  "wheel",
+                  function (e) {
+                    e.preventDefault();
+                  },
+                  { passive: false }
+                )
+              }
+              step="any"
+              type="number"
+              name="minimumFollowers"
+              id="minimumFollowers"
               className="px-4 block w-full rounded-md border-1 border-superfluid-100 py-1.5 shadow-sm sm:text-sm sm:leading-6 focus:outline-none focus:ring-1 focus:ring-superfluid-100"
             />
           </div>
@@ -342,6 +377,7 @@ export default function CampaignForm() {
                 isHuman={isHuman}
                 publicationId={publicationId}
                 amountFlowRate={amountFlowRate}
+                minimumFollowers={minimumFollowers}
                 txLoadingApprove={txLoadingApprove}
                 txErrorApprove={txErrorApprove}
                 txSuccessApprove={txSuccessApprove}

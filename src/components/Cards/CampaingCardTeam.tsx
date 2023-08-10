@@ -10,12 +10,15 @@ import { clientSuperfluid, Superfluid } from "@/pages/api/Superfluid";
 
 interface CampaingCardTeamInterface {
   campaign: any;
+  getFollowersGained?: (followers: number) => void;
 }
 
 export default function CampaingCardTeam({
   campaign,
+  getFollowersGained,
 }: CampaingCardTeamInterface) {
   const [steamActive, setSteamActive] = useState();
+  const [steams, setSteams] = useState<any[]>();
 
   const { data: profile } = useProfile({
     profileId: campaign.clientProfile as ProfileId,
@@ -41,6 +44,12 @@ export default function CampaingCardTeam({
         accountTokenSnapshots {
           maybeCriticalAtTimestamp
         }
+        outflows {
+          receiver {
+            id
+          }
+          currentFlowRate
+        }
       }
     }`;
     try {
@@ -50,6 +59,29 @@ export default function CampaingCardTeam({
       setSteamActive(
         response.data.account.accountTokenSnapshots[0].maybeCriticalAtTimestamp
       );
+      let data = response.data.account.outflows;
+
+      const steams: string[] = [];
+      const flows: number[] = [];
+
+      for (var i = 0; i < data.length; i++) {
+        const elemento = data[i].receiver.id;
+        const currentFlowRate = data[i].currentFlowRate;
+
+        if (!steams.includes(data[i].receiver.id)) {
+          steams.push(elemento);
+          flows.push(currentFlowRate);
+        }
+      }
+
+      const mergedData = steams.reduce(
+        (result: any, receiver: any, index: number) => {
+          return [...result, { receiver, flow: flows[index] }];
+        },
+        []
+      );
+
+      setSteams(mergedData);
     } catch (err) {
       console.log(err);
     }
@@ -69,11 +101,15 @@ export default function CampaingCardTeam({
 
   useEffect(() => {
     fetchSteams();
+    if (getFollowersGained) {
+      console.log(steams);
+      getFollowersGained(steams ? steams.length : 0);
+    }
   }, []);
 
   return (
     <div className="">
-      {profile && (
+      {profile && steams && (
         <div className="grid grid-cols-12 border-t-superfluid-100 border-t-1 py-4">
           <div>
             {Number(data) !== 0.0 ? (
@@ -90,7 +126,6 @@ export default function CampaingCardTeam({
             {Number(ethers.utils.formatUnits(data as string, "18")).toFixed(2)}{" "}
           </div>
           <div>{campaign.tokenX} </div>
-
           <a
             href={`https://console.superfluid.finance/matic/accounts/${campaign.flowSenderAddress}`}
             target="_blank"
@@ -99,7 +134,6 @@ export default function CampaingCardTeam({
             {campaign.flowSenderAddress.slice(0, 6)}...
             {campaign.flowSenderAddress.slice(-6)}
           </a>
-
           <div>{steamActive ? <div>{dateFormated}</div> : <div>-</div>} </div>
           <a
             className=" hover:text-superfluid-100 "
@@ -122,16 +156,11 @@ export default function CampaingCardTeam({
           ) : (
             <div>-</div>
           )}
-
           <div>{campaign.totalFollowers}</div>
           <div>{profile.stats.totalFollowers}</div>
-          <div>+{profile.stats.totalFollowers - campaign.totalFollowers}</div>
+          <div>+{steams?.length}</div>
           <div>
-            {(
-              ((profile.stats.totalFollowers - campaign.totalFollowers) * 100) /
-              profile.stats.totalFollowers
-            ).toFixed(2)}
-            %
+            +{((steams?.length * 100) / campaign.totalFollowers).toFixed(2)}%
           </div>
         </div>
       )}

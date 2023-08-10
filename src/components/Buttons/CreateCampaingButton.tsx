@@ -16,6 +16,7 @@ import Alert from "../Alerts/Alert";
 interface EventIdInputInterface {
   amountInSMC: number;
   amountFlowRate: number;
+  minimumFollowers: number;
   clientInfo: string;
   publicationId: string;
   txLoadingApprove?: boolean;
@@ -30,6 +31,7 @@ interface EventIdInputInterface {
 export default function CreateCampaingButton({
   amountInSMC,
   amountFlowRate,
+  minimumFollowers,
   clientInfo,
   publicationId,
   txSuccessApprove,
@@ -226,7 +228,7 @@ export default function CreateCampaingButton({
 
   async function postClient() {
     try {
-      await fetch(process.env.NEXT_PUBLIC_API as string, {
+      await fetch(process.env.NEXT_PUBLIC_API_CLIENTS as string, {
         method: "POST",
         headers: {
           accept: "application/json",
@@ -288,6 +290,7 @@ export default function CreateCampaingButton({
         followNftAddress: lensProfile?.followNftAddress,
         amountFlowRate: Number(amountFlowRate),
         amount: Number(amountInSMC),
+        minimumFollowers: Number(minimumFollowers),
         owner: address,
         isHuman: isHuman,
         publicationId: publicationId,
