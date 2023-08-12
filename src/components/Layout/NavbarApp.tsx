@@ -29,6 +29,11 @@ export default function NavbarApp() {
             New Campaign
           </Link>
         )}
+        {/* {router.asPath !== "/newList" && (
+          <Link href="/newList" className="mr-2 mt-2 ml-6">
+            New List
+          </Link>
+        )} */}
         {router.asPath !== "/earn" && (
           <Link
             href="/earn"

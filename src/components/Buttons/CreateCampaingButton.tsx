@@ -15,8 +15,9 @@ import Alert from "../Alerts/Alert";
 
 interface EventIdInputInterface {
   amountInSMC: number;
+  listArray?: string[];
   amountFlowRate: number;
-  minimumFollowers: number;
+  minimumFollowers?: number;
   clientInfo: string;
   publicationId: string;
   txLoadingApprove?: boolean;
@@ -31,6 +32,7 @@ interface EventIdInputInterface {
 export default function CreateCampaingButton({
   amountInSMC,
   amountFlowRate,
+  listArray,
   minimumFollowers,
   clientInfo,
   publicationId,
@@ -47,6 +49,13 @@ export default function CreateCampaingButton({
   const [body, setBody] = useState<any>();
   const [type, setType] = useState<string>();
   const [message, setMessage] = useState<string>();
+  const [listOfAddress, setListOfAddress] = useState<string[]>([
+    "",
+    "",
+    "",
+    "",
+    "",
+  ]);
   const [campaign, setCampaing] = useState<string>();
   const [noLensProfile, setNoLensProfile] = useState<boolean>(false);
   const [hash, setHash] = useState<string>();
@@ -85,7 +94,7 @@ export default function CreateCampaingButton({
     hash: dataCampaign?.hash,
   });
 
-  async function fetchProfiles(typeQuery: string) {
+  async function fetchProfiles(typeQuery: string, clientInfo: string) {
     const queryBody = `query Profiles {
       profiles(request: { ${typeQuery}: ["${clientInfo}"], limit: 1 }) {
         items {
@@ -226,16 +235,45 @@ export default function CreateCampaingButton({
     }
   }
 
+  async function fetchProfilesList(clientInfoArray: string[]) {
+    const resultArray = [];
+
+    for (const clientInfo of clientInfoArray) {
+      const queryBody = `query Profiles {
+          profiles(request: { handles: ["${clientInfo}"], limit: 1 }) {
+            items {
+              ownedBy
+            }
+          }
+        }`;
+
+      try {
+        let response = await client.query({ query: Profiles(queryBody) });
+        resultArray.push(response.data.profiles.items[0].ownedBy);
+      } catch (err) {
+        console.log({ err });
+        resultArray.push("");
+      }
+    }
+
+    return resultArray;
+  }
+
   async function postClient() {
     try {
-      await fetch(process.env.NEXT_PUBLIC_API_CLIENTS as string, {
-        method: "POST",
-        headers: {
-          accept: "application/json",
-        },
-        body: body,
-        mode: "no-cors" as RequestMode,
-      }).catch((err) => console.error(err));
+      await fetch(
+        listArray
+          ? (process.env.NEXT_PUBLIC_API_LISTS as string)
+          : (process.env.NEXT_PUBLIC_API_CLIENTS as string),
+        {
+          method: "POST",
+          headers: {
+            accept: "application/json",
+          },
+          body: body,
+          mode: "no-cors" as RequestMode,
+        }
+      ).catch((err) => console.error(err));
     } catch (err) {
       console.log(err);
     }
@@ -256,22 +294,32 @@ export default function CreateCampaingButton({
 
   useEffect(() => {
     if (clientInfo.slice(0, 2) === "0x") {
-      fetchProfiles("ownedBy");
+      fetchProfiles("ownedBy", clientInfo);
     }
     if (clientInfo.slice(-5) === ".lens") {
-      fetchProfiles("handles");
+      fetchProfiles("handles", clientInfo);
+    }
+    if (listArray) {
+      fetchProfilesList(listArray).then((results) => {
+        console.log("Resultados:", results);
+      });
     }
   }, []);
 
   useEffect(() => {
     setNoLensProfile(false);
     if (clientInfo.slice(0, 2) === "0x") {
-      fetchProfiles("ownedBy");
+      fetchProfiles("ownedBy", clientInfo);
     }
     if (clientInfo.slice(-5) === ".lens") {
-      fetchProfiles("handles");
+      fetchProfiles("handles", clientInfo);
     }
-  }, [clientInfo]);
+    if (listArray) {
+      fetchProfilesList(listArray).then((results) => {
+        setListOfAddress(results);
+      });
+    }
+  }, [clientInfo, listArray]);
 
   useEffect(() => {
     if (txSuccessCampaign) {
@@ -280,23 +328,43 @@ export default function CreateCampaingButton({
   }, [txSuccessCampaign]);
 
   useEffect(() => {
-    console.log("Creating Body");
-    setBody(
-      JSON.stringify({
-        clientProfile: lensProfile?.id.toString(),
-        clientAddress: lensProfile?.ownedBy.toString(),
-        totalFollowers: lensProfile?.stats.totalFollowers,
-        flowSenderAddress: campaign,
-        followNftAddress: lensProfile?.followNftAddress,
-        amountFlowRate: Number(amountFlowRate),
-        amount: Number(amountInSMC),
-        minimumFollowers: Number(minimumFollowers),
-        owner: address,
-        isHuman: isHuman,
-        publicationId: publicationId,
-        tokenX: token.symbol + "x",
-      })
-    );
+    if (listArray) {
+      setBody(
+        JSON.stringify({
+          clientProfile: lensProfile?.id.toString(),
+          clientAddress: lensProfile?.ownedBy.toString(),
+          flowSenderAddress: campaign,
+          followNftAddress: lensProfile?.followNftAddress,
+          amountFlowRate: Number(amountFlowRate),
+          amount: Number(amountInSMC),
+          owner: address,
+          publicationId: publicationId,
+          tokenX: token.symbol + "x",
+          address1: listOfAddress[0],
+          address2: listOfAddress[1],
+          address3: listOfAddress[2],
+          address4: listOfAddress[3],
+          address5: listOfAddress[4],
+        })
+      );
+    } else {
+      setBody(
+        JSON.stringify({
+          clientProfile: lensProfile?.id.toString(),
+          clientAddress: lensProfile?.ownedBy.toString(),
+          totalFollowers: lensProfile?.stats.totalFollowers,
+          flowSenderAddress: campaign,
+          followNftAddress: lensProfile?.followNftAddress,
+          amountFlowRate: Number(amountFlowRate),
+          amount: Number(amountInSMC),
+          minimumFollowers: Number(minimumFollowers),
+          owner: address,
+          isHuman: isHuman,
+          publicationId: publicationId,
+          tokenX: token.symbol + "x",
+        })
+      );
+    }
   }, [lensProfile, campaign]);
 
   useEffect(() => {
