@@ -51,12 +51,12 @@ export default function Earn() {
   return (
     <div className="bg-[url('../../public/bg1.jpg')] h-screen bg-no-repeat bg-center bg-cover pt-4 overflow-auto ">
       <NavbarApp />
-      <div className="flex justify-center flex-col mb-10">
-        <div className=" w-2/3 rounded-3xl bg-white mx-auto overflow-auto max-h-[800px] text-center">
-          <h3 className="mt-10 text-4xl text-superfluid-100 font-bold">
+      <div className="flex justify-center flex-col mb-10 mx-4 ">
+        <div className="xl:w-2/3 rounded-3xl bg-white overflow-auto max-h-[800px] text-center mx-auto">
+          <h3 className="mt-10 text-4xl text-superfluid-100 font-bold mx-8">
             Earn super tokens with these campaigns
           </h3>
-          <div className="mt-6">
+          <div className="mt-6 mx-10">
             <p className="mb-4">Follow the instructions to get super tokens:</p>
             <ul>
               <li>1. Check if the campaign is active</li>
@@ -75,13 +75,9 @@ export default function Earn() {
             </ul>
           </div>
 
-          <div className="flex grid grid-cols-2 m-10 ">
+          <div className="flex grid xl:grid-cols-2 xl:p-10 p-4">
             {campaigns?.map((campaign: Campaign, index: number) => {
-              return (
-                <div key={index}>
-                  <CampaingCard campaign={campaign} />
-                </div>
-              );
+              return <CampaingCard campaign={campaign} key={index} />;
             })}
           </div>
         </div>

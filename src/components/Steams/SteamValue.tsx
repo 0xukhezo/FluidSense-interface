@@ -52,7 +52,7 @@ export default function SteamValue({
   }, []);
 
   return (
-    <div className="grid grid-cols-4 px-8">
+    <div className="grid grid-cols-4 px-8 text-xs sm:text-base">
       <span className="col-span-2 text-start">
         <a
           href={`https://console.superfluid.finance/matic/accounts/${steam.sender}?tab=streams`}
@@ -62,17 +62,17 @@ export default function SteamValue({
           {steam.sender.slice(0, 5)}...{steam.sender.slice(-4)}
         </a>
       </span>
-      <div className="grid grid-cols-2 text-end">
-        <span className="mr-1">
+      <div className="grid xl:grid-cols-2 text-center xl:text-end ">
+        <span className="sm:mr-1 mr-6">
           {typeOfSteam === "current"
             ? Number(flow).toFixed(6)
             : (flowInNumber * timeOn) / 365 / 24 / 5 / 60 > 1000
             ? ((flowInNumber * timeOn) / 365 / 24 / 5 / 60).toFixed(2)
             : ((flowInNumber * timeOn) / 365 / 24 / 5 / 60).toFixed(6)}
         </span>{" "}
-        <span>{steam.token}</span>
+        <span className="mr-6 sm:mr-0">{steam.token}</span>
       </div>
-      <div className="text-end">{flowInNumber.toFixed(4)} / mo</div>
+      <div className="text-end">{flowInNumber.toFixed(2)} / mo</div>
     </div>
   );
 }

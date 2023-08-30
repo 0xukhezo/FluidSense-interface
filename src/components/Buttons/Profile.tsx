@@ -3,7 +3,11 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Image from "next/image";
 import Wallet from "../../../public/wallet.svg";
 
-export const Profile = () => {
+interface ProfileProps {
+  navbar?: boolean;
+}
+
+export const Profile = ({ navbar }: ProfileProps) => {
   return (
     <ConnectButton.Custom>
       {({
@@ -39,7 +43,11 @@ export const Profile = () => {
                     <button
                       onClick={openConnectModal}
                       type="button"
-                      className="border-1 border-superfluid-100 text-superfluid-100 px-5 py-4 rounded-full h-12 bg-superfluid-200 flex items-center font-bold text-xl leading-6"
+                      className={
+                        navbar
+                          ? ""
+                          : "border-1 border-superfluid-100 text-superfluid-100 px-5 py-4 rounded-full h-12 bg-superfluid-200 flex items-center font-bold md:text-xl text-sm leading-6"
+                      }
                     >
                       Connect Wallet
                     </button>
@@ -52,7 +60,11 @@ export const Profile = () => {
                     <button
                       onClick={openChainModal}
                       type="button"
-                      className="border-1 border-superfluid-100 text-superfluid-100 px-5 py-4 rounded-full h-12 bg-superfluid-200 flex items-center font-bold text-xl leading-6"
+                      className={
+                        navbar
+                          ? ""
+                          : "border-1 border-superfluid-100 text-superfluid-100 px-5 py-4 rounded-full h-12 bg-superfluid-200 flex items-center font-bold text-xl leading-6"
+                      }
                     >
                       Wrong network
                     </button>
@@ -69,7 +81,11 @@ export const Profile = () => {
                   <button
                     onClick={openAccountModal}
                     type="button"
-                    className="border-1 border-superfluid-100 text-superfluid-100 px-5 py-4 rounded-full h-12 bg-superfluid-200 flex items-center font-bold text-xl leading-6"
+                    className={
+                      navbar
+                        ? "flex items-center"
+                        : "border-1 border-superfluid-100 text-superfluid-100 px-5 py-4 rounded-full h-12 bg-superfluid-200 flex items-center font-bold text-xl leading-6"
+                    }
                   >
                     <Image
                       priority

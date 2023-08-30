@@ -15,7 +15,7 @@ export default function ProfileCard({
   profileInfo,
 }: LandingWorkCardInterface) {
   return (
-    <div className="flex-col p-[53px] border-2 mx-10 rounded-3xl shadow-2xl mb-10 md:min-h-[680px] lg:min-h-[480px] xl:min-h-fit">
+    <div className="flex-col p-[53px] border-2 mx-10 rounded-3xl shadow-2xl mb-10  ">
       <main className="text-lg">{description}</main>
       <div className="grid xl:grid-cols-2 mt-6">
         <Image

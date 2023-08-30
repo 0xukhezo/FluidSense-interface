@@ -34,7 +34,7 @@ export default function SteamsDisplayer({
   const currentTimestampInSeconds: number = Math.floor(Date.now() / 1000);
 
   return (
-    <div className="px-10 overflow-auto">
+    <div className="xl:px-10 overflow-auto">
       <div className="grid grid-cols-4 text-end px-14 py-2 border-b-1 border-b-superfluid-100">
         <div className="col-span-2 text-start">Sender</div>
         <div className="text-center">All time flow</div>

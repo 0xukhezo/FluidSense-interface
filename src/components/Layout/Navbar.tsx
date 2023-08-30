@@ -43,7 +43,7 @@ export default function Navbar() {
                   About
                 </Link>
                 <Link
-                  href="/contact"
+                  href="/"
                   className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-superfluid-100 hover:border-superfluid-100"
                 >
                   Contact
@@ -80,7 +80,7 @@ export default function Navbar() {
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"
-                href="/contact"
+                href="/"
                 className="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
               >
                 Contact

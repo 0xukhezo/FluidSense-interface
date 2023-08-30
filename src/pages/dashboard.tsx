@@ -16,7 +16,7 @@ export default function Dashboard() {
 
   async function fetchSteams() {
     const wallet = inputAddress ? inputAddress : address;
-
+    if (!wallet) return;
     const queryBody = `query MyQuery {
         account(id: "${wallet!.toLowerCase()}") {
             id
@@ -102,7 +102,7 @@ export default function Dashboard() {
     <div className="bg-[url('../../public/bg1.jpg')] h-screen bg-no-repeat bg-center bg-cover pt-4 overflow-auto">
       <NavbarApp />
       <div className="flex justify-center flex-col mb-10">
-        <div className="h-container w-container rounded-3xl bg-white mx-auto overflow-auto">
+        <div className="h-container xl:w-container rounded-3xl bg-white mx-4 xl:mx-auto overflow-auto">
           <div className="flex justify-center mt-6 flex-col">
             {(isConnected &&
               address &&
@@ -124,7 +124,7 @@ export default function Dashboard() {
               </div>
             ) : (
               <>
-                <div className="px-20">
+                <div className="xl:px-20">
                   <label
                     htmlFor="amount"
                     className="block text-xl font-bold leading-6 text-gray-900 pb-2 mt-[50px] px-10"

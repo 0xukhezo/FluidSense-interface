@@ -106,13 +106,13 @@ export default function CampaingCard({ campaign }: CampaingCardInterface) {
     <div
       className={
         campaign.publicationId !== "0x00000"
-          ? "px-2 py-1 border-1 border-superfluid-100 rounded-lg m-4 min-h-[340px]"
-          : "px-2 pt-8 border-1 border-superfluid-100 rounded-lg m-4 min-h-[340px]"
+          ? "sm:px-2 py-1 border-1 border-superfluid-100 rounded-lg sm:m-4 min-h-[340px] my-4"
+          : "sm:px-2 pt-8 border-1 border-superfluid-100 rounded-lg sm:m-4 min-h-[340px] my-4"
       }
     >
       {profile && steams && (
-        <div className="p-6">
-          <div className="flex flex-row justify-between mb-4 text-lg">
+        <div className="sm:p-6">
+          <div className="flex sm:flex-row flex-col justify-between mb-4 text-lg">
             <a
               href={`https://console.superfluid.finance/matic/accounts/${campaign.flowSenderAddress}`}
               target="_blank"
@@ -134,7 +134,7 @@ export default function CampaingCard({ campaign }: CampaingCardInterface) {
             </div>{" "}
             {steamActive && <div>End: {dateFormated}</div>}
           </div>
-          <div className="flex flex-row justify-between mb-4 text-lg">
+          <div className="flex  sm:flex-row flex-col justify-between mb-4 text-lg">
             <div>
               <span className="font-bold">Follow:</span> {profile.handle}
               <a
@@ -148,7 +148,7 @@ export default function CampaingCard({ campaign }: CampaingCardInterface) {
             </div>
           </div>
           {campaign.publicationId !== "0x00000" && (
-            <div className="flex flex-row justify-center text-center mb-4 text-lg">
+            <div className="flex  sm:flex-row flex-col justify-center text-center mb-4 text-lg">
               <span className="font-bold ">Mirror: </span>
               <a
                 className="hover:text-superfluid-100 "
@@ -168,14 +168,15 @@ export default function CampaingCard({ campaign }: CampaingCardInterface) {
               {campaign.tokenX}
             </div>
           </div>
-          <div className="grid grid-cols-4 text-center items-center mb-4 text-lg font-semibold">
+          <div className="grid sm:grid-cols-4 grid-cols-2 text-center items-center mb-4 text-lg font-semibold">
             <div>Inicial Followers</div>
             <div>Current Followers</div>
-            <div className="col-span-2 ">Gained Followers</div>
+            <div className="col-span-2 hidden sm:block">Gained Followers</div>
           </div>
-          <div className="grid grid-cols-4 text-center text-lg font-semibold text-superfluid-100">
+          <div className="grid sm:grid-cols-4 grid-cols-2 text-center text-lg font-semibold text-superfluid-100">
             <div>{campaign.totalFollowers}</div>
             <div>{profile.stats.totalFollowers}</div>
+            <div className="col-span-2 text-black">Gained Followers</div>
             <div>+{steams?.length}</div>
             <div>
               {((steams?.length * 100) / campaign.totalFollowers).toFixed(2)}%

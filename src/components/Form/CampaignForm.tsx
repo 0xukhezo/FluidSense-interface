@@ -115,8 +115,8 @@ export default function CampaignForm() {
   // };
 
   return (
-    <div className="mx-14">
-      <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-4">
+    <div className="mx-20 md:mx-16">
+      <div className="mt-10 grid grid-cols-1 gap-x-6  gap-y-8 sm:grid-cols-4">
         <div className="sm:col-span-3">
           <label
             htmlFor="address"

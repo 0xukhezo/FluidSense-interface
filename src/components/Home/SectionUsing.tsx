@@ -73,14 +73,13 @@ export default function SectionUsing() {
       <div className="grid grid-cols-1 md:grid-cols-2  lg:px-32 max-h-fit">
         {profiles.map((profile: Profile, index: number) => {
           return (
-            <div key={index}>
-              <ProfileCard
-                description={profile.description}
-                image={profile.image}
-                name={profile.name}
-                profileInfo={profile.profileInfo}
-              />
-            </div>
+            <ProfileCard
+              description={profile.description}
+              image={profile.image}
+              name={profile.name}
+              profileInfo={profile.profileInfo}
+              key={index}
+            />
           );
         })}
       </div>

@@ -56,15 +56,14 @@ export default function Footer() {
               key={index}
               href={link.href}
               target="_blank"
-              className="flex p-2 bg-superfluid-100 rounded-3xl min-w-[80px] min-h-[80px] mx-4"
+              className="flex p-2 bg-superfluid-100 rounded-3xl min-w-[24px] min-h-[24px] mx-4"
             >
               <Image
                 priority
                 src={link.image}
-                height={40}
-                width={40}
+                height={24}
+                width={24}
                 alt="Fluid sense logo"
-                className="mx-4"
               />
             </a>
           );
