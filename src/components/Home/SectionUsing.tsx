@@ -67,7 +67,7 @@ export default function SectionUsing() {
           );
         })}{" "}
       </div>
-      <h2 className="mt-[72px] text-center font-bold text-4xl mb-9">
+      <h2 className="mt-[72px] text-center font-bold text-4xl mb-9 mx-8">
         What they say about us
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2  lg:px-32 max-h-fit">
